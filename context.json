@@ -1,0 +1,31 @@
+{
+  "project_name"   : "xxx-guide"
+, "book_title"     : "はじめてのXXX入門"
+, "book_subtitle"  : "概念と基本操作を2時間でマスター！"
+, "author_name"    : "カウプラン機関極東支部"
+, "author_yomi"    : "カウプランキカンキョクトウシブ"
+, "publish_date"   : "2018-04-22"
+, "printing_shop"  : "○○印刷所"
+, "debug"          : true
+, "titlepage"      : true
+, "toc"            : true
+, "colophon"       : true
+
+, "pagesize"       : "A5"
+, "fontsize"       : "9pt"
+, "nchars"         : "40zw"
+, "margin"         : "1.5zw"
+, "openmode"       : "right"
+
+, "small_caption"  : true
+, "small_code"     : true
+, "narrow_padding" : true
+, "short_chaptitle": true
+, "narrow_topmargin": true
+, "sectitle_underline": true
+, "color_link"     : false
+, "font_beramono"  : true
+, "figure_heretop" : true
+, "column_openframe": true
+, "column_boldtitle": true
+}
