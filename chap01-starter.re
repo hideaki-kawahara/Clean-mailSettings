@@ -28,12 +28,14 @@
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 いろはfghij  @<b>{いろはfghij}  @<em>{いろはfghij}  @<strong>{いろはfghij}
 @<B>{いろはfghij}
 
-//blankline
+//resultend
 
 
 
@@ -49,7 +51,9 @@
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //emlist{
 タイプライタ体（通常）： 0123456789 ijkl IJKL !"$%&()*,-./:;?@[\]`|~
@@ -57,7 +61,195 @@
 ゴシック体　　（太字）： @<strong>{0123456789 ijkl IJKL !"$%&()*,-./:;?@[\\]`|~}
 //}
 
-//blankline
+//resultend
+
+
+
+
+==={subsec-olist} 番号つきリストの機能強化
+
+Re:VIEWでは番号つきリストを次のように書きます。
+
+//emlist[サンプル]{
+ 1. XXX
+ 2. YYY
+ 3. ZZZ
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ 1. XXX
+ 2. YYY
+ 3. ZZZ
+
+//resultend
+
+
+
+この書き方には次の欠点があります。
+
+ * 数字の番号はつきますが、「A.」や「a.」などは使えません。
+ * また番号つきリストを入れ子にできません。
+
+そこでStarterでは別の書き方を用意しました。
+
+//emlist[サンプル]{
+数字による番号つきリスト
+
+ - 1. XXX
+ - 2. YYY
+ - 3. ZZZ
+
+大文字による番号つきリスト
+
+ - A. XXX
+ - B. YYY
+ - C. ZZZ
+
+小文字による番号つきリスト
+
+ - a. XXX
+ - b. YYY
+ - c. ZZZ
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+数字による番号つきリスト
+
+ - 1. XXX
+ - 2. YYY
+ - 3. ZZZ
+
+大文字による番号つきリスト
+
+ - A. XXX
+ - B. YYY
+ - C. ZZZ
+
+小文字による番号つきリスト
+
+ - a. XXX
+ - b. YYY
+ - c. ZZZ
+
+//resultend
+
+
+
+「1.」や「A.」や「a.」のあとに必ず半角空白が必要です。
+実は半角空白があれば、その前に書いた文字列がそのまま出力されます。
+なので次のような書き方もできます。
+箇条書きのように見えますが、「・」がついてないことに注意してください。
+
+//emlist[サンプル]{
+ - (A) 項目A
+ - (B) 項目B
+ - (C) 項目C
+
+ - 甲: 山田太郎
+ - 乙: 佐藤花子
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ - (A) 項目A
+ - (B) 項目B
+ - (C) 項目C
+
+ - 甲: 山田太郎
+ - 乙: 佐藤花子
+
+//resultend
+
+
+
+また入れ子にできます。
+
+//emlist[サンプル]{
+ - (A) 作業A
+ -- (A-1) 作業A-1
+ -- (A-2) 作業A-2
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ - (A) 作業A
+ -- (A-1) 作業A-1
+ -- (A-2) 作業A-2
+
+//resultend
+
+
+
+箇条書きとの混在もできます。
+
+//emlist[サンプル]{
+番号つきリストの中に箇条書き
+
+ - A. XXX
+ ** xxx
+ ** xxx
+
+箇条書きの中に番号つきリスト
+
+ * XXXX
+ -- a. xxx
+ -- b. xxx
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+番号つきリストの中に箇条書き
+
+ - A. XXX
+ ** xxx
+ ** xxx
+
+箇条書きの中に番号つきリスト
+
+ * XXXX
+ -- a. xxx
+ -- b. xxx
+
+//resultend
+
+
+
+なお数字や大文字や小文字の順番を補正するようなことはしません。
+たとえば「1.」を連続して書けばそれがそのまま出力されます。
+
+//emlist[サンプル]{
+ - 1. XXX
+ - 1. YYY
+ - 1. ZZZ
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ - 1. XXX
+ - 1. YYY
+ - 1. ZZZ
+
+//resultend
 
 
 
@@ -79,7 +271,9 @@ Re:VIEW標準と比べると、デザインを大きく変更していること�
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //note[■注意：印刷所の締切り日を確かめること]{
 印刷所の締切りは、技術書典のようなイベントの本番当日よりずっと前です。
@@ -90,18 +284,19 @@ Re:VIEW標準と比べると、デザインを大きく変更していること�
 これも忘れやすいので注意しましょう。
 //}
 
-//blankline
+//resultend
 
 
 
-ただしこの書き方は、箇条書きや他のブロック命令を含められないという欠点があります。
+実はRe:VIEWでは、ノートの中に箇条書きや他のブロック命令を含められません。これは技術同人誌や書籍の執筆において、大変困る欠点です。
 
-かわりに、「@<code>$====[note]$ ... @<code>$====[/note]$」という書き方をすると、箇条書きも他のブロック命令も含められます@<fn>{mg7ep}。
+なのでStarterではこれを解決し、ノートの中に箇条書きや他のブロック命令を含められるようにしました@<fn>{wosu0}@<fn>{mg7ep}。
 
-//footnote[mg7ep][以前は、ノート中のプログラム（「@<code>$//emlist$」や「@<code>$//cmd$」）やターミナル（「@<code>$//terminal$」）がページをまたげないという制限がありましたが、現在はその制限はなくなりました。]
+//footnote[wosu0][以前はこれができなかったので、「@<code>$====[note\]$ ... @<code>$====[/note\]$」という別の記法が必要でした。今でもこの記法は有効ですが、もう使う必要はありません。]
+//footnote[mg7ep][昔はノート中のプログラム（「@<code>$//emlist$」や「@<code>$//cmd$」）やターミナル（「@<code>$//terminal$」）がページをまたげないという制限がありましたが、現在はその制限はなくなりました。]
 
 //emlist[サンプル]{
-====[note] ■ノートサンプル
+@<b>|//note[■ノートサンプル]{|
 
 箇条書きを含める例@<letitgo>$@$<fn>{t71o9}。
 
@@ -124,13 +319,15 @@ $ echo Hello
 Hello
 @<letitgo>$//$}
 
-====[/note]
+@<b>|//}|
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
 
-====[note] ■ノートサンプル
+//resultbegin
+
+//note[■ノートサンプル]{
 
 箇条書きを含める例@<fn>{t71o9}。
 
@@ -153,9 +350,9 @@ $ echo Hello
 Hello
 //}
 
-====[/note]
+//}
 
-//blankline
+//resultend
 
 
 
@@ -174,7 +371,9 @@ Hello
 //}
 
 //noindent
-@<em>{表示例（Re:VIEWのデフォルト）：}@<br>{}
+@<em>{表示例（Re:VIEWのデフォルト）：}
+
+//resultbegin
 
 //memo[印刷所の締切り日を確かめること]{
 印刷所の締切りは、技術書典のようなイベントの本番当日よりずっと前です。
@@ -185,7 +384,7 @@ Hello
 これも忘れやすいので注意しましょう。
 //}
 
-//blankline
+//resultend
 
 
 
@@ -247,7 +446,9 @@ end
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[4k2ny][リスト番号あり]{
 def fib(n)
@@ -273,7 +474,7 @@ def fib(n)
 end
 //}
 
-//blankline
+//resultend
 
 
 
@@ -289,7 +490,9 @@ function fib(n) {
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list{
 function fib(n) {
@@ -297,7 +500,7 @@ function fib(n) {
 }
 //}
 
-//blankline
+//resultend
 
 
 
@@ -313,10 +516,10 @@ function fib(n) {
 	すべての行末に、行末であることを表す小さな記号をつけます。
 	「@<code>$foldmark=on$」のかわりに使うことを想定していますが、両方を@<code>{on}にしても使えます。
 	デフォルトは@<code>{off}。
- : @<code>$lineno={on|off|$@<i>$integer$@<code>$}$
-	行番号をつけます（詳しくは後述）。
+ : @<code>$lineno={on|off|$@<i>$integer$@<code>$|$@<i>$pattern$@<code>$}$
+	行番号をつけます。
 	行番号は1から始まりますが、整数を指定するとそれが最初の行番号になります。
-	将来的にはもっと複雑なパターンが指定できる予定。
+	またより複雑なパターンも指定できます（後述）。
 	デフォルトは@<code>{off}。
  : @<code>$linenowidth=$@<i>$integer$
 	行番号の桁数を指定します（詳しくは後述）。
@@ -334,11 +537,25 @@ function fib(n) {
    たとえば「@<code>{//list[][][eolmark=on,lineno=on,linenowidth=3]}」のようにします。
  * オプションの名前だけを指定して値を省略すると、「@<code>{on}」を指定したとみなされます。
    たとえば「@<code>{lineno}」は「@<code>{lineno=on}」と同じです。
+ * 「@<code>$lang=$@<i>$name$」を指定してもコードハイライトはできません。
+   この制限は将来改善される予定ですが、時期は未定です。
  * 「@<code>$lang=$@<i>$name$」の場合は、省略形は「@<code>$lang$」ではなく「@<i>$name$」です@<fn>{auf8z}。
    またこの省略ができるのは、第3引数の最初のオプションに指定した場合だけです。
    つまり、「@<code>$ruby,lineno=1$」はOKだけど「@<code>$lineno=1,ruby$」はエラーになります。
- * 「@<code>$lang=$@<i>$name$」を指定してもコードハイライトはできません。
-   この制限は将来改善される予定ですが、時期は未定です。
+
+//list[][]{
+@<letitgo>{}これはOK
+@<letitgo>{}//list[][][@<b>{ruby},lineno=1]{
+@<letitgo>{}//}
+
+@<letitgo>{}これはエラー
+@<letitgo>{}//list[][][lineno=1,@<b>{ruby}]{
+@<letitgo>{}//}
+
+@<letitgo>{}これはOK
+@<letitgo>{}//list[][][lineno=1,@<b>{lang=ruby}]{
+@<letitgo>{}//}
+//}
 
 //footnote[auf8z][これはRe:VIEWとの互換性を保つために仕方なく決めた仕様なので、できれば「@<code>$lang={name}$」と省略せずに書いてください。この省略のせいでオプション名が間違っていても言語名とみなされてしまうので注意してください。]
 
@@ -363,14 +580,16 @@ foobar
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //cmd[キャプション]{
 $ echo foobar
 foobar
 //}
 
-//blankline
+//resultend
 
 
 
@@ -385,14 +604,16 @@ foobar
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //terminal[id6789][キャプション][lineno=on]{
 $ echo foobar
 foobar
 //}
 
-//blankline
+//resultend
 
 
 
@@ -418,7 +639,9 @@ foo/bar/baz/testprog.rb:11:in `func1': undefined local variable or method `aaabb
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[][長い行を含むプログラム例]{
 data = <<HERE
@@ -431,7 +654,7 @@ $ ruby foo/bar/baz/testprog.rb
 foo/bar/baz/testprog.rb:11:in `func1': undefined local variable or method `aaabbbccc' for main:Object (NameError)
 //}
 
-//blankline
+//resultend
 
 
 
@@ -446,7 +669,7 @@ foo/bar/baz/testprog.rb:11:in `func1': undefined local variable or method `aaabb
 
 //footnote[wilge][英数字なら折り返し改行される位置にハイフンが入ります。このハイフンを強引に置き換えることで、折り返し記号を挿入しています。しかしpLaTeXでは日本語だとハイフンが入らないため、折り返し記号も挿入されません。これの解決は難しそうなので、別の方法を模索中。]
 
-===[note] 折り返し記号のかわりに行末記号
+//note[折り返し記号のかわりに行末記号]{
 
 折り返し箇所が日本語だと折り返し記号がうまく挿入されません。
 かといって手動で「@<code>$@<foldhere>{}$」を挿入するのも面倒です。
@@ -464,7 +687,9 @@ end
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[][][foldmark=off,eolmark=on]{
 def emergency()
@@ -472,11 +697,11 @@ def emergency()
 end
 //}
 
-//blankline
+//resultend
 
 
 
-===[/note]
+//}
 
 
 === プログラムやターミナルの行番号を出力
@@ -492,7 +717,9 @@ function fib(n) {
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[][][lineno=on]{
 function fib(n) {
@@ -500,7 +727,7 @@ function fib(n) {
 }
 //}
 
-//blankline
+//resultend
 
 
 
@@ -515,7 +742,9 @@ function fib(n) {
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[][][lineno=98]{
 function fib(n) {
@@ -523,7 +752,7 @@ function fib(n) {
 }
 //}
 
-//blankline
+//resultend
 
 
 
@@ -539,7 +768,9 @@ function fib(n) {
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[][][lineno=98,linenowidth=5]{
 function fib(n) {
@@ -547,7 +778,7 @@ function fib(n) {
 }
 //}
 
-//blankline
+//resultend
 
 
 
@@ -565,7 +796,9 @@ function fib(n) {
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[][][lineno=98,linenowidth=0]{
 function fib(n) {
@@ -573,7 +806,7 @@ function fib(n) {
 }
 //}
 
-//blankline
+//resultend
 
 
 
@@ -588,7 +821,9 @@ HERE
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[][][lineno=1,linenowidth=2]{
 data = <<HERE
@@ -596,7 +831,55 @@ data = <<HERE
 HERE
 //}
 
-//blankline
+//resultend
+
+
+
+行番号を表す、より複雑なパターンを指定できます。
+
+ * 「@<code>{1-10}」なら、1行目から10行目まで
+ * 「@<code>{1-10&15-18}」なら、1行目から10行目までと、1行空けて15行目から18行目まで
+ * 「@<code>{1-10&15-}」なら、1行目から10行目までと、1行空けて15行目から最終行まで
+
+サンプルを見ればどういうことか分かるでしょう。
+
+//emlist[サンプル]{
+@<letitgo>$//$list[][][@<b>|lineno=10&18-20&25-|]{
+class Hello
+  ...(省略)...
+  def initialize(name)
+    @name = name
+  end
+  ...(省略)...
+  def hello
+    print("Hello #{@name}\n")
+  end
+
+end
+@<letitgo>$//$}
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+//list[][][lineno=10&18-20&25-]{
+class Hello
+  ...(省略)...
+  def initialize(name)
+    @name = name
+  end
+  ...(省略)...
+  def hello
+    print("Hello #{@name}\n")
+  end
+
+end
+//}
+
+//resultend
+
 
 
 
@@ -612,13 +895,15 @@ puts "Hello"
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[samplecode3][サンプル]{
 puts "Hello"
 //}
 
-//blankline
+//resultend
 
 
 
@@ -626,7 +911,7 @@ puts "Hello"
 リスト番号をあとから参照する場合は重複しないことが必要ですが、単にリスト番号をつけたい場合は重複しないラベルを選ぶのは面倒です。
 特に、すべてのソースコードにリスト番号をつけようと思った場合はかなりの手間になります。
 
-そこで、「@<code>$//list[?]$」のように第1引数を「@<code>$?$」とするだけで、ラベルとしてランダムな文字列が割り当てられるようにしました@<fn>{w90w6}。
+そこでStarterでは、「@<code>$//list[?]$」のように第1引数を「@<code>$?$」とするだけで、ラベルとしてランダムな文字列が割り当てられるようにしました@<fn>{w90w6}。
 これにより、すべてのソースコードにリスト番号をつけるのが大幅に簡単になりました。
 //footnote[w90w6][実装は@<em>{lib/hooks/monkeypatch.rb}の中で@<em>{ReVIEW::Book::Compilable#content()}を上書きして実現しています。]
 
@@ -637,13 +922,15 @@ puts "Hello"
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[?][サンプル]{
 puts "Hello"
 //}
 
-//blankline
+//resultend
 
 
 
@@ -670,13 +957,15 @@ puts "Hello"
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //list[test7][]{
 puts "Hello"
 //}
 
-//blankline
+//resultend
 
 
 
@@ -742,7 +1031,9 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //textright{
 右寄せのサンプル
@@ -754,7 +1045,7 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 センタリングのサンプル
 //}
 
-//blankline
+//resultend
 
 
 
@@ -772,7 +1063,9 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //flushright{
 右寄せのサンプル
@@ -781,7 +1074,7 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 センタリングのサンプル
 //}
 
-//blankline
+//resultend
 
 
 
@@ -799,14 +1092,16 @@ Starterでは、章(Chapter)の概要を表す「@<code>$//abstract{$ ... @<code
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //abstract{
 この章では、XXXのXXXという機能について説明します。
 この機能を理解することで、あとの章が理解できるようになります。
 //}
 
-//blankline
+//resultend
 
 
 
@@ -826,7 +1121,9 @@ Starterでは、章(Chapter)の概要を表す「@<code>$//abstract{$ ... @<code
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //lead{
 土に根を下ろし　風と共に生きよう
@@ -834,7 +1131,7 @@ Starterでは、章(Chapter)の概要を表す「@<code>$//abstract{$ ... @<code
 種と共に冬を越え　鳥と共に春を歌おう
 //}
 
-//blankline
+//resultend
 
 
 
@@ -863,7 +1160,7 @@ Re:VIEWのデフォルトでは、図を入れるときに現在位置に入り�
 画像の倍率も指定する場合は、「@<code>$//image[][][scale=0.5,pos=H]$」のように指定してください。
 
 
-====[note] ページ下部にも画像を配置する
+//note[ページ下部にも画像を配置する]{
 
 「@<code>$pos=H$」や「@<code>$pos=h$」のどちらを選んでも、入りきらない画像は次ページに送られます。
 そのため、どうしても画像はページ上部に配置されることが多くなり、逆にページ下部には配置されにくくなります。
@@ -873,9 +1170,9 @@ Re:VIEWのデフォルトでは、図を入れるときに現在位置に入り�
 つまり、まずページ下部に配置を試み、入らないなら次ページ上部に配置します。
 これで、全体的に図がページの上部と下部の両方に配置されるはずです。
 
-====[/note]
+//}
 
-====[note] 「次の図」や「以下の図」という表現を止める
+//note[「次の図」や「以下の図」という表現を止める]{
 
 すでに説明したように、画像の配置場所として「@<code>$pos=H$」@<strong>$以外$を指定した場合は、後続のテキストが現在位置に流し込まれます。
 そのため、文章中で「次の図は〜」とか「以下の図では〜」と書いていると、図が次ページに配置された場合、読者が混乱します。
@@ -883,7 +1180,32 @@ Re:VIEWのデフォルトでは、図を入れるときに現在位置に入り�
 このような事態を避けるために、「次の図は〜」や「以下の図では〜」という表現を止めて、「図1.1では〜」のように番号で参照するようにしましょう。
 面倒でしょうが、仕方がありません。慣れてください。
 
-====[/note]
+//}
+
+
+=== 図のまわりを線で囲む
+
+Starterでは、図のまわりをグレーの線で囲むことができます。
+そのためには「@<code>{//image}」の第3引数に「@<code>{border=on}」を指定します。
+
+//emlist[サンプル]{
+@<letitgo>$//$image[tw-icon][デフォルトの表示][scale=0.5,pos=H]
+
+@<letitgo>$//$image[tw-icon][まわりを線で囲む][scale=0.5,pos=H,@<b>|border=on|]
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+//image[tw-icon][デフォルトの表示][scale=0.5,pos=H]
+
+//image[tw-icon][まわりを線で囲む][scale=0.5,pos=H,border=on]
+
+//resultend
+
+
 
 
 === 何もしない命令「@<code>$@$<letitgo>{...}」
@@ -899,14 +1221,16 @@ Re:VIEWでは、「@<code>$//list{$ ... @<code>$//}$」や「@<code>$//emlist{$ 
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //emlist{
   @<b>{ABC}
   @<code>$@$<b>{ABC}
 //}
 
-//blankline
+//resultend
 
 
 
@@ -928,7 +1252,9 @@ Re:VIEWでは、「@<code>$//list{$ ... @<code>$//}$」や「@<code>$//emlist{$ 
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //emlist{
 1. @<b>{ABC}
@@ -936,7 +1262,7 @@ Re:VIEWでは、「@<code>$//list{$ ... @<code>$//}$」や「@<code>$//emlist{$ 
 3. @<letitgo>$@$<b>{ABC}
 //}
 
-//blankline
+//resultend
 
 
 
@@ -952,6 +1278,8 @@ Re:VIEWでは、「@<code>$//list{$ ... @<code>$//}$」や「@<code>$//emlist{$ 
 これによって、@<LaTeX>{}へ変換するときに「@<code>${$」と「@<code>$}$」が適切にエスケープされます。
 
 このような落とし穴はありますが、ブロック命令の中でインライン命令そのものを表示したい場合は、「@<code>$@<letitgo>{$...@<code>$}$」を使ってください。
+
+なお「@<code>$@<letitgo>{$...@<code>$}$」は長すぎるという意見があったので、エイリアスとして「@<code>$@<nop>{$...@<code>$}$」を用意しました（「nop」は「No Operation」の略です）。
 
 
 === 章や項を参照する「@<code>$@$@<code>$<secref>{}$」
@@ -990,6 +1318,9 @@ Re:VIEWでは、「@<code>$@$@<code>$<hd>{}$」を使って節(Section)や項(Su
 //blankline
 //noindent
 @<em>{表示例：}
+
+//resultbegin
+
 //blankline
 //embed[latex]{
 \par\noindent
@@ -1006,9 +1337,11 @@ Re:VIEWでは、「@<code>$@$@<code>$<hd>{}$」を使って節(Section)や項(Su
 \bigskip
 \par\noindent
 {\large\headfont  実装例}
+\par
 //}
 //blankline
-//blankline
+
+//resultend
 
 このことを踏まえたうえで、節や項を「@<code>$@$@<code>$<hd>{}$」で参照するとどう表示されるでしょうか。
 
@@ -1026,12 +1359,15 @@ Re:VIEWでは、「@<code>$@$@<code>$<hd>{}$」を使って節(Section)や項(Su
 
 //noindent
 @<em>{表示結果：}
-//blankline
+
+//resultbegin
+
  * 「1.1 Visitorパターン」
  * 「動機」
  * 「構造」
  * 「実装例」
-//blankline
+
+//resultend
 
 問題点をもう一度整理しましょう。
 
@@ -1055,12 +1391,15 @@ Re:VIEWでは、「@<code>$@$@<code>$<hd>{}$」を使って節(Section)や項(Su
 
 //noindent
 @<em>{表示結果：}
-//blankline
+
+//resultbegin
+
  * 「1.1 Visitorパターン」(p.1)
  * 「1.1 Visitorパターン」内の「動機」(p.1)
  * 「1.1 Visitorパターン」内の「構造」(p.1)
  * 「1.1 Visitorパターン」内の「実装例」(p.1)
-//blankline
+
+//resultend
 
 これを見ると、番号がついていない項の前に番号がついている節が置かれていること、またページ番号がついていることが分かります。
 どちらも@<code>$@$@<code>$<hd>{}$にはない特徴であり、@<code>$@$@<code>$<hd>{}$で参照するより節や項が探しやすくなります。
@@ -1100,7 +1439,8 @@ Starterでは、「@<letitgo>$@$<chapref>{}」や「@<letitgo>$@$<hd>{}」がリ
 
 === その他
 
- * 「@<code>$@<clearpage>{}$」とすると、改ページします。
+ * ブロック命令「@<code>$//clearpage$」で改ページします。
+   また過去との互換性のために、インライン命令「@<code>$@<clearpage>{}$」も使えます。
  * 「@<code>$@<hearts>{}$」とすると、「@<hearts>{}」と表示されます。
  * 「@<code>$@<TeX>{}$」とすると、「@<TeX>{}」と表示されます。
  * 「@<code>$@<LaTeX>{}$」とすると、「@<LaTeX>{}」と表示されます。
@@ -1313,14 +1653,16 @@ Re:VIEWでは@<LaTeX>{}のデフォルトデザインのまま（全体が少し
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //quote{
 その者蒼き衣を纏いて金色の野に降りたつべし。
 失われし大地との絆を結び、ついに人々を清浄の地に導かん。
 //}
 
-//blankline
+//resultend
 
 
 
@@ -1540,7 +1882,7 @@ PDFファイルのサイズを少しでも減らしたい場合は、「@<code>$
 //footnote[lmknh][技術書典でいちばん多くのサークルがお世話になっている印刷所。電話対応のお姉さんがとても親切。入稿ページの使い方が分かりにくいので、ほとんどの初心者はお姉さんのお世話になるはず。]
 //footnote[26k16][@<href>{http://www.nikko-pc.com/q&a/yokuaru-shitsumon.html#3-1}より引用：『ノンブルは全ページに必要です。ノンブルが無いものは製本時にページ順に並び替えることが非常に困難な為、落丁・乱丁の原因となります。』]
 
-===[note] ■ノンブルとは
+//note[■ノンブルとは]{
 
 ノンブルとは、すべてのページにつけられた通し番号です。
 ページ番号と似ていますが、ページ番号が読者のための番号なのに対し、ノンブルは印刷所の人が間違えずに作業するための番号です。
@@ -1555,7 +1897,7 @@ PDFファイルのサイズを少しでも減らしたい場合は、「@<code>$
 
 詳しくは「ノンブル」でGoogle検索してください。
 
-===[/note]
+//}
 
 Starterでは、PDFにノンブルをつけるためのrakeタスク「@<em>{pdf:nombre}」@<fn>{nqjz9}を用意しています。
 //footnote[nqjz9][@<em>{lib/tasks/starter.rake}で定義されています。]

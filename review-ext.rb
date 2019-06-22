@@ -12,7 +12,8 @@ module ReVIEW
 
   ## インライン命令「@<clearpage>{}」を宣言
   Compiler.definline :clearpage         ## 改ページ
-  Compiler.definline :letitgo           ## 引数をそのまま表示
+  Compiler.definline :nop               ## 引数をそのまま表示 (No Operation)
+  Compiler.definline :letitgo           ## （nopのエイリアス名）
   Compiler.definline :B                 ## @<strong>{}のショートカット
   Compiler.definline :foldhere          ## 折り返し箇所を手動で指定
   Compiler.definline :hearts            ## ハートマーク
@@ -31,25 +32,37 @@ module ReVIEW
   #
   Compiler.defblock :list, 0..3         ## （上書き）
   Compiler.defblock :listnum, 0..3      ## （上書き）
+  #
+  Compiler.defsingle :clearpage, 0      ## 改ページ (\clearpage)
+  Compiler.defsingle :resultbegin, 0     ## （出力結果開始部、Starterドキュメントで使用）
+  Compiler.defsingle :resultend, 0       ## （出力結果終了部、Starterドキュメントで使用）
 
 
   ## LaTeX用の定義
   class LATEXBuilder
 
-    ## 改ページ
+    ## 改ページ（インライン命令）
     def inline_clearpage(str)
       '\clearpage'
+    end
+
+    ## 改ページ（ブロック命令）
+    def clearpage()
+      puts ''
+      puts '\\clearpage'
+      puts ''
     end
 
     ## 引数をそのまま表示
     ## 例：
     ##   //emlist{
     ##     @<b>{ABC}             ← 太字の「ABC」が表示される
-    ##     @<letitgo>$@<b>{ABC}$ ← 「@<b>{ABC}」がそのまま表示される
+    ##     @<nop>$@<b>{ABC}$ ← 「@<b>{ABC}」がそのまま表示される
     ##   //}
-    def inline_letitgo(str)
-      str
+    def inline_nop(str)
+      escape(str)
     end
+    alias inline_letitgo inline_nop
 
     ## @<strong>{} のショートカット
     def inline_B(str)
@@ -156,13 +169,26 @@ module ReVIEW
     end
 
     ## 引用（複数段落に対応）
-    def quote(lines)
+    ## （入れ子対応なので、中に箇条書きや別のブロックを入れられる）
+    def on_quote_block()
+      if within_context?(:note)
+        yes = truncate_if_endwith?("\\begin{starternoteinner}\n")
+        puts "\\end{starternoteinner}" unless yes
+      end
+      #
       puts '\begin{starterquote}'
-      puts lines
+      yield
       puts '\end{starterquote}'
+      #
+      puts "\\begin{starternoteinner}" if within_context?(:note)
+    end
+    def quote(lines)
+      on_quote_block() do
+        puts lines
+      end
     end
 
-    ## 引用 (====[note] ... ====[/note])
+    ## 引用 (====[quote] ... ====[/quote])
     ## （ブロック構文ではないので、中に箇条書きや別のブロックを入れられる）
     def quote_begin(level, label, caption)
       puts '\begin{starterquote}'
@@ -171,15 +197,21 @@ module ReVIEW
       puts '\end{starterquote}'
     end
 
-    ## ノート
-    def note(lines, caption=nil)
+    ## ノート（//note[caption]{ ... //}）
+    ## （入れ子対応なので、中に箇条書きや別のブロックを入れられる）
+    def on_note_block(caption=nil)
       s = compile_inline(caption || "")
       puts "\\begin{starternote}{#{s}}"
       puts "\\begin{starternoteinner}"
-      puts lines
+      yield
       yes = truncate_if_endwith?("\\begin{starternoteinner}\n")
       puts "\\end{starternoteinner}" unless yes
       puts "\\end{starternote}"
+    end
+    def note(lines, caption=nil)
+      on_note_block(caption) do
+        puts lines
+      end
     end
 
     ## ノート (====[note] ... ====[/note])
@@ -229,6 +261,17 @@ module ReVIEW
     end
     private :_codeblock_optstr
 
+    ## 出力結果の開始部と終了部（Starterのドキュメントで使用）
+    ## （Re:VIEWではブロックの入れ子も「===[xxx]」の入れ子もできないため）
+    def resultbegin()
+      #puts "\\begin{starterresult}"         # error in note block
+      puts "\\starterresult"
+    end
+    def resultend()
+      #puts "\\end{starterresult}"           # error in note block
+      puts "\\endstarterresult"
+    end
+
   end
 
 
@@ -236,15 +279,23 @@ module ReVIEW
   class HTMLBuilder
 
     ## 改ページはHTMLにはない
-    def inline_clearpage(str)
+    def inline_clearpage(str)   # インライン命令
       puts '<p></p>'
+      puts '<hr />'
       puts '<p></p>'
     end
 
-    ## 引数をそのまま表示
-    def inline_letitgo(str)
-      str
+    def clearpage(str)          # ブロック命令
+      puts '<p></p>'
+      puts '<hr />'
+      puts '<p></p>'
     end
+
+    ## 引数をそのまま表示 (No Operation)
+    def inline_nop(str)
+      escape_html(str)
+    end
+    alias inline_letitgo inline_nop
 
     ## @<strong>{} のショートカット
     def inline_B(str)
@@ -258,16 +309,17 @@ module ReVIEW
 
     ## ハートマーク
     def inline_hearts(str)
-      '&hearts;'
+      #'&hearts;'
+      '&#9829;'
     end
 
     ## TeXのロゴマーク
-    def inline_TeX()
+    def inline_TeX(str)
       'TeX'
     end
 
     ## LaTeXのロゴマーク
-    def inline_LaTeX()
+    def inline_LaTeX(str)
       'LaTeX'
     end
 
@@ -311,7 +363,20 @@ module ReVIEW
       puts '</blockquote>'
     end
 
-    ## 引用 (====[note] ... ====[/note])
+    ## 引用（//quote{ ... //}）
+    ## （入れ子対応なので、中に箇条書きや別のブロックを入れられる）
+    def on_quote_block()
+      puts '<blockquote class="blockquote">'
+      yield
+      puts '</blockquote>'
+    end
+    def quote(lines)
+      on_quote_block() do
+        puts lines
+      end
+    end
+
+    ## 引用 (====[quote] ... ====[/quote])
     ## （ブロック構文ではないので、中に別のブロックや箇条書きを入れられる）
     def quote_begin(level, label, caption)
       puts '<blockquote class="blockquote">'
@@ -320,13 +385,18 @@ module ReVIEW
       puts '</blockquote>'
     end
 
-    ## ノート
-    def note(lines, caption=nil)
-      s = compile_inline(caption || "")
+    ## ノート（//note{ ... //}）
+    ## （入れ子対応なので、中に箇条書きや別のブロックを入れられる）
+    def on_note_block(caption=nil)
       puts "<div class=\"note\">"
-      puts "<h5>#{s}</h5>" if s.present?
-      puts lines
+      puts "<h5>#{caption}</h5>" if caption.present?
+      yield
       puts "</div>"
+    end
+    def note(lines, caption=nil)
+      on_quote_block(caption) do
+        puts lines
+      end
     end
 
     ## ノート (====[note] ... ====[/note])
@@ -338,6 +408,15 @@ module ReVIEW
     end
     def note_end(level)
       puts "</div>"
+    end
+
+    ## 出力結果の開始部と終了部（Starterのドキュメントで使用）
+    ## （Re:VIEWではブロックの入れ子も「===[xxx]」の入れ子もできないため）
+    def resultbegin()
+      puts "<hr/>"
+    end
+    def resultend()
+      puts "<hr/>"
     end
 
   end

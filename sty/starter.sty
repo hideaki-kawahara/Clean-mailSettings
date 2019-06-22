@@ -106,18 +106,18 @@
 %%% 図や表のキャプションを見映えよくする
 \let\original@makecaption\@makecaption  % jsbook.clsでの定義を保存し、あとで再利用
 \renewcommand{\@makecaption}[2]{%       % 図や表のキャプション
-  \original@makecaption{\starter@captionfont\starter@captionprefix #1}{\starter@captionfont #2}
+  \original@makecaption{\starter@caption@font\starter@caption@prefix #1}{\starter@caption@font #2}
 }
 %\usepackage{amssymb}   % $\blacktriangle$ や $\blacktriangledown$ に必要
-\newcommand{\starter@captionfont}{\gtfamily\sffamily}  % キャプションをゴシック体に
-\newcommand{\starter@captionsymbolup}{▲}    % または $\blacktriangle$
-\newcommand{\starter@captionsymboldown}{▼}  % または $\blacktriangledown$
-\newcommand{\starter@captionsymbol}{\starter@captionsymboldown} % デフォルトは「▼」
-\newcommand{\starter@captionprefix}{%        % キャプションの接頭辞
-  \textcolor{starter@captioncolor}{\starter@captionsymbol}%  % 「▲」や「▼」に色をつける
+\newcommand{\starter@caption@font}{\gtfamily\sffamily}  % キャプションをゴシック体に
+\newcommand{\starter@caption@symbolup}{▲}    % または $\blacktriangle$
+\newcommand{\starter@caption@symboldown}{▼}  % または $\blacktriangledown$
+\newcommand{\starter@caption@symbol}{\starter@caption@symboldown} % デフォルトは「▼」
+\newcommand{\starter@caption@prefix}{%        % キャプションの接頭辞
+  \textcolor{starter@captioncolor}{\starter@caption@symbol}%  % 「▲」や「▼」に色をつける
 }
 \renewcommand{\reviewimagecaption}[1]{{%     % 図のキャプションは図の下につくので、
-  \def\starter@captionsymbol{\starter@captionsymbolup}%  % 接頭辞を「▼」から「▲」に変更
+  \def\starter@caption@symbol{\starter@caption@symbolup}%  % 接頭辞を「▼」から「▲」に変更
   \caption{#1}%
 }}
 
@@ -125,27 +125,27 @@
 %%% 「//list」や「//cmd」のキャプション（説明）の直後で改ページされるのを防ぐ
 %%% （ただし同じページに画像がある場合は、うまく動作しないことがあるので注意）
 \usepackage{needspace}         % \needspaceコマンドを使うのに必要
-\newcommand{\starter@listcaption}[1]{%
+\newcommand{\starter@codeblock@caption}[1]{%
   %\medskip{\small\noindent #1}\vspace*{-1.3zw}%    % original
   \needspace{2zh}%             % 全角2文字分の高さの余白がなければ改ページ
   \starter@codeblock@vspace%   % 縦方向の余白を入れる
   \noindent%                   % キャプションをインデントしない
   {%
     \small%                   % キャプションを小さくする
-    \starter@captionfont\starter@captionprefix% % ゴシック体に変更、接頭辞をつける
+    \starter@caption@font\starter@caption@prefix% % ゴシック体に変更、接頭辞をつける
     #1%                        % キャプションを表示
   }%
   \par%
-  \starter@listcaptionsep%
+  \starter@codeblock@captionsep%
 }
-\newcommand{\starter@listcaptionsep}{%
-  \vspace*{-0.8zw}%            % 縦方向の余白を減らす
+\newcommand{\starter@codeblock@captionsep}{%
+  \vspace*{-0.7zw}%            % 縦方向の余白を減らす
 }
-\renewcommand{\reviewlistcaption}[1]{\starter@listcaption{#1}}  % for //list
-\renewcommand{\reviewemlistcaption}[1]{\starter@listcaption{#1}}  % for //emlist
-\renewcommand{\reviewsourcecaption}[1]{\starter@listcaption{#1}}  % for //source
-\renewcommand{\reviewcmdcaption}[1]{\starter@listcaption{#1}}  % for //cmd
-\renewcommand{\reviewboxcaption}[1]{\starter@listcaption{#1}}  % for //box
+\renewcommand{\reviewlistcaption}[1]{\starter@codeblock@caption{#1}}  % for //list
+\renewcommand{\reviewemlistcaption}[1]{\starter@codeblock@caption{#1}}  % for //emlist
+\renewcommand{\reviewsourcecaption}[1]{\starter@codeblock@caption{#1}}  % for //source
+\renewcommand{\reviewcmdcaption}[1]{\starter@codeblock@caption{#1}}  % for //cmd
+\renewcommand{\reviewboxcaption}[1]{\starter@codeblock@caption{#1}}  % for //box
 
 
 %%% コードブロック（プログラムリストやターミナル）
@@ -179,8 +179,8 @@
 
 
 %%% コードブロック用のキャプション
-\newcommand\starterlistcaption[1]{%
-  \starter@listcaption{#1}%
+\newcommand\startercodeblockcaption[1]{%
+  \starter@codeblock@caption{#1}%
 }
 
 
@@ -220,14 +220,19 @@
   \discretionary{%
     \makebox[0pt][l]{\starter@fold@char}%    % 折り返しを表す記号を挿入
   }{%
-    \makebox[\starter@fold@indentwidth]{}%   % 折返しの直後にインデントを挿入
+    \makebox[\starter@fold@indentwidth][r]{% % 折返しの直後にインデントを挿入
+      \starter@fold@contchar%
+    }%
   }{}%
 }
 \newcommand{\starter@fold@char}{%
   \small\mdseries\textcolor{gray}{\char"0F}% % 小さいグレーの '>'
   %\tiny\textcolor{gray}{\raisebox{0.5mm}{$\blacktriangleright$}}% % 右向きの三角形
 }
-\newcommand{\startersetfoldmark}[1]{%
+\newcommand{\starter@fold@contchar}{         % 折り返し後の継続行の頭につける記号
+  \starter@fold@char%
+}
+\newcommand{\startersetfoldmark}[1]{%        % 折り返しを表す記号を空にするのに使う
   \def\starter@fold@char{#1}%
 }
 \newlength{\starter@fold@indentwidth}        % 折り返し後のインデント幅
@@ -310,8 +315,8 @@
 }}
 %% 装飾つきで章番号とタイトルを表示
 \newcommand{\starter@chapterhead@decorated}[2]{{%  % #1: 章番号、#2: 章タイトル
-  %\raggedright                             % 左寄せ
-  \centering                                % 中央寄せ
+  \raggedright                              % 左寄せ
+  %\centering                               % 中央寄せ
   %\raggedleft                              % 右寄せ
   %\textcolor{starter@chaptercolor}{\rule{\textwidth}{0.9zw}} % 章タイトル上部に太い横線
   %\par\vspace{1.7zw}                       % 余白
@@ -326,8 +331,8 @@
 }}
 %% 装飾なしで章番号とタイトルを表示（まえがきや目次用）
 \newcommand{\starter@chapterhead@plain}[1]{{%  % #2: 章タイトル
-  %\raggedright                             % 左寄せ
-  \centering                                % 中央寄せ
+  \raggedright                              % 左寄せ
+  %\centering                               % 中央寄せ
   %\raggedleft                              % 右寄せ
   \starter@chaptertitle{#1}                 % 章タイトルを出力
   \par                                      % 段落を改める
@@ -625,10 +630,17 @@
 \newenvironment{starter@leftbar}[2]{%   % #1: 太さ、#2: 色
   %% framed.sty の機能を使って、文章の左側に縦棒を入れる
   \def\FrameCommand{\textcolor{#2}{\vrule width #1} \hspace{10pt}}%
-  \MakeFramed{\advance\hsize-\width \FrameRestore}%
+  \MakeFramed{%
+    \advance\hsize-\width%
+    \advance\hsize-2\starter@quote@sidemargin% ノート環境では左右に余白を空ける
+    \FrameRestore%
+  }%
 }{%
   \endMakeFramed%
 }
+%
+\newlength{\starter@quote@sidemargin}   % 引用部の左右の余白幅（ノート環境で使う）
+
 
 
 %%% ノート
@@ -653,9 +665,10 @@
     \fi%
     \par%
   \end{starternoteinner}%
-  \starter@note@font%
-  %% プログラムやターミナルの左右に余白を空ける
+  \starter@note@font%             % 文字を小さく、フォントをゴシック体に
+  %% プログラムやターミナルや引用の左右に余白を空ける
   \setlength{\starter@codeblock@sidemargin}{\starter@note@sidemargin}%
+  \setlength{\starter@quote@sidemargin}{\starter@note@sidemargin}%
   %% プログラムやターミナルの前後の余白を少し小さくする
   \renewcommand{\starter@codeblock@vspace}{\smallskip}%
 }{%
@@ -711,3 +724,24 @@
 %\renewcommand{\starter@note@title}[1]{{%
 %  \gtfamily\sffamily\bfseries\normalsize ■ノート：#1
 %}}
+
+
+%%% 画像のまわりに線をつける
+\newcommand{\starterimageframe}[1]{{%
+  \setlength{\fboxrule}{0.1pt}%
+  \fcolorbox{lightgray}{white}{#1}%
+}}
+
+
+%%% 出力結果（Starterのドキュメントで使用）
+\newenvironment{starterresult}{%
+  %\begin{oframed}%                    % error in note block
+  \noindent%
+  \textcolor{lightgray}{\hrulefill}%
+}{%
+  %\end{oframed}%                      % error in note block
+  \vspace{-0.4\baselineskip}%
+  \noindent%
+  \textcolor{lightgray}{\hrulefill}%
+  \medskip%
+}

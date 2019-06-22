@@ -22,42 +22,244 @@
 \item 「\texttt{@\textless{}B\textgreater{}\{...\}}」は、「\texttt{@\textless{}strong\textgreater{}\{...\}}」のショートカットです（Starter拡張）。
 \end{itemize}
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{いろはfghij  @\textless{}b\textgreater{}\{いろはfghij\}  @\textless{}em\textgreater{}\{いろはfghij\}  @\textless{}strong\textgreater{}\{いろはfghij\}
 @\textless{}B\textgreater{}\{いろはfghij\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
+
+\starterresult
 
 いろはfghij  \textbf{いろはfghij}  \reviewem{いろはfghij}  \reviewstrong{いろはfghij}
 \reviewstrong{いろはfghij}
 
-\vspace*{\baselineskip}
+\endstarterresult
 
 なおソースコードの一部を太字にしたいときは、「\texttt{@\textless{}strong\textgreater{}\{...\}}」ではなく「\texttt{@\textless{}b\textgreater{}\{...\}}」を使ってください。
 なぜなら「\texttt{@\textless{}strong\textgreater{}\{...\}}」だとゴシック体になってしまうのに対し、「\texttt{@\textless{}b\textgreater{}\{...\}}」だとタイプライタ体のまま太字になるからです。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//emlist\{
 タイプライタ体（通常）： 0123456789 ijkl IJKL !"\textdollar{}\%\&()*,{-}./:;?@[\reviewbackslash{}]`\textbar{}\textasciitilde{}
 タイプライタ体（太字）： @\textless{}b\textgreater{}\{0123456789 ijkl IJKL !"\textdollar{}\%\&()*,{-}./:;?@[\reviewbackslash{}\reviewbackslash{}]`\textbar{}\textasciitilde{}\}
 ゴシック体　　（太字）： @\textless{}strong\textgreater{}\{0123456789 ijkl IJKL !"\textdollar{}\%\&()*,{-}./:;?@[\reviewbackslash{}\reviewbackslash{}]`\textbar{}\textasciitilde{}\}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\seqsplit{タイプライタ体（通常）： 0123456789 ijkl IJKL !"\textdollar{}\%\&()*,{-}./:;?@[\reviewbackslash{}]`\textbar{}\textasciitilde{}
 タイプライタ体（太字）： \bfseries{}0123456789 ijkl IJKL !"\textdollar{}\%\&()*,{-}./:;?@[\reviewbackslash{}]`\textbar{}\textasciitilde{}\mdseries{}
 ゴシック体　　（太字）： \reviewstrong{0123456789 ijkl IJKL !"\textdollar{}\%\&()*,{-}./:;?@[\reviewbackslash{}]`\textbar{}\textasciitilde{}}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
+
+\subsection{番号つきリストの機能強化}
+\label{sec:1-1-2}
+\label{subsec-olist}
+
+Re:VIEWでは番号つきリストを次のように書きます。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{ 1. XXX
+ 2. YYY
+ 3. ZZZ}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+
+\begin{enumerate}
+\item XXX
+\item YYY
+\item ZZZ
+\end{enumerate}
+
+\endstarterresult
+
+この書き方には次の欠点があります。
+
+\begin{itemize}
+\item 数字の番号はつきますが、「A.」や「a.」などは使えません。
+\item また番号つきリストを入れ子にできません。
+\end{itemize}
+
+そこでStarterでは別の書き方を用意しました。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{数字による番号つきリスト
+
+ {-} 1. XXX
+ {-} 2. YYY
+ {-} 3. ZZZ
+
+大文字による番号つきリスト
+
+ {-} A. XXX
+ {-} B. YYY
+ {-} C. ZZZ
+
+小文字による番号つきリスト
+
+ {-} a. XXX
+ {-} b. YYY
+ {-} c. ZZZ}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+
+数字による番号つきリスト
+
+\begin{enumerate}
+\item[1.] XXX
+\item[2.] YYY
+\item[3.] ZZZ
+\end{enumerate}
+
+大文字による番号つきリスト
+
+\begin{enumerate}
+\item[A.] XXX
+\item[B.] YYY
+\item[C.] ZZZ
+\end{enumerate}
+
+小文字による番号つきリスト
+
+\begin{enumerate}
+\item[a.] XXX
+\item[b.] YYY
+\item[c.] ZZZ
+\end{enumerate}
+
+\endstarterresult
+
+「1.」や「A.」や「a.」のあとに必ず半角空白が必要です。
+実は半角空白があれば、その前に書いた文字列がそのまま出力されます。
+なので次のような書き方もできます。
+箇条書きのように見えますが、「・」がついてないことに注意してください。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{ {-} (A) 項目A
+ {-} (B) 項目B
+ {-} (C) 項目C
+
+ {-} 甲: 山田太郎
+ {-} 乙: 佐藤花子}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+
+\begin{enumerate}
+\item[(A)] 項目A
+\item[(B)] 項目B
+\item[(C)] 項目C
+\end{enumerate}
+
+\begin{enumerate}
+\item[甲:] 山田太郎
+\item[乙:] 佐藤花子
+\end{enumerate}
+
+\endstarterresult
+
+また入れ子にできます。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{ {-} (A) 作業A
+ {-}{-} (A{-}1) 作業A{-}1
+ {-}{-} (A{-}2) 作業A{-}2}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+
+\begin{enumerate}
+\item[(A)] 作業A
+
+\begin{enumerate}
+\item[(A{-}1)] 作業A{-}1
+\item[(A{-}2)] 作業A{-}2
+\end{enumerate}
+
+\end{enumerate}
+
+\endstarterresult
+
+箇条書きとの混在もできます。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{番号つきリストの中に箇条書き
+
+ {-} A. XXX
+ ** xxx
+ ** xxx
+
+箇条書きの中に番号つきリスト
+
+ * XXXX
+ {-}{-} a. xxx
+ {-}{-} b. xxx}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+
+番号つきリストの中に箇条書き
+
+\begin{enumerate}
+\item[A.] XXX
+
+\begin{itemize}
+\item xxx
+\item xxx
+\end{itemize}
+
+\end{enumerate}
+
+箇条書きの中に番号つきリスト
+
+\begin{itemize}
+\item XXXX
+
+\begin{enumerate}
+\item[a.] xxx
+\item[b.] xxx
+\end{enumerate}
+
+\end{itemize}
+
+\endstarterresult
+
+なお数字や大文字や小文字の順番を補正するようなことはしません。
+たとえば「1.」を連続して書けばそれがそのまま出力されます。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{ {-} 1. XXX
+ {-} 1. YYY
+ {-} 1. ZZZ}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+
+\begin{enumerate}
+\item[1.] XXX
+\item[1.] YYY
+\item[1.] ZZZ
+\end{enumerate}
+
+\endstarterresult
 
 \subsection{ノート}
-\label{sec:1-1-2}
+\label{sec:1-1-3}
 \label{subsec-ext-note}
 
 「\texttt{//note[}...\texttt{]\{} ... \texttt{//\}}」で、付加情報や注意書きのブロックが書けます。
 Re:VIEW標準と比べると、デザインを大きく変更していることと、段落の先頭は1文字分インデントされる点が違います。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//note[■注意：印刷所の締切り日を確かめること]\{
 印刷所の締切りは、技術書典のようなイベントの本番当日よりずっと前です。
 通常は約1週間前、また割引きを受けようと思ったら約2週間前が締切りです。
@@ -67,26 +269,29 @@ Re:VIEW標準と比べると、デザインを大きく変更していること�
 これも忘れやすいので注意しましょう。
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starternote}{■注意：印刷所の締切り日を確かめること}
 \begin{starternoteinner}
+
 印刷所の締切りは、技術書典のようなイベントの本番当日よりずっと前です。
 通常は約1週間前、また割引きを受けようと思ったら約2週間前が締切りです。
 実際の締切り日は印刷所ごとに違うので、必ず確認しておきましょう。
 
 また他の人に原稿のレビューを頼む場合は、さらに1〜2週間必要です。
 これも忘れやすいので注意しましょう。
+
 \end{starternoteinner}
 \end{starternote}
-\vspace*{\baselineskip}
+\endstarterresult
 
-ただしこの書き方は、箇条書きや他のブロック命令を含められないという欠点があります。
+実はRe:VIEWでは、ノートの中に箇条書きや他のブロック命令を含められません。これは技術同人誌や書籍の執筆において、大変困る欠点です。
 
-かわりに、「\texttt{====[note]} ... \texttt{====[/note]}」という書き方をすると、箇条書きも他のブロック命令も含められます\footnote{以前は、ノート中のプログラム（「\texttt{//emlist}」や「\texttt{//cmd}」）やターミナル（「\texttt{//terminal}」）がページをまたげないという制限がありましたが、現在はその制限はなくなりました。}。
+なのでStarterではこれを解決し、ノートの中に箇条書きや他のブロック命令を含められるようにしました\footnote{以前はこれができなかったので、「\texttt{====[note]} ... \texttt{====[/note]}」という別の記法が必要でした。今でもこの記法は有効ですが、もう使う必要はありません。}\footnote{昔はノート中のプログラム（「\texttt{//emlist}」や「\texttt{//cmd}」）やターミナル（「\texttt{//terminal}」）がページをまたげないという制限がありましたが、現在はその制限はなくなりました。}。
 
-\starterlistcaption{サンプル}
-\begin{starterprogram}\seqsplit{====[note] ■ノートサンプル
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{\bfseries{}//note[■ノートサンプル]\{\mdseries{}
 
 箇条書きを含める例@\textless{}fn\textgreater{}\{t71o9\}。
 
@@ -109,10 +314,11 @@ end
 Hello
 //\}
 
-====[/note]}\end{starterprogram}
+\bfseries{}//\}\mdseries{}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starternote}{■ノートサンプル}
 \begin{starternoteinner}
 
@@ -126,23 +332,23 @@ Hello
 
 他のブロックを含める例。
 
-\starterlistcaption{RubyでHello}
+\startercodeblockcaption{RubyでHello}
 \end{starternoteinner}
 \begin{starterprogram}\seqsplit{def hello(name)
   print("Hello, \#\{name\}!\reviewbackslash{}n")
 end}\end{starterprogram}
 \begin{starternoteinner}
-\starterlistcaption{UNIXでHello}
+\startercodeblockcaption{UNIXでHello}
 \end{starternoteinner}
 \begin{starterterminal}\seqsplit{\textdollar{} echo Hello
 Hello}\end{starterterminal}
 \end{starternote}
-\vspace*{\baselineskip}
+\endstarterresult
 
 なお「\texttt{//note}」機能はRe:VIEWの標準機能であり、Starterはそれを上書きしています。
 実はRe:VIEWの標準のままだと、次のような表示になります。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//note[印刷所の締切り日を確かめること]\{
 印刷所の締切りは、技術書典のようなイベントの本番当日よりずっと前です。
 通常は約1週間前、また割引きを受けようと思ったら約2週間前が締切りです。
@@ -152,15 +358,21 @@ Hello}\end{starterterminal}
 これも忘れやすいので注意しましょう。
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示例（Re:VIEWのデフォルト）：}\\
+\reviewem{表示例（Re:VIEWのデフォルト）：}
 
+\starterresult
 \begin{reviewminicolumn}
 \reviewminicolumntitle{印刷所の締切り日を確かめること}
-印刷所の締切りは、技術書典のようなイベントの本番当日よりずっと前です。通常は約1週間前、また割引きを受けようと思ったら約2週間前が締切りです。実際の締切り日は印刷所ごとに違うので、必ず確認しておきましょう。
 
-また他の人に原稿のレビューを頼む場合は、さらに1〜2週間必要です。これも忘れやすいので注意しましょう。
+印刷所の締切りは、技術書典のようなイベントの本番当日よりずっと前です。
+通常は約1週間前、また割引きを受けようと思ったら約2週間前が締切りです。
+実際の締切り日は印刷所ごとに違うので、必ず確認しておきましょう。
+
+また他の人に原稿のレビューを頼む場合は、さらに1〜2週間必要です。
+これも忘れやすいので注意しましょう。
+
 \end{reviewminicolumn}
-\vspace*{\baselineskip}
+\endstarterresult
 
 段落の先頭がインデントされてないことが分かります。
 また、ノート（「\texttt{//note}」）なのになぜかキャプションが「■メモ：」になってる！
@@ -168,7 +380,7 @@ Hello}\end{starterterminal}
 詳しくは\reviewsecref{「2.3.3 「\texttt{//info\{} ... \texttt{//\}}」のキャプションに「■メモ：」がつくんだけど？」}{sec:2-3-3}を参照のこと。
 
 \subsection{プログラムコード用のコマンドを統一}
-\label{sec:1-1-3}
+\label{sec:1-1-4}
 
 Re:VIEWでは、プログラムコードを書くためのブロックコマンドが複数あります。
 
@@ -187,12 +399,15 @@ Starterでは、これらをすべて「\texttt{//list[][][]}」に統一しま�
 それ以外のコマンドは、実質的に「\texttt{//list[][][]}」へのエイリアスとなります\footnote{「\texttt{//emlist}」や「\texttt{listnum}」が使えなくなったわけではありません。これらも引き続き使えますが、動作は「\texttt{//list}」を呼び出すだけになりました。}。
 
 \begin{itemize}
-\item 第1引数が空だと、「リストX.X:」のような番号がつきません。つまり「\texttt{//emlist}」と同じです。
-\item 第3引数に「\texttt{lineno=on}」をつけると、行番号がつきます。つまり「\texttt{//listnum}」と同じです。
-\item 第1引数を空にし、第3引数に「\texttt{lineno=on}」をつけると、リスト番号がつかず行番号がつきます。つまり「\texttt{//emlistnum}」と同じです。
+\item 第1引数が空だと、「リストX.X:」のような番号がつきません。
+   つまり「\texttt{//emlist}」と同じです。
+\item 第3引数に「\texttt{lineno=on}」をつけると、行番号がつきます。
+   つまり「\texttt{//listnum}」と同じです。
+\item 第1引数を空にし、第3引数に「\texttt{lineno=on}」をつけると、リスト番号がつかず行番号がつきます。
+   つまり「\texttt{//emlistnum}」と同じです。
 \end{itemize}
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{\bfseries{}//list[4k2ny][リスト番号あり]\mdseries{}\{
 def fib(n)
   n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2)
@@ -217,46 +432,48 @@ def fib(n)
 end
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
-\starterlistcaption{リスト1.1: リスト番号あり}
+\starterresult
+\startercodeblockcaption{リスト1.1: リスト番号あり}
 \label{4k2ny}
 \begin{starterprogram}\seqsplit{def fib(n)
   n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2)
 end}\end{starterprogram}
-\starterlistcaption{リスト番号なし}
+\startercodeblockcaption{リスト番号なし}
 \label{}
 \begin{starterprogram}\seqsplit{def fib(n)
   n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2)
 end}\end{starterprogram}
-\starterlistcaption{リスト1.2: リスト番号あり、行番号あり}
+\startercodeblockcaption{リスト1.2: リスト番号あり、行番号あり}
 \label{970bl}
 \begin{starterprogram}\starterlineno{1}\seqsplit{def fib(n)}
 \starterlineno{2}\seqsplit{  n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2)}
 \starterlineno{3}\seqsplit{end}\end{starterprogram}
-\starterlistcaption{リスト番号なし、行番号あり}
+\startercodeblockcaption{リスト番号なし、行番号あり}
 \label{}
 \begin{starterprogram}\starterlineno{1}\seqsplit{def fib(n)}
 \starterlineno{2}\seqsplit{  n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2)}
 \starterlineno{3}\seqsplit{end}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 リスト番号もキャプションも行番号もつけない場合は、すべての引数を省略して「\texttt{//list\{ ... //\}}」のように書けます。
 この書き方はRe:VIEWではエラーになりますが、Starterではエラーになりません。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{\bfseries{}//list\mdseries{}\{
 function fib(n) \{
     return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);
 \}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\seqsplit{function fib(n) \{
     return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);
 \}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 また「\texttt{//list}」の第3引数には、以下のオプションが指定できます。
 
@@ -267,8 +484,8 @@ function fib(n) \{
 折り返したことを表す、小さな記号をつけます。デフォルトは\texttt{on}。
 \item[\texttt{eolmark=\{on\textbar{}off\}}] \mbox{} \\
 すべての行末に、行末であることを表す小さな記号をつけます。「\texttt{foldmark=on}」のかわりに使うことを想定していますが、両方を\texttt{on}にしても使えます。デフォルトは\texttt{off}。
-\item[\texttt{lineno=\{on\textbar{}off\textbar{}}\textit{integer}\texttt{\}}] \mbox{} \\
-行番号をつけます（詳しくは後述）。行番号は1から始まりますが、整数を指定するとそれが最初の行番号になります。将来的にはもっと複雑なパターンが指定できる予定。デフォルトは\texttt{off}。
+\item[\texttt{lineno=\{on\textbar{}off\textbar{}}\textit{integer}\texttt{\textbar{}}\textit{pattern}\texttt{\}}] \mbox{} \\
+行番号をつけます。行番号は1から始まりますが、整数を指定するとそれが最初の行番号になります。またより複雑なパターンも指定できます（後述）。デフォルトは\texttt{off}。
 \item[\texttt{linenowidth=}\textit{integer}] \mbox{} \\
 行番号の桁数を指定します（詳しくは後述）。0だと自動計算します。値が0以上だと、行番号の分だけプログラムコードの表示幅が狭くなります。値がマイナスだと行番号はページの右余白に書かれるので、プログラムコードの表示幅が狭くなりません。デフォルトは\texttt{{-}1}。
 \item[\texttt{lang=}\textit{name}] \mbox{} \\
@@ -278,14 +495,31 @@ function fib(n) \{
 いくつか補足事項があります。
 
 \begin{itemize}
-\item 複数のオプションを指定するときは、「\texttt{,}」で区切ってください。たとえば「\texttt{//list[][][eolmark=on,lineno=on,linenowidth=3]}」のようにします。
-\item オプションの名前だけを指定して値を省略すると、「\texttt{on}」を指定したとみなされます。たとえば「\texttt{lineno}」は「\texttt{lineno=on}」と同じです。
-\item 「\texttt{lang=}\textit{name}」の場合は、省略形は「\texttt{lang}」ではなく「\textit{name}」です\footnote{これはRe:VIEWとの互換性を保つために仕方なく決めた仕様なので、できれば「\texttt{lang=\{name\}}」と省略せずに書いてください。この省略のせいでオプション名が間違っていても言語名とみなされてしまうので注意してください。}。またこの省略ができるのは、第3引数の最初のオプションに指定した場合だけです。つまり、「\texttt{ruby,lineno=1}」はOKだけど「\texttt{lineno=1,ruby}」はエラーになります。
-\item 「\texttt{lang=}\textit{name}」を指定してもコードハイライトはできません。この制限は将来改善される予定ですが、時期は未定です。
+\item 複数のオプションを指定するときは、「\texttt{,}」で区切ってください。
+   たとえば「\texttt{//list[][][eolmark=on,lineno=on,linenowidth=3]}」のようにします。
+\item オプションの名前だけを指定して値を省略すると、「\texttt{on}」を指定したとみなされます。
+   たとえば「\texttt{lineno}」は「\texttt{lineno=on}」と同じです。
+\item 「\texttt{lang=}\textit{name}」を指定してもコードハイライトはできません。
+   この制限は将来改善される予定ですが、時期は未定です。
+\item 「\texttt{lang=}\textit{name}」の場合は、省略形は「\texttt{lang}」ではなく「\textit{name}」です\footnote{これはRe:VIEWとの互換性を保つために仕方なく決めた仕様なので、できれば「\texttt{lang=\{name\}}」と省略せずに書いてください。この省略のせいでオプション名が間違っていても言語名とみなされてしまうので注意してください。}。
+   またこの省略ができるのは、第3引数の最初のオプションに指定した場合だけです。
+   つまり、「\texttt{ruby,lineno=1}」はOKだけど「\texttt{lineno=1,ruby}」はエラーになります。
 \end{itemize}
 
+\begin{starterprogram}\seqsplit{これはOK
+//list[][][\bfseries{}ruby\mdseries{},lineno=1]\{
+//\}
+
+これはエラー
+//list[][][lineno=1,\bfseries{}ruby\mdseries{}]\{
+//\}
+
+これはOK
+//list[][][lineno=1,\bfseries{}lang=ruby\mdseries{}]\{
+//\}}\end{starterprogram}
+
 \subsection{ターミナル画面を表す「\texttt{//terminal}」ブロック}
-\label{sec:1-1-4}
+\label{sec:1-1-5}
 
 Starterでは、ターミナル画面用の新しいブロック命令「\texttt{//terminal\{} ... \texttt{//\}}」を用意しました\footnote{\texttt{//terminal}命令の定義は\texttt{lib/hooks/monkeypatch.rb}で行っています。}。
 これは「\texttt{//cmd\{} ... \texttt{//\}}」とよく似ていますが、オプションの指定方法が「\texttt{//list\{} ... \texttt{//\}}」と同じになっています。
@@ -293,49 +527,53 @@ Starterでは、ターミナル画面用の新しいブロック命令「\texttt
 次の例を見てください。
 
 \begin{itemize}
-\item 「\texttt{//cmd}」はオプション引数としてキャプションしか取れません。そのためリスト番号をつけられないし、行番号もつけられません。
+\item 「\texttt{//cmd}」はオプション引数としてキャプションしか取れません。
+   そのためリスト番号をつけられないし、行番号もつけられません。
 \end{itemize}
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{\bfseries{}//cmd[キャプション]\mdseries{}\{
 \textdollar{} echo foobar
 foobar
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
-\starterlistcaption{キャプション}
+\starterresult
+\startercodeblockcaption{キャプション}
 \begin{starterterminal}\seqsplit{\textdollar{} echo foobar
 foobar}\end{starterterminal}
-\vspace*{\baselineskip}
+\endstarterresult
 
 \begin{itemize}
-\item 「\texttt{//terminal}」はオプション引数が「\texttt{//list}」と同じです。そのためリスト番号をつけたり、行番号をつけることが簡単にできます。
+\item 「\texttt{//terminal}」はオプション引数が「\texttt{//list}」と同じです。
+   そのためリスト番号をつけたり、行番号をつけることが簡単にできます。
 \end{itemize}
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{\bfseries{}//terminal[id6789][キャプション][lineno=on]\mdseries{}\{
 \textdollar{} echo foobar
 foobar
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
-\starterlistcaption{リスト1.3: キャプション}
+\starterresult
+\startercodeblockcaption{リスト1.3: キャプション}
 \label{id6789}
 \begin{starterterminal}\starterlineno{1}\seqsplit{\textdollar{} echo foobar}
 \starterlineno{2}\seqsplit{foobar}\end{starterterminal}
-\vspace*{\baselineskip}
+\endstarterresult
 
 なおStarterでは、「\texttt{//cmd}」は実質的に「\texttt{//terminal}」を呼び出しているだけです。
 なので上で説明したこと以外では、両者の機能は同じです。
 
 \subsection{プログラムコード中の長い行を自動的に折り返す}
-\label{sec:1-1-5}
+\label{sec:1-1-6}
 
 Starterでは、プログラムやターミナルの中の長い行を自動的に折り返します。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list[][長い行を含むプログラム例]\{
 data = \textless{}\textless{}HERE
 123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}
@@ -347,25 +585,29 @@ HERE
 foo/bar/baz/testprog.rb:11:in `func1': undefined local variable or method `aaabbbccc' for main:Object (NameError)
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
-\starterlistcaption{長い行を含むプログラム例}
+\starterresult
+\startercodeblockcaption{長い行を含むプログラム例}
 \label{}
 \begin{starterprogram}\seqsplit{data = \textless{}\textless{}HERE
 123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}
 HERE}\end{starterprogram}
-\starterlistcaption{長い行を含む出力例}
+\startercodeblockcaption{長い行を含む出力例}
 \label{}
 \begin{starterterminal}\seqsplit{\textdollar{} ruby foo/bar/baz/testprog.rb
 foo/bar/baz/testprog.rb:11:in `func1': undefined local variable or method `aaabbbccc' for main:Object (NameError)}\end{starterterminal}
-\vspace*{\baselineskip}
+\endstarterresult
 
 いくつか注意事項があります。
 
 \begin{itemize}
-\item 折り返した行には、折り返したことを表す小さな記号がつきます。これをつけなくない場合は、「\texttt{//list}」や「\texttt{//terminal}」の第3引数に「\texttt{foldmark=off}」を指定してください。
-\item 折り返すはずの箇所が日本語の場合、折り返しを表す記号が挿入されません\footnote{英数字なら折り返し改行される位置にハイフンが入ります。このハイフンを強引に置き換えることで、折り返し記号を挿入しています。しかしpLaTeXでは日本語だとハイフンが入らないため、折り返し記号も挿入されません。これの解決は難しそうなので、別の方法を模索中。}。日本語の途中で折り返しをしたい場合は、手動で「\texttt{@\textless{}foldhere\textgreater{}\{\}}」を挿入してください。
-\item 折り返し機能によって何らかの問題が発生したら、「\texttt{//list}」や「\texttt{//terminal}」の第3引数に「\texttt{fold=off}」を指定して折り返し機能をオフにしてください。これは原因の切り分けに役立つでしょう。
+\item 折り返した行には、折り返したことを表す小さな記号がつきます。
+   これをつけなくない場合は、「\texttt{//list}」や「\texttt{//terminal}」の第3引数に「\texttt{foldmark=off}」を指定してください。
+\item 折り返すはずの箇所が日本語の場合、折り返しを表す記号が挿入されません\footnote{英数字なら折り返し改行される位置にハイフンが入ります。このハイフンを強引に置き換えることで、折り返し記号を挿入しています。しかしpLaTeXでは日本語だとハイフンが入らないため、折り返し記号も挿入されません。これの解決は難しそうなので、別の方法を模索中。}。
+   日本語の途中で折り返しをしたい場合は、手動で「\texttt{@\textless{}foldhere\textgreater{}\{\}}」を挿入してください。
+\item 折り返し機能によって何らかの問題が発生したら、「\texttt{//list}」や「\texttt{//terminal}」の第3引数に「\texttt{fold=off}」を指定して折り返し機能をオフにしてください。
+   これは原因の切り分けに役立つでしょう。
 \end{itemize}
 
 \begin{starternote}{折り返し記号のかわりに行末記号}
@@ -378,7 +620,7 @@ foo/bar/baz/testprog.rb:11:in `func1': undefined local variable or method `aaabb
 
 次がその例です。折り返し記号はありませんが、行末記号があるので、行末記号がない箇所は折り返しされていることがわかります。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \end{starternoteinner}
 \begin{starterprogram}\seqsplit{//list[][]\bfseries{}[foldmark=off,eolmark=on]\mdseries{}\{
 def emergency()
@@ -387,139 +629,188 @@ end
 //\}}\end{starterprogram}
 \begin{starternoteinner}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \end{starternoteinner}
 \begin{starterprogram}\startersetfoldmark{}\startereolmarklight{}\seqsplit{def emergency()\startereolmark{}
   abort '深刻なエラーが発生しました。今すぐシステム管理者に連絡して、対処方法を仰いでください。'\startereolmark{}
 end\startereolmark{}}\end{starterprogram}
 \begin{starternoteinner}
-\vspace*{\baselineskip}
+\endstarterresult
 \end{starternoteinner}
 \end{starternote}
 
 \subsection{プログラムやターミナルの行番号を出力}
-\label{sec:1-1-6}
+\label{sec:1-1-7}
 
 Starterでは、プログラムやターミナルに行番号をつけられます。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list[][][\bfseries{}lineno=on\mdseries{}]\{
 function fib(n) \{
   return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);
 \}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\starterlineno{1}\seqsplit{function fib(n) \{}
 \starterlineno{2}\seqsplit{  return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);}
 \starterlineno{3}\seqsplit{\}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 正数を指定すると、最初の行番号になります。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list[][][\bfseries{}lineno=98\mdseries{}]\{
 function fib(n) \{
   return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);
 \}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\starterlineno{98}\seqsplit{function fib(n) \{}
 \starterlineno{99}\seqsplit{  return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);}
 \starterlineno{100}\seqsplit{\}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 行番号の桁数を指定すると、行番号が余白ではなく内側に表示されます。
 その分、プログラムコードの表示幅が狭くなってしまいます。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list[][][lineno=98,\bfseries{}linenowidth=5\mdseries{}]\{
 function fib(n) \{
   return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);
 \}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\startersetfoldindentwidth{9999999}\textcolor{gray}{   98:} \seqsplit{function fib(n) \{}
 \textcolor{gray}{   99:} \seqsplit{  return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);}
 \textcolor{gray}{  100:} \seqsplit{\}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 行番号が灰色で表示されていることにも注目してください。
 こうすることで、行番号とプログラムコードとの見分けがつきやすくなっています。
 
 行番号の桁数に\texttt{0}を指定すると、表示幅を自動計算します。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list[][][lineno=98,\bfseries{}linenowidth=0\mdseries{}]\{
 function fib(n) \{
   return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);
 \}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\startersetfoldindentwidth{99999}\textcolor{gray}{ 98:} \seqsplit{function fib(n) \{}
 \textcolor{gray}{ 99:} \seqsplit{  return n \textless{}= 1 ? n : fib(n{-}1) + fib(n{-}2);}
 \textcolor{gray}{100:} \seqsplit{\}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 長い行が折り返されたときは、折り返された行が左端からは始まらず、行番号の表示幅の分だけインデントされます。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list[][][lineno=1,linenowidth=2]\{
 data = \textless{}\textless{}HERE
 123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}
 HERE
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\startersetfoldindentwidth{9999}\textcolor{gray}{ 1:} \seqsplit{data = \textless{}\textless{}HERE}
 \textcolor{gray}{ 2:} \seqsplit{123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}123456789\textunderscore{}}
 \textcolor{gray}{ 3:} \seqsplit{HERE}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
+
+行番号を表す、より複雑なパターンを指定できます。
+
+\begin{itemize}
+\item 「\texttt{1{-}10}」なら、1行目から10行目まで
+\item 「\texttt{1{-}10\&15{-}18}」なら、1行目から10行目までと、1行空けて15行目から18行目まで
+\item 「\texttt{1{-}10\&15{-}}」なら、1行目から10行目までと、1行空けて15行目から最終行まで
+\end{itemize}
+
+サンプルを見ればどういうことか分かるでしょう。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{//list[][][\bfseries{}lineno=10\&18{-}20\&25{-}\mdseries{}]\{
+class Hello
+  ...(省略)...
+  def initialize(name)
+    @name = name
+  end
+  ...(省略)...
+  def hello
+    print("Hello \#\{@name\}\reviewbackslash{}n")
+  end
+
+end
+//\}}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+\begin{starterprogram}\starterlineno{10}\seqsplit{class Hello}
+\starterlineno{}\seqsplit{  ...(省略)...}
+\starterlineno{18}\seqsplit{  def initialize(name)}
+\starterlineno{19}\seqsplit{    @name = name}
+\starterlineno{20}\seqsplit{  end}
+\starterlineno{}\seqsplit{  ...(省略)...}
+\starterlineno{25}\seqsplit{  def hello}
+\starterlineno{26}\seqsplit{    print("Hello \#\{@name\}\reviewbackslash{}n")}
+\starterlineno{27}\seqsplit{  end}
+\starterlineno{28}\seqsplit{}
+\starterlineno{29}\seqsplit{end}\end{starterprogram}
+\endstarterresult
 
 \subsection{ラベル指定なしでリスト番号を出力}
-\label{sec:1-1-7}
+\label{sec:1-1-8}
 
 リスト番号つきでソースコードを表示する場合、「\texttt{//list}」の第1引数にラベルを指定します。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list\bfseries{}[samplecode3]\mdseries{}[サンプル]\{
 puts "Hello"
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
-\starterlistcaption{リスト1.4: サンプル}
+\starterresult
+\startercodeblockcaption{リスト1.4: サンプル}
 \label{samplecode3}
 \begin{starterprogram}\seqsplit{puts "Hello"}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 このラベルは、重複しないよう気をつけなければいけません。
 リスト番号をあとから参照する場合は重複しないことが必要ですが、単にリスト番号をつけたい場合は重複しないラベルを選ぶのは面倒です。
 特に、すべてのソースコードにリスト番号をつけようと思った場合はかなりの手間になります。
 
-そこで、「\texttt{//list[?]}」のように第1引数を「\texttt{?}」とするだけで、ラベルとしてランダムな文字列が割り当てられるようにしました\footnote{実装は\reviewem{lib/hooks/monkeypatch.rb}の中で\reviewem{ReVIEW::Book::Compilable\#content()}を上書きして実現しています。}。
+そこでStarterでは、「\texttt{//list[?]}」のように第1引数を「\texttt{?}」とするだけで、ラベルとしてランダムな文字列が割り当てられるようにしました\footnote{実装は\reviewem{lib/hooks/monkeypatch.rb}の中で\reviewem{ReVIEW::Book::Compilable\#content()}を上書きして実現しています。}。
 これにより、すべてのソースコードにリスト番号をつけるのが大幅に簡単になりました。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//list[\bfseries{}?\mdseries{}][サンプル]\{
 puts "Hello"
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
-\starterlistcaption{リスト1.5: サンプル}
-\label{_238913648}
+\starterresult
+\startercodeblockcaption{リスト1.5: サンプル}
+\label{_371956505}
 \begin{starterprogram}\seqsplit{puts "Hello"}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 この機能をサポートしているのは、次のブロック命令です。
 
@@ -530,7 +821,7 @@ puts "Hello"
 \end{itemize}
 
 \subsection{キャプションなしでもリスト番号だけを出力}
-\label{sec:1-1-8}
+\label{sec:1-1-9}
 
 Re:VIEWでは、キャプションがないとリスト番号もつかない仕様です。
 つまり「\texttt{//list[][]}」の第1引数を指定しても、第2引数が空ならリスト番号はつきません。
@@ -539,26 +830,27 @@ Re:VIEWでは、キャプションがないとリスト番号もつかない仕�
 Starterではこの仕様を変更し、第1引数が指定してあれば第2引数が空（つまりキャプションが空）でもリスト番号をつけるようにしています。
 こちらのほうが仕様として自然です。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{\bfseries{}//list[test7][]\mdseries{}\{
 puts "Hello"
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
-\starterlistcaption{リスト1.6: }
+\starterresult
+\startercodeblockcaption{リスト1.6: }
 \label{test7}
 \begin{starterprogram}\seqsplit{puts "Hello"}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 \subsection{プログラムのキャプション直後の改ページを抑制}
-\label{sec:1-1-9}
+\label{sec:1-1-10}
 
 Re:VIEWでは、プログラムやターミナルのキャプション（説明）直後に改ページされてしまうことがあります（\reviewimageref{1.1}{image:chap01-starter:caption_pagebreak}）。
 もしこうなると、キャプションが何を説明しているのか分かりにくくなります。
 
 \begin{reviewimage}%%caption_pagebreak
-\includegraphics[width=0.8\maxwidth]{./images/chap01-starter/caption_pagebreak.png}
+\includegraphics[width=0.8\maxwidth]{./images/chap01-starter/caption_pagebreak.png}%
 \reviewimagecaption{キャプションの直後で改ページされた例}
 \label{image:chap01-starter:caption_pagebreak}
 \end{reviewimage}
@@ -571,12 +863,12 @@ Starterではこれを改善し、キャプションの直後では改ページ�
 経験則として、キャプションの前の文章を増やすとなぜか治ることが多いです。
 
 \subsection{コラム内の脚注}
-\label{sec:1-1-10}
+\label{sec:1-1-11}
 
 Re:VIEWでは、コラムの中に書いた脚注が消えることがあります。
 たとえば次のように書いた場合は、脚注が消えます。
 
-\starterlistcaption{コラム内の脚注が消えるサンプル}
+\startercodeblockcaption{コラム内の脚注が消えるサンプル}
 \begin{starterprogram}\seqsplit{==[column] サンプル
 本文本文\texttt{@}\textless{}fn\textgreater{}\{xxx1\}本文本文。
 
@@ -584,7 +876,7 @@ Re:VIEWでは、コラムの中に書いた脚注が消えることがありま�
 
 こうではなく、次のようにコラムを明示的に閉じてから脚注を書くと、消えずに表示されます。
 
-\starterlistcaption{コラム内の脚注が消えないサンプル}
+\startercodeblockcaption{コラム内の脚注が消えないサンプル}
 \begin{starterprogram}\seqsplit{==[column] サンプル
 本文本文\texttt{@}\textless{}fn\textgreater{}\{xxx1\}本文本文。
 
@@ -598,11 +890,11 @@ Starterではこの問題に対処するために、前者のように書かれ�
 設定ファイルである\reviewem{config.yml}に「\texttt{hook\textunderscore{}beforetexcompile: [lib/hooks/beforetexcompile.rb]}」という設定を追加しているため、\LaTeX{}コマンドでコンパイルされる前にこのスクリプトが実行されるようになっています。
 
 \subsection{右寄せ、左寄せ、センタリング}
-\label{sec:1-1-11}
+\label{sec:1-1-12}
 
 Starterでは、右寄せや左寄せやセンタリングをする機能を追加しました。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//textright\{
 右寄せのサンプル
 //\}
@@ -613,8 +905,9 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 センタリングのサンプル
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{flushright}
 右寄せのサンプル
 \end{flushright}
@@ -624,12 +917,12 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 \begin{center}
 センタリングのサンプル
 \end{center}
-\vspace*{\baselineskip}
+\endstarterresult
 
 しかし、実はRe:VIEWにも右寄せとセンタリングの機能があることが判明しました。
 今後はこちらを使うのがいいでしょう\footnote{ただし\url{https://github.com/kmuto/review/blob/master/doc/format.ja.md}には載ってないので、undocumentedな機能です。将来は変更されるかもしれません。}。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//flushright\{
 右寄せのサンプル
 //\}
@@ -637,7 +930,9 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 センタリングのサンプル
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
+
+\starterresult
 
 \begin{flushright}
 右寄せのサンプル
@@ -647,26 +942,27 @@ Starterでは、右寄せや左寄せやセンタリングをする機能を追�
 センタリングのサンプル
 \end{center}
 
-\vspace*{\baselineskip}
+\endstarterresult
 
 \subsection{章の概要}
-\label{sec:1-1-12}
+\label{sec:1-1-13}
 
 Starterでは、章(Chapter)の概要を表す「\texttt{//abstract\{} ... \texttt{//\}}」を用意しています。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//abstract\{
 この章では、XXXのXXXという機能について説明します。
 この機能を理解することで、あとの章が理解できるようになります。
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterabstract}
 この章では、XXXのXXXという機能について説明します。
 この機能を理解することで、あとの章が理解できるようになります。
 \end{starterabstract}
-\vspace*{\baselineskip}
+\endstarterresult
 
 本文と違う見た目にするために、デフォルトでは左右に全角2.5文字文の余白を追加し、かつゴシック体で表示します。
 デザインを変更する場合は、\reviewem{sty/starter.sty}で「\texttt{\reviewbackslash{}newenvironment\{starterabstract\}}」を探し、変更してください。
@@ -675,30 +971,31 @@ Starterでは、章(Chapter)の概要を表す「\texttt{//abstract\{} ... \text
 これは主に、詩や物語や聖書からの引用を表すのに使うようです（海外の本にはよくありますよね）。
 そのため、「\texttt{//lead}」は\LaTeX{}での引用を表す「\texttt{quotation}」環境に変換されます。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//lead\{
 土に根を下ろし　風と共に生きよう
 
 種と共に冬を越え　鳥と共に春を歌おう
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterlead}
 土に根を下ろし　風と共に生きよう
 
 種と共に冬を越え　鳥と共に春を歌おう
 \end{starterlead}
-\vspace*{\baselineskip}
+\endstarterresult
 
 \subsection{図が次のページに送られるときにスペースを空けない}
-\label{sec:1-1-13}
+\label{sec:1-1-14}
 
 Re:VIEWのデフォルトでは、図を入れるときに現在位置に入りきれない場合は、次のページに送られます。
 それは仕方ないのですが、このとき現在位置に大きな空きができてしまいます（\reviewimageref{1.2}{image:chap01-starter:figure_heretop}の上）。
 
 \begin{reviewimage}%%figure_heretop
-\includegraphics[width=0.8\maxwidth]{./images/chap01-starter/figure_heretop.png}
+\includegraphics[width=0.8\maxwidth]{./images/chap01-starter/figure_heretop.png}%
 \reviewimagecaption{図が次のページに送られると、そこに大きな空きができてしまう}
 \label{image:chap01-starter:figure_heretop}
 \end{reviewimage}
@@ -713,9 +1010,11 @@ Re:VIEWのデフォルトでは、図を入れるときに現在位置に入り�
 
 \begin{itemize}
 \item 「\texttt{//image[][][}\reviewstrong{pos=H}\texttt{]}」なら後続のテキストを流し込まない\\
-（つまり画像を現在位置に強制的に配置する）
+
+   （つまり画像を現在位置に強制的に配置する）
 \item 「\texttt{//image[][][}\reviewstrong{pos=h}\texttt{]}」なら後続のテキストを流し込む\\
-（つまり画像が現在位置に入りきらなければ次のページの先頭に配置する）
+
+   （つまり画像が現在位置に入りきらなければ次のページの先頭に配置する）
 \end{itemize}
 
 画像の倍率も指定する場合は、「\texttt{//image[][][scale=0.5,pos=H]}」のように指定してください。
@@ -745,23 +1044,52 @@ Re:VIEWのデフォルトでは、図を入れるときに現在位置に入り�
 \end{starternoteinner}
 \end{starternote}
 
+\subsection{図のまわりを線で囲む}
+\label{sec:1-1-15}
+
+Starterでは、図のまわりをグレーの線で囲むことができます。
+そのためには「\texttt{//image}」の第3引数に「\texttt{border=on}」を指定します。
+
+\startercodeblockcaption{サンプル}
+\begin{starterprogram}\seqsplit{//image[tw{-}icon][デフォルトの表示][scale=0.5,pos=H]
+
+//image[tw{-}icon][まわりを線で囲む][scale=0.5,pos=H,\bfseries{}border=on\mdseries{}]}\end{starterprogram}
+\noindent
+\reviewem{表示結果：}
+
+\starterresult
+\begin{reviewimage}[H]%%tw-icon
+\includegraphics[width=0.5\maxwidth]{./images/chap01-starter/tw-icon.jpg}%
+\reviewimagecaption{デフォルトの表示}
+\label{image:chap01-starter:tw-icon}
+\end{reviewimage}
+\begin{reviewimage}[H]%%tw-icon
+\starterimageframe{%
+\includegraphics[width=0.5\maxwidth]{./images/chap01-starter/tw-icon.jpg}%
+}%
+\reviewimagecaption{まわりを線で囲む}
+\label{image:chap01-starter:tw-icon}
+\end{reviewimage}
+\endstarterresult
+
 \subsection{何もしない命令「\texttt{@}\textless{}letitgo\textgreater{}\{...\}」}
-\label{sec:1-1-14}
+\label{sec:1-1-16}
 
 Re:VIEWでは、「\texttt{//list\{} ... \texttt{//\}}」や「\texttt{//emlist\{} ... \texttt{//\}}」のようなブロック命令の中で、「\texttt{@\textless{}b\textgreater{}\{}...\texttt{\}}」などのインライン命令が利用できます。
 そのため、「\texttt{//emlist\{} ... \texttt{//\}}」の中で「\texttt{@\textless{}b\textgreater{}\{}...\texttt{\}}」そのものを表示させるには次のようなトリックが必要です。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//emlist\{
   @\textless{}b\textgreater{}\{ABC\}
   @\textless{}code\textgreater{}\textdollar{}@\textdollar{}\textless{}b\textgreater{}\{ABC\}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\seqsplit{  \bfseries{}ABC\mdseries{}
   \texttt{@}\textless{}b\textgreater{}\{ABC\}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 つまり「\texttt{@\textless{}b\textgreater{}\{}...\texttt{\}}」のうち「\texttt{@}」だけを「\texttt{@\textless{}code\textgreater{}\{}...\texttt{\}}」で囲うわけです。
 
@@ -772,19 +1100,20 @@ Re:VIEWでは、「\texttt{//list\{} ... \texttt{//\}}」や「\texttt{//emlist\
 
 サンプルを見てみましょう。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//emlist\{
 1. @\textless{}b\textgreater{}\{ABC\}
 2. @\textless{}letitgo\textgreater{}\textdollar{}@\textless{}b\textgreater{}\{ABC\}\textdollar{}
 3. @\textless{}letitgo\textgreater{}\textdollar{}@\textdollar{}\textless{}b\textgreater{}\{ABC\}
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterprogram}\seqsplit{1. \bfseries{}ABC\mdseries{}
-2. @<b>{ABC}
+2. @\textless{}b\textgreater{}\{ABC\}
 3. @\textless{}b\textgreater{}\{ABC\}}\end{starterprogram}
-\vspace*{\baselineskip}
+\endstarterresult
 
 1番目は、「\texttt{ABC}」が太字で表示されてしまいます。
 今は「\texttt{@\textless{}b\textgreater{}\{ABC\}}」と表示したいので、これは意図とは違います。
@@ -799,8 +1128,10 @@ Re:VIEWでは、「\texttt{//list\{} ... \texttt{//\}}」や「\texttt{//emlist\
 
 このような落とし穴はありますが、ブロック命令の中でインライン命令そのものを表示したい場合は、「\texttt{@\textless{}letitgo\textgreater{}\{}...\texttt{\}}」を使ってください。
 
+なお「\texttt{@\textless{}letitgo\textgreater{}\{}...\texttt{\}}」は長すぎるという意見があったので、エイリアスとして「\texttt{@\textless{}nop\textgreater{}\{}...\texttt{\}}」を用意しました（「nop」は「No Operation」の略です）。
+
 \subsection{章や項を参照する「\texttt{@}\texttt{\textless{}secref\textgreater{}\{\}}」}
-\label{sec:1-1-15}
+\label{sec:1-1-17}
 
 Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使って節(Section)や項(Subsection)を参照できます。
 しかしこの機能には問題点があります。
@@ -813,7 +1144,7 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 サンプルを使って説明しましょう。
 たとえば次のような原稿ファイルがあったとします。
 
-\starterlistcaption{ファイル：chap{-}pattern.re}
+\startercodeblockcaption{ファイル：chap{-}pattern.re}
 \begin{starterprogram}\seqsplit{= デザインパターンの紹介
 
 ==\{sec{-}visitor\} Visitorパターン
@@ -847,6 +1178,7 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 \noindent
 \reviewem{表示例：}
 
+\starterresult
 \vspace*{\baselineskip}
 \par\noindent
 {\LARGE\headfont 第1章　デザインパターンの紹介}
@@ -862,17 +1194,20 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 \bigskip
 \par\noindent
 {\large\headfont  実装例}
+\par
 \vspace*{\baselineskip}
-\vspace*{\baselineskip}
+\endstarterresult
 
 このことを踏まえたうえで、節や項を「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」で参照するとどう表示されるでしょうか。
 
 \begin{itemize}
-\item 節(Section)には番号がついているので、たとえば「\texttt{@}\texttt{\textless{}hd\textgreater{}\{sec{-}visitor\}}」のように節を参照すると、「1.1 Visitorパターン」のように表示されます。これだと番号がついているので、読者は節を探しやすいです。
-\item しかし項(Subsection)には番号がついていないので、たとえば「\texttt{@}\texttt{\textless{}hd\textgreater{}\{subsec{-}motivation\}}」や「\texttt{@}\texttt{\textless{}hd\textgreater{}\{subsec{-}structure\}}」のように項を参照すると、「動機」や「構造」とだけ表示されてしまいます。これだと番号がついていないので、読者は項を探せないでしょう。
+\item 節(Section)には番号がついているので、たとえば「\texttt{@}\texttt{\textless{}hd\textgreater{}\{sec{-}visitor\}}」のように節を参照すると、「1.1 Visitorパターン」のように表示されます。
+   これだと番号がついているので、読者は節を探しやすいです。
+\item しかし項(Subsection)には番号がついていないので、たとえば「\texttt{@}\texttt{\textless{}hd\textgreater{}\{subsec{-}motivation\}}」や「\texttt{@}\texttt{\textless{}hd\textgreater{}\{subsec{-}structure\}}」のように項を参照すると、「動機」や「構造」とだけ表示されてしまいます。
+   これだと番号がついていないので、読者は項を探せないでしょう。
 \end{itemize}
 
-\starterlistcaption{サンプル（最初の1つは節を参照、残り3つは項を参照）}
+\startercodeblockcaption{サンプル（最初の1つは節を参照、残り3つは項を参照）}
 \begin{starterprogram}\seqsplit{ * @\textless{}hd\textgreater{}\{sec{-}visitor\}
  * @\textless{}hd\textgreater{}\{subsec{-}motivation\}
  * @\textless{}hd\textgreater{}\{subsec{-}structure\}
@@ -880,7 +1215,7 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 \noindent
 \reviewem{表示結果：}
 
-\vspace*{\baselineskip}
+\starterresult
 
 \begin{itemize}
 \item 「1.1 Visitorパターン」
@@ -889,7 +1224,7 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 \item 「実装例」
 \end{itemize}
 
-\vspace*{\baselineskip}
+\endstarterresult
 
 問題点をもう一度整理しましょう。
 
@@ -908,7 +1243,7 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 
 次のサンプルを見れば、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」との違いがすぐに分かるでしょう。
 
-\starterlistcaption{サンプル（最初の1つは節を参照、残り3つは項を参照）}
+\startercodeblockcaption{サンプル（最初の1つは節を参照、残り3つは項を参照）}
 \begin{starterprogram}\seqsplit{ * \bfseries{}@\mdseries{}\bfseries{}\textless{}secref\textgreater{}\mdseries{}\{sec{-}visitor\}
  * \bfseries{}@\mdseries{}\bfseries{}\textless{}secref\textgreater{}\mdseries{}\{subsec{-}motivation\}
  * \bfseries{}@\mdseries{}\bfseries{}\textless{}secref\textgreater{}\mdseries{}\{subsec{-}structure\}
@@ -916,7 +1251,7 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 \noindent
 \reviewem{表示結果：}
 
-\vspace*{\baselineskip}
+\starterresult
 
 \begin{itemize}
 \item 「1.1 Visitorパターン」(p.1)
@@ -925,7 +1260,7 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 \item 「1.1 Visitorパターン」内の「実装例」(p.1)
 \end{itemize}
 
-\vspace*{\baselineskip}
+\endstarterresult
 
 これを見ると、番号がついていない項の前に番号がついている節が置かれていること、またページ番号がついていることが分かります。
 どちらも\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}にはない特徴であり、\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}で参照するより節や項が探しやすくなります。
@@ -933,16 +1268,21 @@ Re:VIEWでは、「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使�
 その他の注意事項です。
 
 \begin{itemize}
-\item 「\texttt{@}\texttt{\textless{}secref\textgreater{}\{\}}」は、節でも項でも、あるいは目(Subsubsection)でも参照できます。今まで「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使っていた箇所はすべて「\texttt{@}\texttt{\textless{}secref\textgreater{}\{\}}」で置き換えられます。ただし、章(Chapter)は参照できないので、その場合は「\texttt{@}\texttt{\textless{}chapref\textgreater{}\{\}}」を使ってください。
+\item 「\texttt{@}\texttt{\textless{}secref\textgreater{}\{\}}」は、節でも項でも、あるいは目(Subsubsection)でも参照できます。
+   今まで「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」を使っていた箇所はすべて「\texttt{@}\texttt{\textless{}secref\textgreater{}\{\}}」で置き換えられます。
+   ただし、章(Chapter)は参照できないので、その場合は「\texttt{@}\texttt{\textless{}chapref\textgreater{}\{\}}」を使ってください。
 \item 項にも番号をつけるよう設定している場合は、「\texttt{@}\texttt{\textless{}secref\textgreater{}\{\}}」の表示結果は「\texttt{@}\texttt{\textless{}hd\textgreater{}\{\}}」にページ番号をつけたものと同じです。
 \item 他の章(Chapter)の節や項を参照する場合は、たとえば\\
-「\texttt{@}\texttt{\textless{}secref\textgreater{}\{chap{-}pattern\textbar{}sec{-}visitor\}}」や\\
-「\texttt{@}\texttt{\textless{}secref\textgreater{}\{chap{-}pattern\textbar{}subsec{-}impl\}}」のように書いてください。わざわざ\\
-「\texttt{@}\texttt{\textless{}secref\textgreater{}\{chap{-}pattern\textbar{}sec{-}visitor\textbar{}subsec{-}impl\}}」のように書く必要はありません。
+
+  「\texttt{@}\texttt{\textless{}secref\textgreater{}\{chap{-}pattern\textbar{}sec{-}visitor\}}」や\\
+
+  「\texttt{@}\texttt{\textless{}secref\textgreater{}\{chap{-}pattern\textbar{}subsec{-}impl\}}」のように書いてください。わざわざ\\
+
+  「\texttt{@}\texttt{\textless{}secref\textgreater{}\{chap{-}pattern\textbar{}sec{-}visitor\textbar{}subsec{-}impl\}}」のように書く必要はありません。
 \end{itemize}
 
 \subsection{「\reviewem{@}\reviewem{\textless{}chapref\textgreater{}\{\}}」や「\reviewem{@}\reviewem{\textless{}hd\textgreater{}\{\}}」をリンクに}
-\label{sec:1-1-16}
+\label{sec:1-1-18}
 
 Starterでは、「@\textless{}chapref\textgreater{}\{\}」や「@\textless{}hd\textgreater{}\{\}」がリンクになるように設定しています。
 そのために次のような設定をしています。
@@ -952,7 +1292,7 @@ Starterでは、「@\textless{}chapref\textgreater{}\{\}」や「@\textless{}hd\
 \item \reviewem{sty/starter.sty}で「\reviewem{\reviewbackslash{}reviewsecref}」を再定義し、「\reviewem{\reviewbackslash{}hyperref}」を使うように変更。
 \end{itemize}
 
-\starterlistcaption{リスト：\reviewbackslash{}reviewsecrefを再定義}
+\startercodeblockcaption{リスト：\reviewbackslash{}reviewsecrefを再定義}
 \begin{starterprogram}\seqsplit{\reviewbackslash{}renewcommand\{\reviewbackslash{}reviewsecref\}[2]\{\%
   \reviewbackslash{}hyperref[\#2]\{\#1\}(p.\reviewbackslash{}pageref\{\#2\})\%     \% 節や項のタイトルがリンク
   \%\{\#1\}(\reviewbackslash{}hyperref[\#2]\{p.\reviewbackslash{}pageref\{\#2\}\})\%  \% ページ番号がリンク
@@ -964,10 +1304,11 @@ Starterでは、「@\textless{}chapref\textgreater{}\{\}」や「@\textless{}hd\
 またStarterの追加機能である「\reviewem{@}\reviewem{\textless{}secref\textgreater{}\{\}}」でも、リンクが作成されます。
 
 \subsection{その他}
-\label{sec:1-1-17}
+\label{sec:1-1-19}
 
 \begin{itemize}
-\item 「\texttt{@\textless{}clearpage\textgreater{}\{\}}」とすると、改ページします。
+\item ブロック命令「\texttt{//clearpage}」で改ページします。
+   また過去との互換性のために、インライン命令「\texttt{@\textless{}clearpage\textgreater{}\{\}}」も使えます。
 \item 「\texttt{@\textless{}hearts\textgreater{}\{\}}」とすると、「$\heartsuit$」と表示されます。
 \item 「\texttt{@\textless{}TeX\textgreater{}\{\}}」とすると、「\TeX{}」と表示されます。
 \item 「\texttt{@\textless{}LaTeX\textgreater{}\{\}}」とすると、「\LaTeX{}」と表示されます。
@@ -985,7 +1326,7 @@ Re:VIEW 2.5は、標準では本文のフォントサイズを9ptや8ptに指定
 先人の苦労が偲ばれます。
 
 \begin{reviewimage}%%slide2
-\includegraphics[width=\maxwidth]{./images/chap01-starter/slide2.png}
+\includegraphics[width=\maxwidth]{./images/chap01-starter/slide2.png}%
 \reviewimagecaption{フォントやページサイズを変更できなかった人の証言}
 \label{image:chap01-starter:slide2}
 \end{reviewimage}
@@ -1000,6 +1341,7 @@ Re:VIEW 2.5は、標準ではA5サイズの指定が効いてくれません（�
 ウソだと思うかも知れませんが、実際にトラブルに陥った人の証言があります\footnote{\url{https://blog.vtryo.me/entry/submit-of-journey}}。
 
 \begin{starterquote}
+
 　\\
 \reviewstrong{トラブル発生！！}\\
 \\
@@ -1011,6 +1353,7 @@ Re:VIEW 2.5は、標準ではA5サイズの指定が効いてくれません（�
 セイチョウ・ジャーニーはA5で制作しているはずなのに、B5サイズに？？\\
 わからない！どうして！だって何度も確認したはずだ！！\\
 と度重なる徹夜で脳死寸前の僕はパニック状態になりました。\\
+
 \end{starterquote}
 
 入稿で明らかになるトラブル！怖いですねー。
@@ -1032,7 +1375,7 @@ Starterではこのオプションを指定しているので、A5やB5の指定
 
 詳しくは、\reviewem{config.yml}の「\texttt{texdocumentclass:}」を参照してください。
 
-\starterlistcaption{config.yml}
+\startercodeblockcaption{config.yml}
 \begin{starterprogram}\seqsplit{texdocumentclass: ["jsbook",
     \#"uplatex,papersize,twoside,b5j,10pt,openright" \# B5 10pt 右起こし
     \#"uplatex,papersize,twoside,b5j,10pt,openany"   \# B5 10pt 両起こし
@@ -1063,8 +1406,10 @@ B5サイズでフォントが10ptだと、1行あたり全角42〜45文字がい
 本文の幅を広げる場合でも、左右の余白はちゃんと取りましょう。
 
 \begin{itemize}
-\item 本を開いたときの中央（「ノド」という）の余白、つまり左ページの右余白と右ページの左余白は、最低でも2cmは確保しましょう。そうしないと、ノド近くの文章がとても読みづらくなります。
-\item 本を開いたときの外側（「小口」という）の余白、つまり左ページの左余白と右ページの右余白は、最低でも1cmは確保しましょう。そうしないと、ページをめくるときに指が本文にかかってしまい、読みにくいです。
+\item 本を開いたときの中央（「ノド」という）の余白、つまり左ページの右余白と右ページの左余白は、最低でも2cmは確保しましょう。
+   そうしないと、ノド近くの文章がとても読みづらくなります。
+\item 本を開いたときの外側（「小口」という）の余白、つまり左ページの左余白と右ページの右余白は、最低でも1cmは確保しましょう。
+   そうしないと、ページをめくるときに指が本文にかかってしまい、読みにくいです。
 \end{itemize}
 
 Starterではこういったことを考慮し、本文の幅を広げる（つまり1行あたりの文字数を増やす）場合には小口側の余白だけを減らすようにしています。
@@ -1082,16 +1427,16 @@ Starterではこの余白を約1cm減らし\footnote{実はjsbook.clsでは「\r
 \subsection{ソースコード表示用のフォントを変更}
 \label{sec:1-2-6}
 
-\LaTeX{}のデフォルトでは、装飾が多めのフォントがソースコードの表示に使われています（\reviewimageref{1.4}{image:chap01-starter:font_beramono}の上半分）。
+\LaTeX{}のデフォルトでは、装飾が多めのフォントがソースコードの表示に使われています（\reviewimageref{1.6}{image:chap01-starter:font_beramono}の上半分）。
 このフォントは「0」と「O」や「1」と「l」の区別がつきにくく、また太字にしてもあまり目立たないという欠点があります。
 
 \begin{reviewimage}%%font_beramono
-\includegraphics[width=0.7\maxwidth]{./images/chap01-starter/font_beramono.png}
+\includegraphics[width=0.7\maxwidth]{./images/chap01-starter/font_beramono.png}%
 \reviewimagecaption{ソースコードの表示に使われるフォント}
 \label{image:chap01-starter:font_beramono}
 \end{reviewimage}
 
-Starterでは、ソースコードの表示に使うフォントを、装飾が少ないもの（Bera Mono\footnote{\url{http://www.tug.dk/FontCatalogue/beramono/} でサンプルが見れます。}）に変更しています（\reviewimageref{1.4}{image:chap01-starter:font_beramono}の下半分）。
+Starterでは、ソースコードの表示に使うフォントを、装飾が少ないもの（Bera Mono\footnote{\url{http://www.tug.dk/FontCatalogue/beramono/} でサンプルが見れます。}）に変更しています（\reviewimageref{1.6}{image:chap01-starter:font_beramono}の下半分）。
 このフォントは「0」と「O」や「1」と「l」の区別がつきやすく、また太字にしたときも目立つようになっています。
 ただし「\texttt{'}」（シングルクォート）と「\texttt{`}」（バッククォート）の区別がつきにくくなっているので注意してください。
 
@@ -1102,32 +1447,32 @@ Starterでは、ソースコードの表示に使うフォントを、装飾が�
 \label{sec:1-2-7}
 
 Starterでは、章(Chapter)や節(Section)のデザインを変更できます。
-例を2つ挙げておきます（\reviewimageref{1.5}{image:chap01-starter:chaphead_design_3}、\reviewimageref{1.6}{image:chap01-starter:chaphead_design_2}）。
+例を2つ挙げておきます（\reviewimageref{1.7}{image:chap01-starter:chaphead_design_3}、\reviewimageref{1.8}{image:chap01-starter:chaphead_design_2}）。
 
 \begin{reviewimage}%%chaphead_design_3
-\includegraphics[width=0.7\maxwidth]{./images/chap01-starter/chaphead_design_3.png}
+\includegraphics[width=0.7\maxwidth]{./images/chap01-starter/chaphead_design_3.png}%
 \reviewimagecaption{章タイトルをセンタリング、上下に太線、節タイトルに下線}
 \label{image:chap01-starter:chaphead_design_3}
 \end{reviewimage}
 \begin{reviewimage}%%chaphead_design_2
-\includegraphics[width=0.7\maxwidth]{./images/chap01-starter/chaphead_design_2.png}
+\includegraphics[width=0.7\maxwidth]{./images/chap01-starter/chaphead_design_2.png}%
 \reviewimagecaption{章タイトルを右寄せ、下に細線、節タイトルの行頭にクローバー}
 \label{image:chap01-starter:chaphead_design_2}
 \end{reviewimage}
 
 これらのデザインを調整するときは、\reviewem{sty/starter.sty}を編集してください。
 
-なおStarterでは、\reviewimageref{1.5}{image:chap01-starter:chaphead_design_3}のように章タイトルの上下に太い線を入れた場合でも、まえがきや目次やあとがきのタイトルには太い線を入れないようにしています。
+なおStarterでは、\reviewimageref{1.7}{image:chap01-starter:chaphead_design_3}のように章タイトルの上下に太い線を入れた場合でも、まえがきや目次やあとがきのタイトルには太い線を入れないようにしています。
 これは意図的な仕様です。
 
 \subsection{章のタイトルページを作成可能}
 \label{sec:1-2-8}
 
-Starterでは、章(Chapter)のタイトルと概要を独立したページにできます（\reviewimageref{1.7}{image:chap01-starter:chaptitlepage_sample}）。
+Starterでは、章(Chapter)のタイトルと概要を独立したページにできます（\reviewimageref{1.9}{image:chap01-starter:chaptitlepage_sample}）。
 これは商用の書籍ではよく見かける方法です。
 
 \begin{reviewimage}%%chaptitlepage_sample
-\includegraphics[width=0.5\maxwidth]{./images/chap01-starter/chaptitlepage_sample.png}
+\includegraphics[width=0.5\maxwidth]{./images/chap01-starter/chaptitlepage_sample.png}%
 \reviewimagecaption{章のタイトルと概要を独立したページにした例（章ごとの目次つき）}
 \label{image:chap01-starter:chaptitlepage_sample}
 \end{reviewimage}
@@ -1135,7 +1480,7 @@ Starterでは、章(Chapter)のタイトルと概要を独立したページに�
 やり方は簡単で、章タイトルと概要を書いたあとに「\texttt{//makechaptitlepage[toc=section]}」と書くだけです。
 これで章タイトルページが作られ、背景色がつき、その章の目次もつきます\footnote{実装の詳細は\reviewem{sty/starter.sty}の\reviewem{makechaptitlepage}コマンドを参照してください。}。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{= Re:VIEW Starter FAQ
 
 //abstract\{
@@ -1156,8 +1501,10 @@ Starterでは、章(Chapter)のタイトルと概要を独立したページに�
 Starterでは、目次のデザインを少し変更しています。
 
 \begin{itemize}
-\item 章(Section)の文字をゴシック体にしました。項(Subsection)の文字は明朝体のままなので、これで目次での章と項が見分けやすくなります。
-\item 項(Subsection)の文字を少し小さくし、行間を狭くしました。これにより、目次にとられるページ数を少しだけ減らせます。
+\item 章(Section)の文字をゴシック体にしました。
+   項(Subsection)の文字は明朝体のままなので、これで目次での章と項が見分けやすくなります。
+\item 項(Subsection)の文字を少し小さくし、行間を狭くしました。
+   これにより、目次にとられるページ数を少しだけ減らせます。
 \end{itemize}
 
 目次のデザインを修正する場合は、\reviewem{sty/starter.sty}の中で「\reviewem{\reviewbackslash{}l@section}」や「\reviewem{\reviewbackslash{}l@subsection}」を探して、適宜修正してください。
@@ -1186,19 +1533,22 @@ Re:VIEWでは\LaTeX{}のデフォルトデザインのまま（全体が少し�
 
 また引用中に複数の段落を入れた場合、段落の先頭が1文字分インデントされます（Re:VIEW標準ではインデントされません）。
 
-\starterlistcaption{サンプル}
+\startercodeblockcaption{サンプル}
 \begin{starterprogram}\seqsplit{//quote\{
 その者蒼き衣を纏いて金色の野に降りたつべし。
 失われし大地との絆を結び、ついに人々を清浄の地に導かん。
 //\}}\end{starterprogram}
 \noindent
-\reviewem{表示結果：}\\
+\reviewem{表示結果：}
 
+\starterresult
 \begin{starterquote}
+
 その者蒼き衣を纏いて金色の野に降りたつべし。
 失われし大地との絆を結び、ついに人々を清浄の地に導かん。
+
 \end{starterquote}
-\vspace*{\baselineskip}
+\endstarterresult
 
 \subsection{ページヘッダーを変更}
 \label{sec:1-2-12}
@@ -1289,11 +1639,11 @@ Starterではこれを改善し、奥付が必ず最後のページになるよ�
 \subsection{コラムがページまたぎする場合は横線を入れない}
 \label{sec:1-2-17}
 
-Starterでは、コラムが長くてページをまたいでしまう場合に、横線をいれないようにしています（\reviewimageref{1.8}{image:chap01-starter:column_openframe}）。
+Starterでは、コラムが長くてページをまたいでしまう場合に、横線をいれないようにしています（\reviewimageref{1.10}{image:chap01-starter:column_openframe}）。
 こうすると、コラムが続いていることが分かりやすいです。
 
 \begin{reviewimage}%%column_openframe
-\includegraphics[width=0.8\maxwidth]{./images/chap01-starter/column_openframe.png}
+\includegraphics[width=0.8\maxwidth]{./images/chap01-starter/column_openframe.png}%
 \reviewimagecaption{コラムがページをまたぐときに横線を入れない}
 \label{image:chap01-starter:column_openframe}
 \end{reviewimage}
@@ -1383,7 +1733,7 @@ Starterでは、実行する\LaTeX{}コマンドをオプションつきで出�
 次が実行例です。
 \reviewem{uplatex}コマンドや\reviewem{dvipdfmx}コマンドが、オプションつきで出力されていることが分かります。
 
-\starterlistcaption{実行例}
+\startercodeblockcaption{実行例}
 \label{}
 \begin{starterterminal}\seqsplit{\textdollar{} rake pdf
 compiling chap00{-}preface.tex
@@ -1441,9 +1791,12 @@ PDFファイルのサイズを少しでも減らしたい場合は、「\texttt{
 具体的には次のような違いがあります。
 
 \begin{itemize}
-\item ページ番号は読者のためにつけるので、読者から見えやすい場所につける。ノンブルは印刷所の人が見えればいいので、読者には見えにくい場所につける。
-\item ページ番号は、まえがきや目次では「i, ii, iii, ...」、本文では「1, 2, 3, ...」と増える。ノンブルは最初から「1, 2, 3, ...」と増える。
-\item ページ番号は、タイトルページや空白ページではつかないことがある。ノンブルは、すべてのページに必ずつける必要がある。
+\item ページ番号は読者のためにつけるので、読者から見えやすい場所につける。
+   ノンブルは印刷所の人が見えればいいので、読者には見えにくい場所につける。
+\item ページ番号は、まえがきや目次では「i, ii, iii, ...」、本文では「1, 2, 3, ...」と増える。
+   ノンブルは最初から「1, 2, 3, ...」と増える。
+\item ページ番号は、タイトルページや空白ページではつかないことがある。
+   ノンブルは、すべてのページに必ずつける必要がある。
 \end{itemize}
 
 詳しくは「ノンブル」でGoogle検索してください。
@@ -1472,7 +1825,7 @@ Re:VIEWでは、rakeのデフォルトタスクが「\reviewem{epub}」になっ
 このおかげで、引数なしでrakeコマンドを実行するとrakeの使い方が表示されます。
 このほうが、Rubyとrakeをよく知らない人にとって優しいでしょう。
 
-\starterlistcaption{引数なしでrakeコマンドを実行すると、rakeの使い方が表示される}
+\startercodeblockcaption{引数なしでrakeコマンドを実行すると、rakeの使い方が表示される}
 \label{}
 \begin{starterterminal}\textdollar{} rake
 rake {-}T
@@ -1495,7 +1848,7 @@ rake web            \# generate stagic HTML file for web\end{starterterminal}
 また環境変数「\reviewem{\textdollar{}RAKE\textunderscore{}DEFAULT}」を設定すると、それがデフォルトタスクになります。
 たとえば「\reviewem{pdf}」タスクをデフォルトにしたい場合は、次のようにします。
 
-\starterlistcaption{pdfタスクをデフォルトタスクにする}
+\startercodeblockcaption{pdfタスクをデフォルトタスクにする}
 \label{}
 \begin{starterterminal}\seqsplit{\textdollar{} export RAKE\textunderscore{}DEFAULT=pdf    \# デフォルトタスクを変更する。
 \textdollar{} rake                       \# 引数がないのにpdfタスクが実行される。

@@ -5,7 +5,9 @@
 \usepackage{afterpage}                  % for '\afterpage'
 \usepackage[pagecolor=none]{pagecolor}  % for '\newpagecolor'
 
-\definecolor{starter@titlepagecolor}{gray}{0.90}
+%% 背景色を指定
+%\definecolor{starter@titlepagecolor}{gray}{0.90}  % 薄いグレー
+\colorlet{starter@titlepagecolor}{white}           % 白
 
 \newcommand{\mytitlepage}{%
   \newpagecolor{starter@titlepagecolor} % このページの背景色を指定する

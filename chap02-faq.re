@@ -12,7 +12,46 @@
 
 === 範囲コメントはないの？
 
-ありません。必要な範囲に行コメント「@<code>$#@#$」をつけてください。頑張れ。
+範囲コメントは、Re:VIEWにはありませんがStarterにはあります。
+
+//emlist[サンプル]{
+aaa
+
+@<letitgo>$#@$+++
+bbb
+
+ccc
+@<letitgo>$#@$---
+
+ddd
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+aaa
+
+#@+++
+bbb
+
+ccc
+#@---
+
+ddd
+
+//resultend
+
+
+
+ * 「@<code>{#@+++}」から「@<code>{#@---}」までが範囲コメントです。
+ * 「@<code>{+}」や「@<code>{-}」の数は3つです。それ以上でも以下でも範囲コメントとは認識されません。
+ * 範囲コメントは入れ子にできません。
+ * 「@<code>{//embed}」の中では使わないでください。
+ * これは実験的な機能なので、将来は仕様が変更したり機能が削除される可能性があります。
+   この機能にあまり依存しないようにし、できれば行コメントを使ってください。
+   一時的なコメントアウトに限定して使うのがいいでしょう。
 
 
 === 行コメントを使ったら勝手に段落が分かれたんだけど、なんで？
@@ -30,7 +69,9 @@ Re:VIEWの仕様です。
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 これから王国の復活を祝って、諸君にラピュタの力を見せてやろうと思ってね。
 見せてあげよう、ラピュタの雷を！
@@ -38,7 +79,7 @@ Re:VIEWの仕様です。
 ラーマーヤナではインドラの矢とも伝えているがね。
 全世界は再びラピュタのもとにひれ伏すことになるだろう。
 
-//blankline
+//resultend
 
 
 
@@ -47,21 +88,25 @@ Re:VIEWの仕様です。
 //emlist[サンプル]{
 これから王国の復活を祝って、諸君にラピュタの力を見せてやろうと思ってね。
 見せてあげよう、ラピュタの雷を！
-@<code>$#@$#旧約聖書にある、ソドムとゴモラを滅ぼした天の火だよ。
+@<letitgo>$#@$#旧約聖書にある、ソドムとゴモラを滅ぼした天の火だよ。
 ラーマーヤナではインドラの矢とも伝えているがね。
 全世界は再びラピュタのもとにひれ伏すことになるだろう。
 //}
 
+
+
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 これから王国の復活を祝って、諸君にラピュタの力を見せてやろうと思ってね。
 見せてあげよう、ラピュタの雷を！
-#@#旧約聖書にある、ソドムとゴモラを滅ぼした天の火だよ。
+
 ラーマーヤナではインドラの矢とも伝えているがね。
 全世界は再びラピュタのもとにひれ伏すことになるだろう。
 
-//blankline
+//resultend
 
 
 
@@ -77,46 +122,209 @@ Re:VIEWの仕様です。
 
 
 
-段落が分かれてしまうのはこのような理由ですが、これはRe:VIEWの仕様バグというべきですね。
+段落が分かれてしまうのはこのような理由です。
+
+Re:VIEW開発チームに問い合わせたところ、これがRe:VIEWの仕様であるという回答が返ってきました。
+しかしこの仕様だと、段落を分けずに途中の行をコメントアウトする方法がありません。
+この仕様は、仕様バグというべきものでしょう。
+
+そこでStarterでは、段落の途中の行をコメントアウトしても段落が分かれないように変更しました。
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+これから王国の復活を祝って、諸君にラピュタの力を見せてやろうと思ってね。
+見せてあげよう、ラピュタの雷を！
+#@#旧約聖書にある、ソドムとゴモラを滅ぼした天の火だよ。
+ラーマーヤナではインドラの矢とも伝えているがね。
+全世界は再びラピュタのもとにひれ伏すことになるだろう。
+
+//resultend
+
+
+
+こちらのほうが明らかに便利だし、困ることはないと思います。
+
+また「@<code>{//list}」や「@<code>{//terminal}」でも行コメントが有効（つまり読み飛ばされる）ことに注意してください。
 
 
 == 箇条書き
 
+=== 箇条書きで英単語が勝手に結合するんだけど？
+
+Re:VIEWのバグです@<fn>{zf4y3}。
+次のように箇条書きの要素を改行すると、行がすべて連結されてしまいます。
+
+//emlist[サンプル]{
+ * aa bb
+   cc dd
+   ee ff
+//}
+
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ * aa bbcc ddee ff
+
+//resultend
+
+
+
+これは日本語だと特に問題とはなりませんが、英語だと非常に困ります。
+
+そこでStarterでは、行を連結しないように修正しています。
+Starterだと上の例はこのように表示されます。
+
+//emlist[サンプル]{
+ * aa bb
+   cc dd
+   ee ff
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ * aa bb
+   cc dd
+   ee ff
+
+//resultend
+
+
+
+//footnote[zf4y3][少なくともRe:VIEW 3.1まではこのバグが存在します。]
+
+
 === 順序つき箇条書きに「A.」や「a.」や「i.」を使いたい
 
-できません。
+Re:VIEWではできません。
+
 Re:VIEWでは、順序つき箇条書きとしては「1. 」や「2. 」という書き方しかサポートしていません。
 数字ではなくアルファベットを使おうと「A. 」や「a. 」のようにしても、できません。
 Re:VIEWの文法を拡張するしかないです。
 
+なのでStarterでは文法を拡張し、これらの順序つき箇条書きが使えるようにしました。
+
+//emlist[サンプル]{
+ - 1. 項目1
+ - 2. 項目2
+
+ - A. 項目1
+ - B. 項目2
+
+ - a. 項目1
+ - b. 項目2
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ - 1. 項目1
+ - 2. 項目2
+
+ - A. 項目1
+ - B. 項目2
+
+ - a. 項目1
+ - b. 項目2
+
+//resultend
+
+
+
+「@<code>{-}」の前と後、そして「@<code>{1.}」や「@<code>{A.}」や「@<code>{a.}」のあとにも半角空白が必要です。
+また半角空白の前の文字列がそのまま出力されるので、「@<code>{(1)}」や「@<code>{A-1:}」などを使えます。
+
+//emlist[サンプル]{
+ - (1) 項目1
+ - (2) 項目2
+
+ - (A-1) 項目1
+ - (A-2) 項目2
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ - (1) 項目1
+ - (2) 項目2
+
+ - (A-1) 項目1
+ - (A-2) 項目2
+
+//resultend
+
+
+
 
 === 順序つき箇条書きを入れ子にできない？
 
-できません。
+Re:VIEWではできません。
+
 Re:VIEWでは、順序なし箇条書きは入れ子にできますが、順序つき箇条書きは入れ子にできません。
 #@#また順序つき箇条書きの中に順序なし箇条書きを入れ子にすることもできません。
 箇条書きの入れ子をインデントで表現するような文法だとよかったのですが、残念ながらRe:VIEWはそのような仕様になっていません。
 
-とりあえずの回避策としては、順序つき箇条書きの中で「1.」や「(A)」を使ってください。
+そこでStarterでは、順序つき箇条書きを入れ子にできる文法を用意しました。
+行の先頭に半角空白が必要なことに注意。
 
 //emlist[サンプル]{
- * (A) 大項目
- ** (1) 中項目
- *** (1-a) 小項目
- *** (1-b) 小項目
- ** (2) 中項目
+ - (A) 大項目
+ -- (1) 中項目
+ --- (1-a) 小項目
+ --- (1-b) 小項目
+ -- (2) 中項目
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
 
- * (A) 大項目
- ** (1) 中項目
- *** (1-a) 小項目
- *** (1-b) 小項目
- ** (2) 中項目
+//resultbegin
 
-//blankline
+ - (A) 大項目
+ -- (1) 中項目
+ --- (1-a) 小項目
+ --- (1-b) 小項目
+ -- (2) 中項目
+
+//resultend
+
+
+
+また順序なし箇条書きと順序つき箇条書きを混在できます。
+繰り返しますが、行の先頭に半角空白が必要なことに注意。
+
+//emlist[サンプル]{
+ * 大項目
+ -- a. 中項目
+ -- b. 中項目
+ *** 小項目
+ *** 小項目
+//}
+
+//noindent
+@<em>{表示結果：}
+
+//resultbegin
+
+ * 大項目
+ -- a. 中項目
+ -- b. 中項目
+ *** 小項目
+ *** 小項目
+
+//resultend
 
 
 
@@ -127,162 +335,101 @@ Re:VIEWでは、順序なし箇条書きは入れ子にできますが、順序�
 
 Re:VIEWの仕様です。
 
-Re:VIEWでは、たとえば「@<code>$//note{$ ... @<code>$//}$」の中に「@<code>$//emlist{$ ... @<code>$//}$」を入れると、エラーになります。
-これはかなり困った仕様です@<fn>{cb05k}。
-//footnote[cb05k][これはパーサを再帰呼び出しすればいいだけなので、そんなに難しくはないはずなのですが。]
+Re:VIEWでは、たとえば「@<code>$//note{$ ... @<code>$//}$」の中に「@<code>$//list{$ ... @<code>$//}$」を入れると、エラーになります。
+これはかなり困った仕様です。
 
-ただし、ノート（「@<code>$//note$」）と引用（「@<code>$//quote$」）だけはStarterで回避策を用意しました。
-
- * ノートなら、「@<code>$//note{$ ... @<code>$//}$」のかわりに「@<code>$====[note]$ ... @<code>$====[/note]$」を使ってください。
- * 引用なら、「@<code>$//quote{$ ... @<code>$//}$」のかわりに「@<code>$====[quote]$ ... @<code>$====[/quote]$」を使ってください。
-
-これで、内部に別のブロックを含めることができます。
+そこでStarterではこれを改良し、ブロック命令の入れ子ができるようになりました。
 
 //emlist[サンプル]{
-====[note] ■ノートの中にソースコード
+@<letitgo>$//$note[■ノートの中にソースコード]{
 
-ただし現在の制限として、キャプションをつけるとデザインが崩れるので、つけないこと。
+ノートの中にソースコードを入れるサンプル。
 
-@<code>$//$emlist{
+@<letitgo>$//$list[][サンプルコード]{
 print("Hello, World!")
-@<code>$//$}
+@<letitgo>$//$}
 
-====[/note]
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
 
-====[note] ■ノートの中にソースコード
+//resultbegin
 
-ただし現在の制限として、キャプションをつけるとデザインが崩れるので、つけないこと。
+//note[■ノートの中にソースコード]{
 
-//emlist{
+ノートの中にソースコードを入れるサンプル。
+
+//list[][サンプルコード]{
 print("Hello, World!")
 //}
 
-====[/note]
-
-//blankline
-
-
-
-ノートや引用以外の場合は、とりあえずの回避策として外側のブロックの@<LaTeX>{}コードを「@<code>$//embed$」で埋め込む方法があります。
-次の例を参考にしてください。
-
-//emlist[サンプル]{
-@<code>$//$embed[latex]{
-\begin{starternote}{■サンプル}  % 「//note{」のLaTeXコード
-@<code>$//$}
-
-ノートの中にソースコードを埋めるハック。
-
-@<code>$//$emlist{
-print("Hello, world!")
-@<code>$//$}
-
-@<code>$//$embed[latex]{
-\end{starternote}  % 「//}」のLaTeXコード
-@<code>$//$}
 //}
 
-//noindent
-@<em>{表示結果：}@<br>{}
-
-//embed[latex]{
-\begin{starternote}{■サンプル}  % 「//note{」のLaTeXコード
-//}
-
-ノートの中にソースコードを埋めるハック。
-
-//emlist{
-print("Hello, world!")
-//}
-
-//embed[latex]{
-\end{starternote}  % 「//}」のLaTeXコード
-//}
-
-//blankline
+//resultend
 
 
+
+ただし他のブロック命令を含められる（つまり入れ子の外側になれる）のは、今のところ次のブロック命令だけです。
+
+ * @<code>{//note}
+ * @<code>{//quote}
+ * @<code>{//memo}
+
+これ以外の命令を入れ子対応にしたい場合は、ハッシュタグ「#reviewstarter」をつけてツイートしてください。
+
+また以下のブロック命令は、その性質上他のブロック命令を含めることはできません。
+
+ * @<code>{//list}, @<code>{//emlist}, @<code>{//listnum}, @<code>{//emlist}
+ * @<code>{//cmd}, @<code>{//terminal}
+ * @<code>{//program}
+ * @<code>{//source}
+
+なおStarterでは、以前は「@<code>$====[note]$ ... @<code>$====[/note]$」といった記法を使っていました。この記法は今でも使えますが、ブロック命令の入れ子がサポートされた現在では使う必要もないでしょう。
 
 
 ==={subsec-faq-block2} ブロックの中に箇条書きを入れても反映されないよ？
 
 Re:VIEWの仕様です。
 
-Re:VIEWでは、たとえば「@<code>$//note{$ ... @<code>$//}$」の中に「 * 項目1」のような箇条書きを入れても、箇条書きとして解釈されません。
-これはかなり困った仕様です@<fn>{0nhax}。
-//footnote[0nhax][これもパーサを再帰呼び出しすればいいだけのはずです。]
+Re:VIEWでは、たとえば「@<code>$//note{$ ... @<code>$//}$」の中に「@<code>{ * 項目1}」のような箇条書きを入れても、箇条書きとして解釈されません。
+これはかなり困った仕様です。
 
-ただし、ノート（「@<code>$//note$」）と引用（「@<code>$//quote$」）だけはStarterで回避策を用意しました。
-
- * ノートなら、「@<code>$//note{$ ... @<code>$//}$」のかわりに「@<code>$====[note]$ ... @<code>$====[/note]$」を使ってください。
- * 引用なら、「@<code>$//quote{$ ... @<code>$//}$」のかわりに「@<code>$====[quote]$ ... @<code>$====[/quote]$」を使ってください。
-
-これで、内部に箇条書きを含めることができます。
+そこでStarterではこれを改良し、ブロック命令の中に箇条書きが入れられるようになりました。
 
 //emlist[サンプル]{
-====[note] ■ノートの中に箇条書きやソースコードを入れる例
+@<letitgo>$//$note[■ノートの中に箇条書きやソースコードを入れる例]{
 
  * 項目1
  * 項目2
 
-====[/note]
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
 
-====[note] ■ノートの中に箇条書きやソースコードを入れる例
+//resultbegin
 
- * 項目1
- * 項目2
-
-====[/note]
-
-//blankline
-
-
-
-ノートや引用ではないブロックの場合は、とりあえずの回避策として外側のブロックの@<LaTeX>{}コードを「@<code>$//embed$」で埋め込むのがいいでしょう。
-次の例を参考にしてください。
-
-//emlist[サンプル]{
-@<code>$//$embed[latex]{
-\begin{starternote}{■サンプル}  % 「//note{」のLaTeXコード
-@<code>$//$}
-
-ノートの中に箇条書きを含めるハック。
+//note[■ノートの中に箇条書きやソースコードを入れる例]{
 
  * 項目1
  * 項目2
 
-@<code>$//$embed[latex]{
-\end{starternote}  % 「//}」のLaTeXコード
-@<code>$//$}
 //}
 
-//noindent
-@<em>{表示結果：}@<br>{}
-
-//embed[latex]{
-\begin{starternote}{■サンプル}  % 「//note{」のLaTeXコード
-//}
-
-ノートの中に箇条書きを含めるハック。
-
- * 項目1
- * 項目2
-
-//embed[latex]{
-\end{starternote}  % 「//}」のLaTeXコード
-//}
-
-//blankline
+//resultend
 
 
+
+現在のところ、以下のブロック命令で箇条書きをサポートしています。
+
+ * @<code>{//note}
+ * @<code>{//quote}
+ * @<code>{//memo}
+
+これ以外の命令を入れ子対応にしたい場合は、ハッシュタグ「#reviewstarter」をつけてツイートしてください。
 
 
 ==={subsec-faq-memo} 「@<code>$//info{$ ... @<code>$//}$」のキャプションに「■メモ：」がつくんだけど？
@@ -291,101 +438,115 @@ Re:VIEWの仕様です。
 「@<code>$//info$」だけでなく、他の「@<code>$//tip$」や「@<code>$//info$」や「@<code>$//warning$」や「@<code>$//important$」や「@<code>$//caution$」や「@<code>$//notice$」も、すべて「■メモ：」になります！
 
 //emlist[サンプル]{
-@<code>$//$memo[memoサンプル]{
-@<code>$//$}
+@<letitgo>$//$memo[memoサンプル]{
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //memo[memoサンプル]{
 //}
 
-//blankline
+//resultend
 
 
 //emlist[サンプル]{
-@<code>$//$tip[tipサンプル]{
-@<code>$//$}
+@<letitgo>$//$tip[tipサンプル]{
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //tip[tipサンプル]{
 //}
 
-//blankline
+//resultend
 
 
 //emlist[サンプル]{
-@<code>$//$info[infoサンプル]{
-@<code>$//$}
+@<letitgo>$//$info[infoサンプル]{
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //info[infoサンプル]{
 //}
 
-//blankline
+//resultend
 
 
 //emlist[サンプル]{
-@<code>$//$warning[warningサンプル]{
-@<code>$//$}
+@<letitgo>$//$warning[warningサンプル]{
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //warning[warningサンプル]{
 //}
 
-//blankline
+//resultend
 
 
 //emlist[サンプル]{
-@<code>$//$important[importantサンプル]{
-@<code>$//$}
+@<letitgo>$//$important[importantサンプル]{
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //important[importantサンプル]{
 //}
 
-//blankline
+//resultend
 
 
 //emlist[サンプル]{
-@<code>$//$caution[cautionサンプル]{
-@<code>$//$}
+@<letitgo>$//$caution[cautionサンプル]{
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //caution[cautionサンプル]{
 //}
 
-//blankline
+//resultend
 
 
 //emlist[サンプル]{
-@<code>$//$notice[noticeサンプル]{
-@<code>$//$}
+@<letitgo>$//$notice[noticeサンプル]{
+@<letitgo>$//$}
 //}
 
 //noindent
-@<em>{表示結果：}@<br>{}
+@<em>{表示結果：}
+
+//resultbegin
 
 //notice[noticeサンプル]{
 //}
 
-//blankline
+//resultend
 
 
 
@@ -396,6 +557,64 @@ Re:VIEWの仕様です。
 
 
 == ソースコード
+
+=== ソースコードの見た目が崩れるんだけど？
+
+恐らく、ソースコードの中にタブ文字があることが原因でしょう。
+
+Re:VIEWでは、「@<code>{//list}」などに含まれるタブ文字を半角空白に展開してくれます。
+しかしこの展開方法に根本的なバグがあるため、正しく展開してくれません。
+
+たとえば次の例では、1つ目のコメントの前には半角空白を使い、2つ目のコメントの前にはタブ文字を使っています。
+
+//emlist[サンプル]{
+@<letitgo>$//$terminal{
+$ printf "Hi\n"         # コメントの前に半角空白
+#@#$ printf "Hi\n"		# コメントの前にタブ文字
+$ printf "Hi\n"         # コメントの前にタブ文字
+@<letitgo>$//$}
+//}
+
+
+
+
+これをRe:VIEWでコンパイルすると、次のようにタブ文字のある行は表示が崩れてしまいます。
+しかもエラーメッセージが出るわけではないので、なかなか気づきません。
+
+//noindent
+@<em>{表示結果 (Re:VIEW)}
+
+//resultbegin
+
+//terminal{
+$ printf "Hi\n"         # コメントの前に半角空白
+#@#$ printf "Hi\n"		# コメントの前にタブ文字
+$ printf "Hi\n"            # コメントの前にタブ文字
+//}
+
+//resultend
+
+
+
+Starterではこの不具合を修正し、タブ文字がある行でも表示が崩れないようにしました。
+
+//noindent
+@<em>{表示結果 (Starter)}
+
+//resultbegin
+
+//terminal{
+$ printf "Hi\n"         # コメントの前に半角空白
+#@#$ printf "Hi\n"		# コメントの前にタブ文字
+$ printf "Hi\n"         # コメントの前に半角空白
+//}
+
+//resultend
+
+
+
+ただし、タブ文字のある行に「@<code>$@<b>{}$」や「@<code>$@<del>{}$」があると、タブ文字を半角空白に正しく展開できません。これは技術的に修正しようがないので、ソースコードではタブ文字より半角空白を使うようにしてください。
+
 
 === コラム中のソースコードがページまたぎしてくれないよ？
 
@@ -408,7 +627,7 @@ Re:VIEWの仕様です。
 
 @<href>{https://github.com/kmuto/review/issues/887}によると、このような方法でできるようです。
 
-//emlist[別ファイルのソースコード(source/fib1.rb)を読み込む方法]{
+//list[][別ファイルのソースコード(source/fib1.rb)を読み込む方法]{
 @<code>$//$list[fib1][フィボナッチ数列]{
 @<code>$@$<include>{source/fib1.rb}
 @<code>$//$}
@@ -467,7 +686,7 @@ Re:VIEWの仕様です。
 @<em>{config.yml}の「@<code>{booktitle: |-}」という箇所@<fn>{rsjp9}に、タイトル名を複数行で指定してください。
 //footnote[rsjp9][「@<code>{|-}」は、YAMLにおいて複数行を記述する記法の1つ（最後の行の改行は捨てられる）。]
 
-//emlist[サンプル]{
+//list[][サンプル]{
 booktitle: |-
   週末なにしてますか?
   忙しいですか?
@@ -495,7 +714,7 @@ booktitle: |-
 Starterではなく、素のRe:VIEWやTechboosterのテンプレートを使っている場合は、@<em>{layouts/layout.tex.erb}を変更します。
 変更するまえに、@<em>{layouts/layout.tex.erb}のバックアップをとっておくといいでしょう。
 
-//emlist[layouts/layout.tex.erb][ruby]{
+//list[][layouts/layout.tex.erb][ruby]{
 ....(省略)....
 \thispagestyle{empty}
 \begin{center}%
@@ -535,16 +754,12 @@ Re:VIEWの設定ファイルである@<em>{config.yml}や@<em>{catalog.yml}は�
 
  * タブ文字を使うと、エラーになります。かわりに半角スペースを使ってください。
  * 全角スペースを使うと、エラーになります。かわりに半角スペースを使ってください。
- * 「@<code>{:}」のあとに半角スペースが必要です。たとえば@<br>{}
-   「@<tt>{titlepage:false}」はダメです。@<br>{}
-   「@<tt>{titlepage: false}」のように書いてください。
- * 「@<code>{,}」のあとに半角スペースが必要です。たとえば@<br>{}
-   「@<code>{texstyle: [reviewmacro,starter,mystyle]}」はダメです。@<br>{}
-   「@<code>{texstyle: [reviewmacro, starter, mystyle]}」のように書いてください。
+ * 「@<code>{:}」のあとに半角スペースが必要です。たとえば@<br>{}「@<tt>{titlepage:false}」はダメです。@<br>{}「@<tt>{titlepage: false}」のように書いてください。
+ * 「@<code>{,}」のあとに半角スペースが必要です。たとえば@<br>{}「@<code>{texstyle: [reviewmacro,starter,mystyle]}」はダメです。@<br>{}「@<code>{texstyle: [reviewmacro, starter, mystyle]}」のように書いてください。
  * インデントが揃ってないと、エラーになります。
    たとえば@<em>{catalog.yml}が次のようになっていると、インデントが揃ってないのでエラーになります。
 
-//emlist[「CHAPS:」のインデントが揃ってないのでエラー]{
+//list[][「CHAPS:」のインデントが揃ってないのでエラー]{
 PREDEF:
   - chap00-preface.re
 
@@ -558,9 +773,7 @@ POSTDEF:
   - chap99-postscript.re
 //}
 
- * 「@<em>{-}」のあとに半角スペースが必要です。たとえば上の例で@<br>{}
-   「@<code>{- chap01-starter.re}」が@<br>{}
-   「@<code>{-chap01-starter.re}」となっていると、エラーになります。
+ * 「@<em>{-}」のあとに半角スペースが必要です。たとえば上の例で@<br>{}「@<code>{- chap01-starter.re}」が@<br>{}「@<code>{-chap01-starter.re}」となっていると、エラーになります。
 
 
 === 印刷用とタブレット用で設定を少し変えるにはどうするの？
