@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.7.1-u1.22-161114-2.6 (utf8.uptex) (TeX Live 2017/Debian) (preloaded format=uplatex 2018.8.9)  22 JUN 2019 04:14
+This is e-upTeX, Version 3.14159265-p3.7.1-u1.22-161114-2.6 (utf8.uptex) (TeX Live 2017/Debian) (preloaded format=uplatex 2018.8.9)  22 JUN 2019 07:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1300,50 +1300,66 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 File: ./images/chap00-preface/gmail.png Graphic file (type bmp)
 <./images/chap00-preface/gmail.png>
-LaTeX Font Info:    Font shape `JT2/hgt/bx/n' will be
-(Font)              scaled to size 9.24683pt on input line 19.
-LaTeX Font Info:    Font shape `JY2/hgt/bx/n' will be
-(Font)              scaled to size 9.24683pt on input line 19.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
-[1
-
-
-]) [2] (./book.toc
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 3.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 12.
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 3.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 12.
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 3.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 12.
+
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 3.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 12.
+
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 3.
+(Font)              <10> on input line 12.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 3.
+(Font)              <7> on input line 12.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 3.
+(Font)              <5> on input line 12.
 LaTeX Font Info:    Font shape `JY2/hmc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 3.
+(Font)              scaled to size 6.47278pt on input line 12.
 LaTeX Font Info:    Font shape `JY2/hmc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 3.
-LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+(Font)              scaled to size 4.62341pt on input line 12.
+LaTeX Font Info:    Try loading font information for U+msa on input line 12.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+LaTeX Font Info:    Try loading font information for U+msb on input line 12.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+LaTeX Font Info:    Font shape `JT2/hmc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 12.
+LaTeX Font Info:    Font shape `JT2/hmc/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 12.
+LaTeX Font Info:    Font shape `JY2/hmc/m/n' will be
+(Font)              scaled to size 7.39746pt on input line 12.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 12.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 12.
+LaTeX Font Info:    Font shape `JY2/hmc/m/n' will be
+(Font)              scaled to size 5.5481pt on input line 12.
+LaTeX Font Info:    Font shape `JT2/hmc/m/n' will be
+(Font)              scaled to size 5.5481pt on input line 12.
+LaTeX Font Info:    Font shape `JT2/hgt/bx/n' will be
+(Font)              scaled to size 9.24683pt on input line 21.
+LaTeX Font Info:    Font shape `JY2/hgt/bx/n' will be
+(Font)              scaled to size 9.24683pt on input line 21.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 21.
+[1
+
+
+]) [2] (./book.toc
 LaTeX Font Info:    Try loading font information for T1+fvm on input line 8.
 (/usr/share/texlive/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
@@ -1359,12 +1375,6 @@ LaTeX Font Info:    Font shape `JY2/hgt/m/n' will be
 (Font)              scaled to size 6.47278pt on input line 41.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 44.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 44.
-LaTeX Font Info:    Font shape `JY2/hmc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 44.
-LaTeX Font Info:    Font shape `JT2/hmc/m/n' will be
-(Font)              scaled to size 5.5481pt on input line 44.
 [4])
 \tf@toc=\write5
 \openout5 = `book.toc'.
@@ -1379,12 +1389,6 @@ LaTeX Font Info:    Font shape `JY2/hgt/bx/n' will be
 (Font)              scaled to size 15.9785pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `JT2/hmc/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 5.
-LaTeX Font Info:    Font shape `JY2/hmc/m/n' will be
-(Font)              scaled to size 7.39746pt on input line 5.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 5.
 LaTeX Font Info:    Font shape `JT2/hgt/m/n' will be
 (Font)              scaled to size 7.39746pt on input line 5.
 LaTeX Font Info:    Font shape `JY2/hgt/m/n' will be
@@ -1449,8 +1453,6 @@ LaTeX Font Info:    Font shape `JT2/hmc/bx/n' will be
 (Font)              scaled to size 8.32214pt on input line 286.
 LaTeX Font Info:    Font shape `JY2/hmc/bx/n' will be
 (Font)              scaled to size 8.32214pt on input line 286.
-LaTeX Font Info:    Font shape `JT2/hmc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 291.
 [6]
 LaTeX Font Info:    Try loading font information for TS1+phv on input line 328.
 
@@ -1864,4 +1866,4 @@ Here is how much of TeX's memory you used:
  19 hyphenation exceptions out of 8191
  41i,16n,80p,709b,991s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on book.dvi (78 pages, 272560 bytes).
+Output written on book.dvi (78 pages, 273880 bytes).
