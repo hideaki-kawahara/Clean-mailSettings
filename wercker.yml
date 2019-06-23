@@ -7,3 +7,4 @@ build:
         code: |
           rake clean pdf
           cp Clean-mailSettings.pdf ${WERCKER_REPORT_ARTIFACTS_DIR}/
+          upload_dropbox.sh Clean-mailSettings.pdf ${DROPBOX_TOKEN}
