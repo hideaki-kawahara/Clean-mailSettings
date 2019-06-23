@@ -2,8 +2,12 @@ PREDEF:
   - chap00-preface.re
 
 CHAPS:
-  - chap01-starter.re
-  - chap02-faq.re
+  - chap01-structure.re
+  - chap02-cleanmail.re
+  - chap03-spf-settings.re
+  - chap04-dkim-settings.re
+  - chap05-sakura-settings.re
+  - chap06-gsuites-settings.re
 
 APPENDIX:
 
