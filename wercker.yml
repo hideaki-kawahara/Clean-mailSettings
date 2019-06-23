@@ -1,4 +1,4 @@
-box: vvakame/review
+box: kauplan/review2.5
 
 build:
   steps:
