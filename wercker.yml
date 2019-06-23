@@ -6,4 +6,4 @@ build:
         name: Build PDF
         code: |
           rake clean pdf
-          cp book.pdf ${WERCKER_REPORT_ARTIFACTS_DIR}/
+          cp Clean-mailSettings.pdf ${WERCKER_REPORT_ARTIFACTS_DIR}/
