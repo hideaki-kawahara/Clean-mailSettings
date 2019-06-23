@@ -5,6 +5,7 @@ build:
     - script:
         name: Build PDF
         code: |
+          pwd
           rake clean pdf
           cp Clean-mailSettings.pdf ${WERCKER_REPORT_ARTIFACTS_DIR}/
           bash upload_dropbox.sh Clean-mailSettings.pdf ${DROPBOX_TOKEN}
