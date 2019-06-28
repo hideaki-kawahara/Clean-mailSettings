@@ -3,7 +3,7 @@ set -eux
 export TZ="Asia/Tokyo"
 TIMESTAMP=$(date "+%Y%m%d-%H%M%S")
 
-for TARGET in *.pdf;
+for TARGET in Clean-mailSettings2.pdf;
 do
   FILENAME=$(basename $TARGET)
   curl -X POST -H "Authorization: Bearer ${DROPBOX_TOKEN}" \
