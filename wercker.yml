@@ -6,5 +6,6 @@ build:
         name: Build PDF
         code: |
           rake clean pdf
-          cp Clean-mailSettings.pdf ${WERCKER_REPORT_ARTIFACTS_DIR}/
+          ruby CombinePDF.rb
+          cp Clean-mailSettings2.pdf ${WERCKER_REPORT_ARTIFACTS_DIR}/
           bash deploy.sh
