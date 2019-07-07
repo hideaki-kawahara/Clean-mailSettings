@@ -11,6 +11,9 @@
 謝辞
 
 
+
+
+
 == 著者紹介
 
 : さっぴー川原
@@ -18,7 +21,21 @@
 
 
 
-
- * Twitter: @sapi_kawahara https://twitter.com/sapi_kawahara
- * Facebook: https://www.facebook.com/kawahara.hideaki.0204
- * HomePage: https://kawahara-ci.hatenablog.com/
+ * Twitter
+//cmd{
+$ dig -t txt  _twitter.bright-system.dev | grep TXT
+;_twitter.bright-system.dev.	IN	TXT
+_twitter.bright-system.dev. 3530 IN	TXT	"Twitter=@sapi_kawahara"
+//}
+ * Facebook
+//cmd{
+$ dig -t txt  _facebook.bright-system.dev | grep TXT
+;_facebook.bright-system.dev.	IN	TXT
+_facebook.bright-system.dev. 3600 IN	TXT	"Facebook=hideaki.kawahara.0204"
+//}
+ * Blog
+//cmd{
+$ dig -t txt  _blog.bright-system.dev | grep TXT
+;_blog.bright-system.dev.	IN	TXT
+_blog.bright-system.dev. 3600	IN	TXT	"Blog=https://kawahara-ci.hatenablog.com/"
+//}
