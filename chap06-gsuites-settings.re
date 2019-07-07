@@ -7,3 +7,4 @@
 === 確認しよう
 == DKIMを設定しよう
 === 確認しよう
+https://toolbox.googleapps.com/apps/checkmx/
