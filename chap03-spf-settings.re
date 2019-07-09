@@ -70,12 +70,12 @@ v=spf1 +ip4:xxx.xxx.xxx.xxx ~all
 Qualifierについて +,-,~,?の4つの設定があります。Mechanismにマッチした結果でどのように判定するか記載します。
 
 //table[Qualifier][Qualifierの動作]{
-表記  判定  意味
+表記	判定	意味
 ----------
-+ Pass  認証します。
-- Fail  認証しない。
-~ SoftFail  認証しないときがある。
-? Neutral どっちもしない。
++	Pass	認証します。
+-	Fail	認証しない。
+~	SoftFail	認証しないときがある。
+?	Neutral	どっちもしない。
 //}
 
 なお+は省略可能です。
