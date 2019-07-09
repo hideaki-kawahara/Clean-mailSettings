@@ -41,19 +41,7 @@ module ReVIEW
     ## インライン命令
     definline :secref            ## 節(Section)や項(Subsection)を参照
 
-    ## 「//embed」コマンドでは行コメントを読み飛ばさない
     private
-
-    alias _original_read_block read_block
-
-    def read_block(f, ignore_inline)
-      is_embed = @strategy.doc_status[:embed]
-      f.enable_comment(false) if is_embed
-      ret = _original_read_block(f, ignore_inline)
-      f.enable_comment(true)  if is_embed
-      return ret
-    end
-
 
     ## パーサを再帰呼び出しに対応させる
 
@@ -124,16 +112,28 @@ module ReVIEW
     ##   置き換えてから、'\\' を '\\textbackslash{}' に展開すべき。
     ## ・またタブ文字の展開は、本来はBuilderではなくCompilerで行うべきだが、
     ##   Re:VIEWの設計がまずいのでそうなっていない。
-    def read_block(f, ignore_inline)
+    ## ・'//table' と '//embed' ではタブ文字の展開は行わない。
+    def read_block_for(cmdname, f)   # 追加
+      disable_comment = cmdname == :embed    # '//embed' では行コメントを読み飛ばさない
+      ignore_inline   = cmdname == :embed    # '//embed' ではインライン命令を解釈しない
+      enable_detab    = cmdname !~ /\A(?:em)?table\z/  # '//table' ではタブ展開しない
+      f.enable_comment(false) if disable_comment
+      lines = read_block(f, ignore_inline, enable_detab)
+      f.enable_comment(true)  if disable_comment
+      return lines
+    end
+    def read_block(f, ignore_inline, enable_detab=true)   # 上書き
       head = f.lineno
       buf = []
-      builder = @strategy                          #+
+      builder = @strategy                            #+
       f.until_match(%r{\A//\}}) do |line|
         if ignore_inline
           buf.push line
         elsif line !~ /\A\#@/
-          #buf.push text(line.rstrip)              #-
-          buf << text(builder.detab(line.rstrip))  #+
+          #buf.push text(line.rstrip)                #-
+          line = line.rstrip                         #+
+          line = builder.detab(line) if enable_detab #+
+          buf << text(line)                          #+
         end
       end
       unless %r{\A//\}} =~ f.peek
@@ -188,7 +188,7 @@ module ReVIEW
         if !syntax.block_allowed?
           builder.__send__(cmdname, *args)
         elsif curly
-          lines = read_block(f, cmdname == :embed)
+          lines = read_block_for(cmdname, f)
           builder.__send__(cmdname, lines, *args)
         else
           lines = default_block(syntax)
@@ -578,6 +578,27 @@ module ReVIEW
 
   class LATEXBuilder
 
+    ## 改行命令「\\」のあとに改行文字「\n」を置かない。
+    ##
+    ## 「\n」が置かれると、たとえば
+    ##
+    ##     foo@<br>{}
+    ##     bar
+    ##
+    ## が
+    ##
+    ##     foo\\
+    ##
+    ##     bar
+    ##
+    ## に展開されてしまう。
+    ## つまり改行のつもりが改段落になってしまう。
+    def inline_br(_str)
+      #"\\\\\n"   # original
+      "\\\\{}"
+    end
+
+
     ## コードブロック（//program, //terminal）
 
     def program(lines, id=nil, caption=nil, optionstr=nil)
@@ -713,9 +734,19 @@ module ReVIEW
 
     public
 
+    def ul_begin
+      blank
+      puts '\begin{starteritemize}'    # instead of 'itemize'
+    end
+
+    def ul_end
+      puts '\end{starteritemize}'      # instead of 'itemize'
+      blank
+    end
+
     def ol_begin(start_num=nil)
       blank
-      puts '\begin{enumerate}'
+      puts '\begin{starterenumerate}'  # instead of 'enumerate'
       if start_num.nil?
         return true unless @ol_num
         puts "\\setcounter{enumi}{#{@ol_num - 1}}"
@@ -724,7 +755,7 @@ module ReVIEW
     end
 
     def ol_end
-      puts '\end{enumerate}'
+      puts '\end{starterenumerate}'    # instead of 'enumerate'
       blank
     end
 

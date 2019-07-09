@@ -29,7 +29,7 @@
 %%
 
 %% 本文の幅を設定
-\setlength{\textwidth}{40zw}  % 全角40文字
+\setlength{\textwidth}{39zw}  % 全角39文字
 \setlength{\fullwidth}{\textwidth}  % ヘッダの幅を本文と同じにする
 %% 左右の余白幅を設定
 \setlength{\oddsidemargin}{\paperwidth}      % 紙の幅から
@@ -38,8 +38,15 @@
 \addtolength{\oddsidemargin}{-\inv@mag in}   % （謎の呪文）
 \setlength{\evensidemargin}{\oddsidemargin}  % 偶数ページも同じ
 %% 奇数・偶数ページで余白幅を変える場合
-\addtolength{\oddsidemargin}{1.5zw}   % 奇数ページで1.5文字分広げる
-\addtolength{\evensidemargin}{-1.5zw} % 偶数ページで1.5文字分狭める
+%% （ただし pbook (printing book) の場合だけ）
+\newcommand\if@pbook{         % \starter@target の値が pbook かどうかを調べる
+  \def\@tempa{pbook}
+  \ifx\starter@target\@tempa  % \starter@target は layouts/layout.tex.erb の先頭で定義される
+}
+\if@pbook
+  \addtolength{\oddsidemargin}{1zw}   % 奇数ページで1文字分広げる
+  \addtolength{\evensidemargin}{-1zw} % 偶数ページで1文字分狭める
+\fi
 
 %% 天（ページ上部）の余白を狭め、そのぶん本文の高さに加える
 \addtolength{\topmargin}{-10mm}

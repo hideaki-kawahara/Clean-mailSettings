@@ -19,6 +19,7 @@ module ReVIEW
   Compiler.definline :hearts            ## ハートマーク
   Compiler.definline :TeX               ## TeX のロゴマーク
   Compiler.definline :LaTeX             ## LaTeX のロゴマーク
+  Compiler.definline :cursor            ## ターミナルでのカーソル
 
   ## ブロック命令「//textleft{ ... //}」等を宣言
   ## （ここでは第2引数が「0」なので、引数なしのブロック命令になる。
@@ -113,6 +114,11 @@ module ReVIEW
     ## LaTeXのロゴマーク
     def inline_LaTeX(str)
       '\LaTeX{}'
+    end
+
+    ## ターミナルでのカーソル（背景が白、文字が黒）
+    def inline_cursor(str)
+      "{\\startercursor{#{escape(str)}}}"
     end
 
     ## 左寄せ
@@ -321,6 +327,11 @@ module ReVIEW
     ## LaTeXのロゴマーク
     def inline_LaTeX(str)
       'LaTeX'
+    end
+
+    ## ターミナルでのカーソル（背景が白、文字が黒）
+    def inline_cursor(str)
+      "<span class=\"cursor\">#{escape_html(str)}</span>"
     end
 
     ## 左寄せ

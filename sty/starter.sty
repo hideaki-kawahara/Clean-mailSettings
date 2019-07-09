@@ -19,31 +19,50 @@
 }
 
 
+%%% \starter@target を調べて各種変数を設定する
+\iffalse
+\else\ifstreq{\starter@target}{pbook}    % pbook (printing book) なら
+  \def\starter@colormode{mono}           % 白黒
+\else\ifstreq{\starter@target}{ebook}    % ebook (electric book) なら
+  \def\starter@colormode{rgb}            % カラー
+  %\def\starter@colormode{cmyk}
+\else\ifstreq{\starter@target}{tablet}   % tablet なら
+  \def\starter@colormode{rgb}            % カラー
+  %\def\starter@colormode{cmyk}
+\else
+  \def\starter@colormode{mono}           % 白黒
+\fi
+
+
 %%%
 %%% 色の設定
 %%%
-\def\starter@colormode{mono}
-%\def\starter@colormode{rgb}
-%\def\starter@colormode{cmyk}
+
 %%% 白黒 (0.0: black, 1.0: white)
 \ifstreq{\starter@colormode}{mono}
-  \definecolor{starter@deepcolor}{gray}{0.1}        % light gray
-  \definecolor{starter@palecolor}{gray}{0.9}        % dark gray
+  \definecolor{starter@deepcolor}{gray}{0.1}        % dark gray
+  \definecolor{starter@palecolor}{gray}{0.9}        % light gray
   \definecolor{starter@chaptercolor}{gray}{0.4}     % gray
   \definecolor{starter@sectioncolor}{gray}{0.4}     % gray
+  \definecolor{starter@subsectioncolor}{gray}{0.1}  % dark gray
+  \definecolor{starter@notecolor}{gray}{0.0}        % black
   \definecolor{starter@captioncolor}{gray}{0.4}     % gray
   \definecolor{starter@quotecolor}{gray}{0.4}       % gray
+     \colorlet{starter@linkcolor}{black}            % black
      \colorlet{starter@chaptitlepagecolor}{starter@palecolor}
-  \definecolor{starter@programcolor}{gray}{0.9}     % light gray
-  \definecolor{starter@terminalcolor}{gray}{0.1}    % dark black
+  \definecolor{starter@programcolor}{gray}{0.9}     % dark black
+  \definecolor{starter@terminalcolor}{gray}{0.1}    % light gray
 %%% カラー（RGB、タブレット向け）
 \else\ifstreq{\starter@colormode}{rgb}
   \definecolor{starter@deepcolor}{HTML}{990000}     % red
   \definecolor{starter@palecolor}{HTML}{E5E5E5}     % light gray
      \colorlet{starter@chaptercolor}{starter@deepcolor}
      \colorlet{starter@sectioncolor}{starter@deepcolor}
+     \colorlet{starter@subsectioncolor}{starter@deepcolor}
+     \colorlet{starter@notecolor}{starter@deepcolor}
   \definecolor{starter@captioncolor}{HTML}{999999}  % gray
   \definecolor{starter@quotecolor}{HTML}{999999}    % gray
+     \colorlet{starter@linkcolor}{starter@deepcolor}% red
      \colorlet{starter@chaptitlepagecolor}{starter@palecolor}
   \definecolor{starter@programcolor}{HTML}{E5E5E5}  % light gray
   \definecolor{starter@terminalcolor}{HTML}{191919} % dark black
@@ -53,8 +72,11 @@
   \definecolor{starter@palecolor}{cmyk}{0.0,0.0,0.0,0.1}     % light gray
      \colorlet{starter@chaptercolor}{starter@deepcolor}
      \colorlet{starter@sectioncolor}{starter@deepcolor}
+     \colorlet{starter@subsectioncolor}{starter@deepcolor}
+     \colorlet{starter@notecolor}{starter@deepcolor}
   \definecolor{starter@captioncolor}{cmyk}{0.0,0.0,0.0,0.5}  % gray
   \definecolor{starter@quotecolor}{cmyk}{0.0,0.0,0.0,0.5}    % gray
+     \colorlet{starter@linkcolor}{starter@deepcolor}         % red
      \colorlet{starter@chaptitlepagecolor}{starter@palecolor}
   \definecolor{starter@programcolor}{cmyk}{0.0,0.0,0.0,0.1}  % light gray
   \definecolor{starter@terminalcolor}{cmyk}{0.0,0.0,0.0,0.9} % dark black
@@ -62,12 +84,10 @@
 
 
 %%% 目次やリンクは、デフォルトでは赤くなり印刷には向かないので、黒くする。
-%%% （電子書籍用PDFでは、リンクであることがわかるよう色をつけたほうがよい。
-%%%   またリンクに色をつけるなら、ブラウザと同じで青がお勧め。）
-%\hypersetup{colorlinks=true}                % 赤（デフォルト）
-%\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}  % 青（電子書籍用）
-\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black} % 黒（印刷用）
-%\hypersetup{colorlinks=false}
+%%% ただし電子書籍用PDFでは、リンクであることがわかるよう色をつける。
+\hypersetup{colorlinks=true,linkcolor=starter@linkcolor,urlcolor=starter@linkcolor}  % カラー
+%\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black} % 黒（印刷用）
+%\hypersetup{colorlinks=false}   % リンク機能をオフにする
 
 
 %%% 「@<strong>{ ... }」を太字のゴシック体にする（「@<b>{ ... }」は明朝体のまま）。
@@ -96,7 +116,32 @@
 \usepackage[nott,varl,varqu,mono,narrow]{inconsolata}  % 上と同じだが幅が狭い、nottつけるとdefault fontを変更しない
 
 
-%%% 番号なし箇条書きの行頭文字を変更
+%%% 箇条書き（順序なし）
+\newenvironment{starteritemize}{%
+  \starter@itemlist@margin%          % 余白を減らす
+  \begin{itemize}%
+}{%
+  \end{itemize}%
+  \starter@itemlist@margin%          % 余白を減らす
+}
+\newcommand{\starter@itemlist@margin}{%
+  \ifnum\@itemdepth=0%              % 入れ子ではない場合だけ
+    \ifnum\@enumdepth=0%
+      \vspace{-0.50\topsep}%        % 余白を半分に減らす
+    \fi%
+  \fi%
+}
+
+%%% 箇条書き（順序つき）
+\newenvironment{starterenumerate}{%
+  \starter@itemlist@margin%        % 余白を減らす
+  \begin{enumerate}%
+}{%
+  \end{enumerate}%
+  \starter@itemlist@margin%        % 余白を減らす
+}
+
+%%% 順序なし箇条書きの行頭文字を変更
 \usepackage{amssymb}            % \blacktriangleright や \bigstar のために必要
 %\renewcommand{\labelitemi}{$\blacktriangleright$}  % 深さ1段目：小さい黒丸→小さい三角へ
 \renewcommand{\labelitemii}{$\circ$}                % 深さ2段目：「-」→小さい白丸へ
@@ -279,6 +324,17 @@
 }
 
 
+%% 右起こし（奇数ぺージ始まり）にしない場合でも、目次と第1章との間に
+%% 空白ページが入ることがあるので、修正する。
+\if@openright\else\if@openleft\else  % 右起こしでも左起こしでもない場合だけ、
+  \renewcommand\mainmatter{%         % 本文の開始を表すコマンドを再定義する。
+    %\pltx@cleartooddpage            % 削除
+    \clearpage                       % 追加
+    \@mainmattertrue
+    \pagenumbering{arabic}
+  }
+\fi\fi
+
 
 %%% 章 (Chapter) の番号とタイトルと上下の余白を表示する
 %\def\@makechapterhead#1{%    (jsbook.clsでのオリジナル定義)
@@ -296,69 +352,116 @@
 %    \vskip 3\Cvs}} % 欧文は40pt
 %
 \renewcommand{\@makechapterhead}[1]{%
-  \vspace*{-3zw}                            % 章タイトル上部の余白を詰める
-  \starter@chapterhead{#1}                  % 章タイトルを組み立てる
-  \vspace{2\baselineskip}                   % 章タイトルのあとに余白を空ける
+  \vspace*{-3zw}%                           % 章タイトル上部の余白を詰める
+  \starter@chapterhead{#1}%                 % 章タイトルを組み立てる
+  \vspace{2\baselineskip}%                  % 章タイトルのあとに余白を空ける
 }
 %% 装飾する・しないを判断して、章の番号とタイトルを表示（上下の余白は除く）
-\newcommand{\starter@chapterhead}[1]{{%
-  \setlength{\parindent}{0pt}               % 段落の最初のインデントをなしに
-  \ifnum \c@secnumdepth >\m@ne
-    \if@mainmatter                          % まえがきや目次でないなら
-      \starter@chapterhead@decorated{\thechapter}{#1} % 装飾つきで表示
-    \else                                   % まえがきや目次なら
-      \starter@chapterhead@plain{#1}        %   装飾なしで表示
-    \fi
-  \else
-      \starter@chapterhead@plain{#1}        %   装飾なしで表示
-  \fi
-}}
+\newcommand{\starter@chapterhead}[1]{%
+  {%                                        % フォント変更などの影響範囲を限定する。
+    \setlength{\parindent}{0pt}%            % 段落の最初のインデントをなしに。
+    \starter@chapterhead@align%             % 左寄せ/右寄せ/中央揃え
+    \ifnum \c@secnumdepth >\m@ne%
+      \if@mainmatter%                       % まえがきや目次ではないなら
+        \starter@chapterhead@decorated{\thechapter}{#1}% 装飾つきで表示
+      \else%                                % まえがきや目次なら
+        \starter@chapterhead@plain{#1}%     %   装飾なしで表示
+      \fi%
+    \else%
+        \starter@chapterhead@plain{#1}%     %   装飾なしで表示
+    \fi%
+    \par%                                   % 段落を改める
+  }%
+}
+\newcommand{\starter@chapterhead@align}{%
+  \edef\@align{\starter@chapter@align}%     % left, right, or center
+  \ifstreq{\@align}{left}%
+    \raggedright%                           % 左寄せ
+  \else\ifstreq{\@align}{right}%
+    \raggedleft%                            % 右寄せ
+  \else\ifstreq{\@align}{center}%
+    \centering%                             % 中央寄せ
+  \fi%
+}
 %% 装飾つきで章番号とタイトルを表示
-\newcommand{\starter@chapterhead@decorated}[2]{{%  % #1: 章番号、#2: 章タイトル
-  \raggedright                              % 左寄せ
-  %\centering                               % 中央寄せ
-  %\raggedleft                              % 右寄せ
-  %\textcolor{starter@chaptercolor}{\rule{\textwidth}{0.9zw}} % 章タイトル上部に太い横線
-  %\par\vspace{1.7zw}                       % 余白
-  \starter@chapternumber{#1}                % 章番号を出力
-  %\par\vspace{1.5zw}                       % 余白（章番号とタイトルで2行のとき）
-  \hspace{1zw}                              % 1文字空ける（章番号とタイトルで1行のとき）
-  \starter@chaptertitle{#2}                 % 章タイトルを出力
-  %\par\vspace{1.5zw}                       % 余白
-  %\textcolor{starter@chaptercolor}{\rule{\textwidth}{0.9zw}} % 章タイトル下部に太い横線
-  \textcolor{starter@chaptercolor}{\rule{\textwidth}{0.2pt}} % 章タイトル下部に細い横線
-  \par                                      % 段落を改める
-}}
+\ifstreq{\starter@chapter@decoration}{underline}
+  \newcommand{\starter@chapterhead@decorated}[2]{%  % #1: 章番号、#2: 章タイトル
+    \starter@chaphead{#1}{#2}%              % 章番号と章タイトルを出力
+    \par\vspace{0pt}%                       % 余白
+    \textcolor{starter@chaptercolor}{\rule{\textwidth}{0.2pt}}% 章タイトルに細い下線
+  }
+\else\ifstreq{\starter@chapter@decoration}{boldlines}
+  \newcommand{\starter@chapterhead@decorated}[2]{%  % #1: 章番号、#2: 章タイトル
+    \textcolor{starter@chaptercolor}{\rule{\textwidth}{0.9zw}}% 章タイトル上部に太い横線
+    \par\vspace{1.7zw}%                     % 余白
+    \starter@chaphead{#1}{#2}%              % 章番号と章タイトルを出力
+    \par\vspace{1.5zw}%                     % 余白
+    \textcolor{starter@chaptercolor}{\rule{\textwidth}{0.9zw}}% 章タイトル下部に太い横線
+  }
+\else
+  \newcommand{\starter@chapterhead@decorated}[2]{%  % #1: 章番号、#2: 章タイトル
+    \starter@chaphead{#1}{#2}%              % 章番号と章タイトルを出力
+  }
+\fi
 %% 装飾なしで章番号とタイトルを表示（まえがきや目次用）
-\newcommand{\starter@chapterhead@plain}[1]{{%  % #2: 章タイトル
-  \raggedright                              % 左寄せ
-  %\centering                               % 中央寄せ
-  %\raggedleft                              % 右寄せ
-  \starter@chaptertitle{#1}                 % 章タイトルを出力
-  \par                                      % 段落を改める
-  \textcolor{starter@chaptercolor}{\rule{\textwidth}{0.2pt}} % 章タイトル下部に下線
-  \par                                      % 段落を改める
-}}
+\newcommand{\starter@chapterhead@plain}[1]{%  % #1: 章タイトル
+  \starter@chaphead{}{#1}%                  % 章タイトルだけを出力
+  \ifstreq{\starter@chapter@decoration}{underline}%
+    \par\vspace{0pt}%                       % 余白
+    \textcolor{starter@chaptercolor}{\rule{\textwidth}{0.2pt}}% 章タイトルに細い下線
+  \fi%
+}
+%% 章番号と章タイトルを表示
+\newcommand{\starter@chaphead}[2]{%         % #1: 章番号、#2: 章タイトル
+  \ifempty{#1}\else%
+    \starter@chaphead@number{#1}%           % 章番号
+    \starter@chaphead@spacer%               % 余白
+  \fi%
+  \starter@chaphead@title{#2}%              % 章タイトル
+}
 %% 章番号を表示
-\newcommand{\starter@chapternumber}[1]{%    % #1: 章番号
-  %{\huge\headfont \@chapapp #1\@chappos}        % jsbook.clsのデフォルト
-  {\headfont\LARGE\@chapapp{\HUGE #1}\@chappos}  % 番号を大きくして出力
+\newcommand{\starter@chaphead@number}[1]{%  % #1: 章番号
+  %{\huge\headfont \@chapapp #1\@chappos}%  % jsbook.clsのデフォルト
+  {\headfont\LARGE\@chapapp{\HUGE #1}\@chappos}% 番号を大きくして出力
 }
 %% 章タイトルを表示
-\newcommand{\starter@chaptertitle}[1]{%     % #1: 章タイトル
-  {\Huge\headfont #1}                       % 大きいサイズ、ゴシック体で出力
+\newcommand{\starter@chaphead@title}[1]{%   % #1: 章タイトル
+  {\Huge\headfont #1}%                      % 大きいサイズ、ゴシック体で出力
+}
+%% 章番号と章タイトルの間のスペース
+\newcommand{\starter@chaphead@spacer}{%
+  \ifx\starter@chapter@oneline\empty%       % 章番号とタイトルで2行のとき
+    \par\vspace{1.5zw}%                     % 縦方向に余白を空ける
+  \else%                                    % 章番号とタイトルで1行のとき
+    \hspace{1zw}%                           % 横方向に1文字空ける
+  \fi%
 }
 
 
 %%% 節 (Section) タイトルの上下のスペースを調整（jsbook.clsからコピーして変更）
 \renewcommand{\section}{%
-  \if@slide\clearpage\fi
+  \edef\@newpage{\starter@section@newpage}% % Yなら節ごとに改ページする、空ならしない
+  \def\@beforeSkip{1.3\Cvs \@plus.5\Cdp \@minus.2\Cdp}%  % 節タイトル直前の空白
+  \def\@afterSkip{0.9\Cvs \@plus.3\Cdp}%    % 節タイトル直後の空白
+  \ifx\@newpage\empty\else%                 % 節ごとに改ページするときは
+    \def\@beforeSkip{0pt}%                  % 節タイトル直前の空白をゼロにする
+  \fi%
+  %% 節タイトルを開始
   \@startsection{section}{1}{\z@}%
-  %{\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ（オリジナル）
-  {1.3\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-  %{.5\Cvs \@plus.3\Cdp}% 後アキ（オリジナル）
-  {0.7\Cvs \@plus.3\Cdp}% 後アキ
-  {\normalfont\Large\headfont\raggedright}%
+  {\@beforeSkip}%                           % 前アキ
+  {\@afterSkip}%                            % 後アキ
+  {%
+    %% 節ごとに改ページする場合
+    \ifx\@newpage\empty\else%               % 変数の値が空でないなら
+      \ifnum\value{section}>1%              %   章の最初の節でなければ
+        \clearpage%                         %     改ページする
+      \else%                                %   章の最初の節なら
+        \vskip \@beforeSkip\relax%          %     スペースを空ける
+      \fi%
+    \fi%
+    %% 節タイトルの表示設定
+    \normalfont\Large\headfont\raggedright%
+  }%
 }
 %%% 節 (Section) 番号の表示をカスタマイズ
 \let\original@seccntformat=\@seccntformat
@@ -368,38 +471,48 @@
     {\csname starter@#1@formatnumber\endcsname}%
 }
 %%% 節タイトルに下線を引く
-%\newcommand{\starter@section@formatnumber}{%
-%  \textcolor{starter@sectioncolor}{%      % 色を変える
-%    \rule[-0.35zw]{\textwidth}{0.2pt}%    % 横幅いっぱいの細い下線
-%    \hspace{-\textwidth}%                 % もとの位置に戻る
-%    \rule[-0.35zw]{0.7zw}{1.7zw}%         % 行頭に縦長の「■」を追加
-%  }%
-%  \hspace{0.7zw}%                         % 節番号のまえにスペースを少し空ける
-%  \thesection%                            % 節番号
-%  \hspace{1.0zw}%                         % 節番号のあとに全角1文字分のスペース
-%}
+\ifstreq{\starter@section@decoration}{underline}
+  \newcommand{\starter@section@formatnumber}{%
+    \textcolor{starter@sectioncolor}{%      % 色を変える
+      \rule[-0.35zw]{\textwidth}{0.2pt}%    % 横幅いっぱいの細い下線
+      \hspace{-\textwidth}%                 % もとの位置に戻る
+      \rule[-0.35zw]{0.7zw}{1.7zw}%         % 行頭に縦長の「■」を追加
+    }%
+    \hspace{0.7zw}%                         % 節番号のまえにスペースを少し空ける
+    \thesection%                            % 節番号
+    \hspace{1.0zw}%                         % 節番号のあとに全角1文字分のスペース
+  }
+\fi
 %%% 節番号を白抜き、節タイトル背景を薄いグレーにする
-\newcommand{\starter@section@formatnumber}{%
-  \starter@section@background{starter@palecolor}{\textwidth}% % 幅いっぱいに灰色背景
-  \starter@section@background{starter@deepcolor}{3.5zw}%      % 3.5文字分の黒色背景
-  \makebox[3.5zw][c]{\textcolor{white}{\thesection}}%         % 白文字で節番号
-  \hspace{0.7zw}%                                             % タイトル前のスペース
-}
-\newcommand{\starter@section@background}[2]{%
-  \makebox[0pt][l]{%                                          % 幅をゼロ扱いにする
-    \textcolor{#1}{\rule[-0.6zw]{#2}{2zw}}%                   % 指定幅の背景を描く
-  }%
-}
+\ifstreq{\starter@section@decoration}{grayback}
+  \newcommand{\starter@section@formatnumber}{%
+    \starter@section@background{starter@palecolor}{\textwidth}% % 幅いっぱいに灰色背景
+    \starter@section@background{starter@deepcolor}{3.5zw}%      % 3.5文字分の黒色背景
+    \makebox[3.5zw][c]{\textcolor{white}{\thesection}}%         % 白文字で節番号
+    \hspace{0.7zw}%                                             % タイトル前のスペース
+  }
+  \newcommand{\starter@section@background}[2]{%
+    \makebox[0pt][l]{%                                          % 幅をゼロ扱いにする
+      \textcolor{#1}{\rule[-0.6zw]{#2}{2zw}}%                   % 指定幅の背景を描く
+    }%
+  }
+\fi
 
 
 %%% 小節 (Subsection) のデザインを変更（jsbook.clsからコピーして変更）
 \renewcommand{\subsection}{%
+  \edef\@decoration{\starter@subsection@decoration}%    % 'none' or 'symbol'
   \@startsection{subsection}{2}{\z@}%
-    {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-    {.5\Cvs \@plus.3\Cdp}% 後アキ
+    %{\Cvs \@plus.5\Cdp \@minus.2\Cdp}%     % 前アキ（オリジナル）
+    %{.5\Cvs \@plus.3\Cdp}%                 % 後アキ（オリジナル）
+    {.7\Cvs \@plus.5\Cdp \@minus.2\Cdp}%    % 前アキ（少し狭める）
+    {.3\Cvs \@plus.3\Cdp}%                  % 後アキ（少し狭める）
     {%
-      \normalfont\large\headfont%                % フォントを本文より少し大きめに
-      %\textcolor{starter@deepcolor}{$\clubsuit$ }% 頭にクローバー
+      \normalfont\large\headfont%           % フォントを本文より少し大きめに
+      \def\@tempa{symbol}%
+      \ifx\@decoration\@tempa%
+        \textcolor{starter@subsectioncolor}{$\clubsuit$ }% 頭にクローバー
+      \fi%
     }%
 }
 
@@ -431,6 +544,13 @@
   \if@restonecol\twocolumn\fi
 }
 
+
+%%% 目次での章 (Chapter) 直後での改ページを防ぐ
+\let\original@l@chapter=\l@chapter                % もとの定義を保存
+\renewcommand*{\l@chapter}[2]{{%
+  \needspace{2zw}%                                % スペースがなければ改ページ
+  \original@l@chapter{#1}{#2}%                    % もとの定義を呼び出す
+}}
 
 %%% 目次での節 (Section) をゴシック体に変更
 \let\original@l@section=\l@section                % もとの定義を保存
@@ -707,7 +827,9 @@
   %% 横幅いっぱいの点線を \dotfill で引く
   %% （\dotfill だけだと左右に少しすき間ができてしまうので、
   %%   それを埋めるために左右を少し伸ばしている）
-  \hspace{#1}\dotfill\hspace{#1}\mbox{}%
+  \textcolor{starter@notecolor}{%
+    \hspace{#1}\dotfill\hspace{#1}\mbox{}%
+  }%
 }}
 %%% ノートのフォント
 \newcommand{\starter@note@font}{%
@@ -745,3 +867,48 @@
   \textcolor{lightgray}{\hrulefill}%
   \medskip%
 }
+
+
+%%
+%% 黒ヌキ（白い背景に黒い文字）
+%%
+%% 使い方: \startercursor{テキスト}
+%%
+\newcommand*{\startercursor}[1]{%
+  \starter@bgcolor[black]{white}{#1}%    % 文字を黒、背景を白にして表示
+  %\mybgcolor{white}{\textcolor{black}{#1}}%
+}%
+
+%%
+%% 背景色（と文字色）をつける
+%%
+%% 使い方: \starter@bgcolor{white}{テキスト}
+%%      or \starter@bgcolor[black]{white}{テキスト}
+%%
+\newcommand{\starter@bgcolor}[3][]{% % #1: 文字色(default: 空), #2: 背景色, #3: テキスト
+  \settowidth{\tmp@width}{#3}%       % 幅
+  \settodepth{\tmp@depth}{g}%        % 深さ
+  \settoheight{\tmp@height}{M}%      % 高さ
+  \addtolength{\tmp@height}{\tmp@depth}%  % 高さに深さを追加
+  \addtolength{\tmp@depth}{1pt}%     % 深さを少し増やす
+  \addtolength{\tmp@height}{2pt}%    % 高さを少し増やす
+  %
+  \makebox[0pt][l]{%                 % カーソル位置を変えないまま
+    \textcolor{#2}{%                 % 背景色を指定して
+      \rule[-\tmp@depth]{\tmp@width}{\tmp@height}% % 塗りつぶす
+      %\rule[-\tmp@depth]{\tmp@width}{\baselineskip}%
+    }%
+  }%
+  \ifempty{#1}%                      % 文字色が未指定なら
+    #3%                              % テキストをそのまま表示
+  \else%                             % 文字色が指定されていれば
+    \textcolor{#1}{#3}%              % 色を指定してテキストを表示
+  \fi%
+}
+
+%% 長さを表す変数 (control sequence) を宣言
+\newlength{\tmp@width}%    % 幅
+\newlength{\tmp@height}%   % 高さ
+\newlength{\tmp@depth}%    % 深さ
+
+
