@@ -95,7 +95,6 @@ include	Valueにあるドメイン名のSPFレコードを使用する、入れ�
 
 なおaは省略可能です。
 
-//footnote[CIDR][CIDRとはClassless Inter-Domain Routingのこと、IPアドレスの範囲を示すための仕組みです]
 
 先ほど例を解説すると 最初の定義情報は @<code>{+ip4:xxx.xxx.xxx.xxx} なのでValueに指定されたIPアドレスを認証するとなるのでメールを認証するになる。そして次の定義情報は @<code>{~all} になるので全てマッチするのを認証しないときがあるという意味になるので、最初に指定されたIPアドレス以外のメールは認証をしないときがあるという動きになります。
 
@@ -103,6 +102,8 @@ include	Valueにあるドメイン名のSPFレコードを使用する、入れ�
 v=spf1 include:_spf.google.com ~all
 //}
 G Suiteでは、このような定義情報になっているが、includeは入れ子になっております。最終的には+ip4のValueまで到達します。includeにすることでG Suite利用者には最初の定義だけを示しておくだけで、IPアドレスのメンテナンスで設定値の変更が自由になります。
+
+//footnote[CIDR][CIDRとはClassless Inter-Domain Routingのこと、IPアドレスの範囲を示すための仕組みです]
 
 ===[column] 意外としていないメールを送信しない設定
 
