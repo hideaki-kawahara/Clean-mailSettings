@@ -80,9 +80,7 @@ Qualifierについて +,-,~,?の4つの設定があります。Mechanismにマ�
 
 なお+は省略可能です。
 
-//embed[latex]{
-\clearpage
-//}
+//raw[|latex|\pagebreak]
 
 Mechanismについて代表的なのをあげる。
 
