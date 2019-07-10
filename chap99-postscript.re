@@ -20,22 +20,18 @@
 	元コンシューマーゲームのエンジニア、某メガIT企業でメルマガのお守りをしていました、今はベンチャー企業でIoT関連の仕事をしております。
 
 
-
- * Twitter
-//cmd{
-$ dig -t txt  _twitter.bright-system.dev | grep TXT
-;_twitter.bright-system.dev.	IN	TXT
-_twitter.bright-system.dev. 3530 IN	TXT	"Twitter=@sapi_kawahara"
+//emlist[Twitter][bash]{
+$ dig -t txt _twitter.bright-system.dev | grep Twitter
 //}
- * Facebook
-//cmd{
-$ dig -t txt  _facebook.bright-system.dev | grep TXT
-;_facebook.bright-system.dev.	IN	TXT
-_facebook.bright-system.dev. 3600 IN	TXT	"Facebook=hideaki.kawahara.0204"
+@<br>{}
+//emlist[Facebook][bash]{
+$ dig -t txt _facebook.bright-system.dev | grep Facebook
 //}
- * Blog
-//cmd{
-$ dig -t txt  _blog.bright-system.dev | grep TXT
-;_blog.bright-system.dev.	IN	TXT
-_blog.bright-system.dev. 3600	IN	TXT	"Blog=https://kawahara-ci.hatenablog.com/"
+@<br>{}
+//emlist[Blog][bash]{
+$ dig -t txt _blog.bright-system.dev | grep Blog
+//}
+@<br>{}
+//emlist[Qiita][bash]{
+$ dig -t txt _qiita.bright-system.dev | grep Qiita
 //}
