@@ -80,6 +80,10 @@ Qualifierについて +,-,~,?の4つの設定があります。Mechanismにマ�
 
 なお+は省略可能です。
 
+//embed[latex]{
+\clearpage
+//}
+
 Mechanismについて代表的なのをあげる。
 
 //table[Mechanism][Mechanismの動作]{
