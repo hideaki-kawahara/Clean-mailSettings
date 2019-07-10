@@ -23,15 +23,12 @@
 //emlist[Twitter][bash]{
 $ dig -t txt _twitter.bright-system.dev | grep Twitter
 //}
-@<br>{}
 //emlist[Facebook][bash]{
 $ dig -t txt _facebook.bright-system.dev | grep Facebook
 //}
-@<br>{}
 //emlist[Blog][bash]{
 $ dig -t txt _blog.bright-system.dev | grep Blog
 //}
-@<br>{}
 //emlist[Qiita][bash]{
 $ dig -t txt _qiita.bright-system.dev | grep Qiita
 //}
