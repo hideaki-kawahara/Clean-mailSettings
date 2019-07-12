@@ -88,11 +88,23 @@ G Suite(@<href>{https://gsuite.google.co.jp/intl/ja/features/})に接続しま�
 @<img>{y05}MXレコードが設定されました、反映されるまで最大2時間かかります。
 
 //image[z01][ ][scale=0.4]
-MXレコードの設定が終わったら2時間ほど待ち @<img>{suite06}の画面からGoogle MXレコードを設定を押下すると上の説明画面がでます。画面の下の方に指定された手順を完了しましたという文言があるので、そこを押下しますと、MXレコードが設定されます。
+MXレコードの設定が終わったら2時間ほど待ち @<img>{suite06}の画面からGoogle MXレコードを設定を押下すると上の説明画面がでます。画面の下の方に指定された手順を完了しましたという文言があるので、sそのボタンを押下すると、MXレコードが設定されます。
 
 == SPFを設定しよう
 //image[spf1][ ][scale=0.8]
 @<img>{spf1}の画面でSPFレコードを設定して @<code>{v=spf1 include:_spf.google.com ~all} を入力してからADDを押下します。
+
+
+1時間ぐらいしたら設定を以下のコマンドで確認します。
+
+//cmd{
+$ dig -t txt bright-system.dev | grep spf1
+//}
+
+このように表示されたら設定完了です。
+//cmd{
+bright-system.dev.	3600	IN	TXT	"v=spf1 include:_spf.google.com ~all"
+//}
 
 
 == DKIMを設定しよう
@@ -118,21 +130,35 @@ G Suite ADMIN画面に接続する。
 //image[dkim8][ ][scale=0.5]
 TXTレコードを選択し @<img>{dkim7} のDNSホストの名前と、TXTレコード値をコピーして入力してADDを押下する。
 
+
+//raw[|latex|\pagebreak]
+
+1時間ぐらいしたら設定を以下のコマンドで確認します。
+
+//cmd{
+$ dig -t txt google._domainkey.bright-system.dev | DKIM1
+//}
+
+このように表示されたら設定完了です。
+//cmd{
+google._domainkey.bright-system.dev. 3588 IN TXT "v=DKIM1; k=rsa; p=<以下省略>"
+//}
+
+
 //image[dkim9][ ][scale=0.5]
-@<img>{dkim5}の画面を更新するとメールを認証となり、DKIMの設定が完了します。
+そのあとしらばくしてから @<img>{dkim5}の画面を更新するとメールを認証となり、DKIMの設定が完了します。
 
 
-=== 確認しよう
+
+== 全ての設定を確認しよう
 
 
 これまでの設定を包括的に確認できます。
 
 こちらのURLで確認できますす。 @<href>{https://toolbox.googleapps.com/apps/checkmx/}
 
-//image[check][ ][scale=0.4]
+//image[check][ ][scale=0.3]
 @<img>{check} ドメイン名を入れてチェック実行を押下するとチェックします、今回はDMARCの設定をしていないので▲の表示が出ていますが、それ以外は設定が正しいことが確認できました。
-
-//raw[|latex|\pagebreak]
 
 == メールを送信しよう
 設定したドメインから新規にユーザを作り、Gmailドメインにメールを送信して確認しましょう。
