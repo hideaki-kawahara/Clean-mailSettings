@@ -125,7 +125,9 @@ TXTレコードを選択し @<img>{dkim7} のDNSホストの名前と、TXTレ�
 === 確認しよう
 
 
-これまでの設定を包括的に確認できます、こちらで確認できますす。 @<href>{https://toolbox.googleapps.com/apps/checkmx/}
+これまでの設定を包括的に確認できます。
+
+こちらのURLで確認できますす。 @<href>{https://toolbox.googleapps.com/apps/checkmx/}
 
 //image[check][ ][scale=0.4]
 @<img>{check} ドメイン名を入れてチェック実行を押下するとチェックします、今回はDMARCの設定をしていないので▲ですが、それ以外は設定が正しいことが確認できました。
