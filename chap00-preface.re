@@ -45,5 +45,5 @@ Gmailで表示される？マークはスパムメールとして判定される
 
 ===== 問い合わせ先
 
- * URL: https://sapi-kawahara.netlify.com/
+ * URL: https://bright-system.dev/
  * Twitter: @sapi_kawahara
