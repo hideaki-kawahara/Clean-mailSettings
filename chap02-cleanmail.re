@@ -115,5 +115,5 @@ MD5は暗号学的ハッシュ関数と呼ばれ物の一種です。暗号学�
 
 //footnote[UUCP][Unix to Unix Copy Protocolのこと、初期のインターネットで使われたプロトコル、1日1回まとめて通信するなどの機能がある。]
 //footnote[TLS][Transport Layer Securityのこと、セキュリティ通信を行うためのプロトコルです。アプリケーションに対して中立な実装なので、他のプロトコルに追加できる仕組みになっている。]
-//footnote[STARTTLS][STARTTLSはメールの送受信するプロセスにおいて暗号化通信する仕組みです]
+//footnote[STARTTLS][STARTTLSはメールの送受信するプロセスにおいて暗号化通信する仕組みです。]
 //footnote[IMAP][Internet Message Access Protocolのこと、POPと異なり、メールをメールサーバ上に保存したまま管理する。Webメールはこの仕組みを使っている。]

@@ -11,9 +11,9 @@ Gmailが表示する？マークは迷惑メールとして判定される前段
 
 今後も使われるメールを長く付き合うためにも本書を読んでいただけたら幸いです。
 
-//footnote[SPF][SPF(Sender Policy Framework)とは、送信ドメイン詐称を防いで正当なドメインからの送信を検証する仕組み]
-//footnote[Sender ID][Sender IDとはSPFと同じく、送信ドメイン詐称を防いで正当なドメインからの送信を検証する仕組み]
-//footnote[DKIM][DKIM(Domainkeys Identified Mail)とは、送信ドメインを電子署名で認証する仕組み]
+//footnote[SPF][SPF(Sender Policy Framework)とは、送信ドメイン詐称を防いで正当なドメインからの送信を検証する仕組み。]
+//footnote[Sender ID][Sender IDとはSPFと同じく、送信ドメイン詐称を防いで正当なドメインからの送信を検証する仕組み。]
+//footnote[DKIM][DKIM(Domainkeys Identified Mail)とは、送信ドメインを電子署名で認証する仕組み。]
 
 
 ===== 本書で得られること

@@ -23,7 +23,7 @@ Envelope Fromはメールサーバの方が自動的に補完するので、全�
  5. 取り出したSPFレコードにはIPアドレスまたはドメイン名(FQDN)が記載されています。ドメイン名(FQDN)だったら、そのドメイン名(FQDN)で再度SPFレコードを取り出してIPアドレスが出てくるまで繰り返す。
  6. IPアドレスとEnvelope FromのIPアドレスが一致したら認証成功とする。
 
-//footnote[SPFレコード][SPFレコードとはDNSサーバに設定された情報です、非対応のDNSサーバはTXTレコードに設定されてます、テキストデータが設定されて誰でも参照できます]
+//footnote[SPFレコード][SPFレコードとはDNSサーバに設定された情報です、非対応のDNSサーバはTXTレコードに設定されてます、テキストデータが設定されて誰でも参照できます。]
 
 
 
@@ -108,7 +108,7 @@ v=spf1 include:_spf.google.com ~all
 //}
 G Suiteでは、このような定義情報になっているが、includeは入れ子になっております。最終的には+ip4のValueまで到達します。includeにすることでG Suite利用者には最初の定義だけを示しておくだけで、IPアドレスのメンテナンスで設定値の変更が自由です。
 
-//footnote[CIDR][CIDRとはClassless Inter-Domain Routingのこと、IPアドレスの範囲を示すための仕組みです]
+//footnote[CIDR][CIDRとはClassless Inter-Domain Routingのこと、IPアドレスの範囲を示すための仕組みです。]
 
 ===[column] 思いのほかやっていないメールを送信しない設定
 
