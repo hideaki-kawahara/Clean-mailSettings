@@ -14,7 +14,7 @@ Domain Nameの欄にドメイン名を入力して、SPF Record Lookupを押下�
 === DKIM確認ツール
 URL:@<href>{https://mxtoolbox.com/dkim.aspx}
 
-//image[dkim1][DKIM確認ツール][scale=0.5]
+//image[dkim1][DKIM確認ツール][scale=0.45]
 Domain Nameの欄にドメイン名を入力して、Selectorにセレクター名を入れます、@<b>{_domainkeyの入力は必要ないです}、そしてDKIM Lookupを押下します。
 
 //image[dkim2][DKIM確認結果][scale=0.3]

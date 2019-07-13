@@ -22,7 +22,7 @@ G Suite用のアカウント1つから料金が発生しますが、グループ
 //raw[|latex|\pagebreak]
 
 
-== G Suiteに契約する
+== G Suiteを契約する
 Google Domains(@<href>{https://domains.google/#/})に接続します。
 //image[dmain01][ ][scale=0.4]
 @<img>{dmain01}のMANAGE MY DOMAINSを押下する。
@@ -45,7 +45,7 @@ Google Domains(@<href>{https://domains.google/#/})に接続します。
 //image[dmain07][ ][scale=0.4]
 @<img>{dmain07}の画面を確認したらREVIEW YOUR PURCHASEを押下する。あとは通常の通販と同じです。
 
-== G Suiteに契約済みなら追加する
+== G Suiteに追加する（契約済の場合）
 G Suite(@<href>{https://gsuite.google.co.jp/intl/ja/features/})に接続します。
 
 
@@ -67,7 +67,7 @@ G Suite(@<href>{https://gsuite.google.co.jp/intl/ja/features/})に接続しま�
 
 //image[suite06][ ][scale=0.8]
 @<img>{suite06}即座に所有権が確認されました。@<br>{}
-※Google Domainsサービスの他を使用しているときはDNSサーバに対して所有権確認などのDNSの設定やファイルのアップロードが必要です。
+※Google Domainsサービスを使用していなくて他サービスを使用しているときはDNSサーバに対して所有権確認などのDNSの設定やファイルのアップロードが必要です。
 
 
 == MXレコードを設定しよう
@@ -76,19 +76,19 @@ G Suite(@<href>{https://gsuite.google.co.jp/intl/ja/features/})に接続しま�
 @<img>{y01}のMXレコードを設定したドメインを選択する。
 
 //image[y02][ ][scale=0.4]
-@<img>{y02}のAdd an MX record ...を押下する。
+@<img>{y02}のAdd an MX recordを押下する。
 
 //image[y03][ ][scale=0.8]
 @<img>{y03}のCustom resource recordsのレコード追加のところでMXを選択し追加する分だけ+を押下する。
 
 //image[y04][ ][scale=0.8]
-@<img>{y04}の入力欄に 優先度 メールサーバの順番に入力しADDを押下する。
+@<img>{y04}の入力欄に優先度とメールサーバの順番に入力しADDを押下する。
 
 //image[y05][ ][scale=0.8]
 @<img>{y05}MXレコードが設定されました、反映されるまで最大2時間かかります。
 
 //image[z01][ ][scale=0.4]
-MXレコードの設定が終わったら2時間ほど待ち @<img>{suite06}の画面からGoogle MXレコードを設定を押下すると上の説明画面がでます。画面の下の方に指定された手順を完了しましたという文言があるので、sそのボタンを押下すると、MXレコードが設定されます。
+MXレコードの設定が終わったら2時間ほど待ち @<img>{suite06}の画面からGoogle MXレコードを設定を押下すると上の説明画面がでます。画面の下の方に指定された手順を完了しましたという文言があるので、そのボタンを押下すると、MXレコードが設定されます。
 
 == SPFを設定しよう
 //image[spf1][ ][scale=0.8]
@@ -146,7 +146,7 @@ google._domainkey.bright-system.dev. 3588 IN TXT "v=DKIM1; k=rsa; p=<以下省�
 
 
 //image[dkim9][ ][scale=0.5]
-そのあとしらばくしてから @<img>{dkim5}の画面を更新するとメールを認証となり、DKIMの設定が完了します。
+そのあとしらばくしてから @<img>{dkim5}の画面を更新するとMXレコードの認証となります。これでDKIMの設定が完了します。
 
 
 
@@ -166,6 +166,6 @@ google._domainkey.bright-system.dev. 3588 IN TXT "v=DKIM1; k=rsa; p=<以下省�
 //image[OK][ヘッダー確認][scale=0.7]
 受信したメールのメールヘッダーを確認すると、SPFとDKIMがともにPASSの表示が出ています、この本の目的である@<b>{きれいなメール}を送信することに成功しました。
 
-これで、所有する独自ドメインから送信するメールが迷惑メールにされることはないでしょう、今でも多くの企業のメールは@<b>{きれいなメール}になっていないことが多いで誇っていいと思います。
+これで、所有する独自ドメインから送信するメールが迷惑メールにされることはないでしょう、今でも多くの企業のメールは@<b>{きれいなメール}になっていないことが多いので誇っていいと思います。
 
 @<b>{今後もメールライフを楽しんでください。}
