@@ -45,5 +45,5 @@ Gmailが表示する？マークは迷惑メールとして判定される前段
 
 ===== 問い合わせ先
 
- * URL: https://bright-system.dev/
+ * Support homepage: @<href>{https://bright-system.dev/}
  * Twitter: @sapi_kawahara

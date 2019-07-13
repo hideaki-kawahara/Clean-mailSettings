@@ -8,7 +8,8 @@ CHAPS:
   - chap04-dkim-settings.re
   - chap05-gsuites-settings.re
 
-APPENDIX:
-
 POSTDEF:
   - chap99-postscript.re
+
+APPENDIX:
+  - chap99-appendix.re
