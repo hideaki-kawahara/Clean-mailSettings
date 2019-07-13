@@ -15,7 +15,7 @@ Domain Nameの欄にドメイン名を入力して、SPF Record Lookupを押下�
 URL:@<href>{https://mxtoolbox.com/dkim.aspx}
 
 //image[dkim1][DKIM確認ツール][scale=0.5]
-Domain Nameの欄にドメイン名を入力して、Selectorにセレクター名を入れます、@<b>{_domainkeyの入力は不要です}、そしてDKIM Lookupを押下します。
+Domain Nameの欄にドメイン名を入力して、Selectorにセレクター名を入れます、@<b>{_domainkeyの入力は必要ないです}、そしてDKIM Lookupを押下します。
 
 //image[dkim2][DKIM確認結果][scale=0.3]
 正しい設定ならばDKIMレコードの設定が表示されます。
@@ -23,7 +23,7 @@ Domain Nameの欄にドメイン名を入力して、Selectorにセレクター�
 === その他確認ツール
 URL:@<href>{https://mxtoolbox.com/NetworkTools.aspx}
 
-特にblacklistなどは使用しているドメインが迷惑メール判定されメールが一切届かなくなった確認に便利です、ドメインごと迷惑メール判定されるとエラーメールにならず届かないという現象になるので、このような確認ツールを使うのが良いです。
+特にblacklistなどは使用しているドメインが迷惑メール判定されメールが届かなくなった確認に便利です、ドメインごと迷惑メール判定されるとエラーメールにならず届かないという現象になるので、このような確認ツールを使うのが良いです。
 
 
 //raw[|latex|\pagebreak]
