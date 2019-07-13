@@ -37,7 +37,7 @@ Google Domains(@<href>{https://domains.google/#/})に接続します。
 @<img>{dmain04}の確認ダイアログが出るのでNEXTを押下する。
 
 //image[dmain05][ ][scale=0.4]
-@<img>{dmain05}の画面でアドミンメールアドレスと名前と、非常用のメールアドレスを入力してNEXTを押下する。
+@<img>{dmain05}の画面でアドミンメールアドレス、名前、非常用のメールアドレスを入力してNEXTを押下する。
 
 //image[dmain06][ ][scale=0.4]
 @<img>{dmain06}の契約プランを選択しNEXTを押下する。
@@ -119,10 +119,10 @@ G Suite ADMIN画面に接続する。
 @<img>{dkim3} Gmailを押下する。
 
 //image[dkim4][ ][scale=0.6]
-@<img>{dkim4} メール認証(DKIM)の設定を押下する。
+@<img>{dkim4} メール認証（DKIM）の設定を押下する。
 
 //image[dkim5][ ][scale=0.5]
-@<img>{dkim5} メール認証(DKIM)画面から、新しいレコードを作成を押下する。
+@<img>{dkim5} メール認証（DKIM）画面から、新しいレコードを作成を押下する。
 
 //image[dkim7][ ][scale=0.5]
 @<img>{dkim7} DKIMの公開鍵が生成されます。
@@ -150,7 +150,7 @@ google._domainkey.bright-system.dev. 3588 IN TXT "v=DKIM1; k=rsa; p=<以下省�
 
 
 
-== 全ての設定を確認しよう
+== すべての設定を確認しよう
 
 
 これまでの設定を包括的に確認できます。
@@ -158,7 +158,7 @@ google._domainkey.bright-system.dev. 3588 IN TXT "v=DKIM1; k=rsa; p=<以下省�
 こちらのURLを使い確認できますす。 @<href>{https://toolbox.googleapps.com/apps/checkmx/}
 
 //image[check][ ][scale=0.3]
-@<img>{check} ドメイン名を入れてチェック実行を押下するとチェックします、今回はDMARCの設定をしていないので▲の表示が出ていますが、それのほかは設定が正しいことが確認できました。
+@<img>{check} ドメイン名を入れてチェック実行を押下するとチェックします、今回はDMARCの設定をしていないので▲の表示が出ていますが、それのほかは設定が正しいこと確認できました。
 
 == メールを送信しよう
 設定したドメインから新規に受信メールユーザを作り、Gmailドメインにメールを送信して確認しましょう。
