@@ -101,7 +101,7 @@ MXレコードの設定が終わったら2時間ほど待ち @<img>{suite06}の�
 $ dig -t txt bright-system.dev | grep spf1
 //}
 
-このように表示されたら設定完了です。
+このように表示されたら設定完了です。。表示がないなら反映できていませんのでもう少し待ちましょう。
 //cmd{
 bright-system.dev.	3600	IN	TXT	"v=spf1 include:_spf.google.com ~all"
 //}
@@ -139,7 +139,7 @@ TXTレコードを選択し @<img>{dkim7} のDNSホストの名前と、TXTレ�
 $ dig -t txt google._domainkey.bright-system.dev | DKIM1
 //}
 
-このように表示されたら設定完了です。
+このように表示されたら設定完了です。表示がないなら反映できていませんのでもう少し待ちましょう。
 //cmd{
 google._domainkey.bright-system.dev. 3588 IN TXT "v=DKIM1; k=rsa; p=<以下省略>"
 //}
