@@ -1,10 +1,10 @@
 = G Suiteでの使い方
-SPFとDKIMに対応して、独自ドメインが使えるのはGoogleのG Suiteです。
+SPFとDKIMに対応していて、独自ドメインが使えるのはGoogleのG Suiteです。
 
 == G Suiteの説明
-G Suiteはコラボレーションツールです、Googleのサービスのパワーアップ版が使用できます。G SuiteのWebメールはGmailと同じです、Gmailアプリもそのまま使えます。ビジネス用ですがひとりから使用可能です、2019年現在料金は月680円（税別）からです。
+G SuiteはGoogleの各種サービスをパワーアップしたものが利用できるコラボレーションツールです。G SuiteのWebメールはGmailと同じで、Gmailアプリもそのまま使えます。ビジネス用ですがひとりから使用可能で、2019年現在料金は月680円（税別）からです。
 
-G Suite用のアカウント1つから料金が発生しますが、グループアカウントと呼ばれるメーリングリストアカウントを作ることができるので、受信できるメールアドレスは無限に作れます、送信は1アカウントに最大5つまでです。
+G Suite用のアカウント1つから料金が発生しますが、グループアカウントと呼ばれるメーリングリストアカウントを作ることができるので、受信できるメールアドレスは無限に作れます。送信は1アカウントに最大5つまでです。
 
 == 独自ドメインをG Suiteに設定しよう
 独自ドメインを所有していない人は、Google Domains(@<href>{https://domains.google/#/})で取得しましょう。
@@ -15,9 +15,11 @@ G Suite用のアカウント1つから料金が発生しますが、グループ
 
  1. G Suiteに契約する。（G Suiteに契約済みなら追加する）
  2. MXレコードを追加する。
- 3. SPFレコードを追加する。
- 4. 待つ
- 5. DKIMレコードを追加する。
+ 3. 設定が反映するまで1時間待つ
+ 4. SPFレコードを追加する。
+ 5. 設定が反映するまで1時間待つ
+ 6. DKIMレコードを追加する。
+ 7. 設定が反映するまで1時間待つ
 
 //raw[|latex|\pagebreak]
 
@@ -25,22 +27,22 @@ G Suite用のアカウント1つから料金が発生しますが、グループ
 == G Suiteを契約する
 Google Domains(@<href>{https://domains.google/#/})に接続します。
 //image[dmain01][ ][scale=0.4]
-@<img>{dmain01}のMANAGE MY DOMAINSを押下する。
+@<img>{dmain01}のMANAGE MY DOMAINSを押下します。
 
 //image[dmain02][ ][scale=0.4]
-@<img>{dmain02}のG Suiteと紐づけたいドメインを選択する。
+@<img>{dmain02}のG Suiteと紐づけたいドメインを選択します。
 
 //image[dmain03][ ][scale=0.3]
-@<img>{dmain03}のGET G SUITEを押下する。
+@<img>{dmain03}のGET G SUITEを押下します。
 
 //image[dmain04][ ][scale=0.5]
-@<img>{dmain04}の確認ダイアログが出るのでNEXTを押下する。
+@<img>{dmain04}の確認ダイアログが出るのでNEXTを押下します。
 
 //image[dmain05][ ][scale=0.4]
-@<img>{dmain05}の画面でアドミンメールアドレス、名前、非常用のメールアドレスを入力してNEXTを押下する。
+@<img>{dmain05}の画面でアドミンメールアドレス、名前、非常用のメールアドレスを入力してNEXTを押下します。
 
 //image[dmain06][ ][scale=0.4]
-@<img>{dmain06}の契約プランを選択しNEXTを押下する。
+@<img>{dmain06}の契約プランを選択しNEXTを押下します。
 
 //image[dmain07][ ][scale=0.4]
 @<img>{dmain07}の画面を確認したらREVIEW YOUR PURCHASEを押下する。あとは通常の通販と同じです。
@@ -76,13 +78,13 @@ G Suite(@<href>{https://gsuite.google.co.jp/intl/ja/features/})に接続しま�
 @<img>{y01}のMXレコードを設定したドメインを選択する。
 
 //image[y02][ ][scale=0.4]
-@<img>{y02}のAdd an MX recordを押下する。
+@<img>{y02}のAdd an MX recordを押下します。
 
 //image[y03][ ][scale=0.8]
-@<img>{y03}のCustom resource recordsのレコード追加のところでMXを選択し追加する分だけ+を押下する。
+@<img>{y03}のCustom resource recordsのレコード追加のところでMXを選択し追加する分だけ+を押下します。
 
 //image[y04][ ][scale=0.8]
-@<img>{y04}の入力欄に優先度とメールサーバの順番に入力しADDを押下する。
+@<img>{y04}の入力欄に優先度とメールサーバの順番に入力しADDを押下します。
 
 //image[y05][ ][scale=0.8]
 @<img>{y05}MXレコードが設定されました、反映されるまで最大2時間かかります。
@@ -101,34 +103,34 @@ MXレコードの設定が終わったら2時間ほど待ち @<img>{suite06}の�
 $ dig -t txt bright-system.dev | grep spf1
 //}
 
-このように表示されたら設定完了です。。表示がないなら反映できていませんのでもう少し待ちましょう。
+このように表示されたら設定完了です。表示がないなら反映できていませんのでもう少し待ちましょう。
 //cmd{
 bright-system.dev.	3600	IN	TXT	"v=spf1 include:_spf.google.com ~all"
 //}
 
 
 == DKIMを設定しよう
-G Suite ADMIN画面に接続する。
+G Suite ADMIN画面に接続します。
 //image[dkim01][ ][scale=0.4]
-@<img>{dkim01} G Suiteからアプリを押下する。
+@<img>{dkim01} G Suiteからアプリを押下します。
 
 //image[dkim2][ ][scale=0.4]
-@<img>{dkim2} G Suiteコアサービスを押下する。
+@<img>{dkim2} G Suiteコアサービスを押下します。
 
 //image[dkim3][ ][scale=0.5]
-@<img>{dkim3} Gmailを押下する。
+@<img>{dkim3} Gmailを押下します。
 
 //image[dkim4][ ][scale=0.6]
-@<img>{dkim4} メール認証（DKIM）の設定を押下する。
+@<img>{dkim4} メール認証（DKIM）の設定を押下します。
 
 //image[dkim5][ ][scale=0.5]
-@<img>{dkim5} メール認証（DKIM）画面から、新しいレコードを作成を押下する。
+@<img>{dkim5} メール認証（DKIM）画面から、新しいレコードを作成を押下します。
 
 //image[dkim7][ ][scale=0.5]
 @<img>{dkim7} DKIMの公開鍵が生成されます。
 
 //image[dkim8][ ][scale=0.5]
-TXTレコードを選択し @<img>{dkim7} のDNSホストの名前と、TXTレコード値をコピーして入力してADDを押下する。
+TXTレコードを選択し @<img>{dkim7} のDNSホストの名前と、TXTレコード値をコピーして入力してADDを押下します。
 
 
 //raw[|latex|\pagebreak]
@@ -158,14 +160,14 @@ google._domainkey.bright-system.dev. 3588 IN TXT "v=DKIM1; k=rsa; p=<以下省�
 こちらのURLを使い確認できますす。 @<href>{https://toolbox.googleapps.com/apps/checkmx/}
 
 //image[check][ ][scale=0.3]
-@<img>{check} ドメイン名を入れてチェック実行を押下するとチェックします、今回はDMARCの設定をしていないので▲の表示が出ていますが、それのほかは設定が正しいこと確認できました。
+@<img>{check} ドメイン名を入れてチェック実行を押下するとチェックします。今回はDMARCの設定をしていないので▲の表示が出ていますが、それのほかは設定が正しいこと確認できました。
 
 == メールを送信しよう
 設定したドメインから新規に受信メールユーザを作り、Gmailドメインにメールを送信して確認しましょう。
 
 //image[OK][ヘッダー確認][scale=0.7]
-受信したメールのメールヘッダーを確認すると、SPFとDKIMがともにPASSの表示が出ています、この本の目的である@<b>{きれいなメール}を送信することに成功しました。
+受信したメールのメールヘッダーを確認すると、SPFとDKIMがともにPASSの表示が出ています。この本の目的である@<b>{きれいなメール}を送信することに成功しました。
 
-これで、所有する独自ドメインから送信するメールが迷惑メールにされることはないでしょう、今でも多くの企業のメールは@<b>{きれいなメール}になっていないことが多いので誇っていいと思います。
+これで、所有する独自ドメインから送信するメールが迷惑メールにされることはないでしょう。今でも多くの企業のメールは@<b>{きれいなメール}になっていないことが多いので誇っていいと思います。
 
 @<b>{今後もメールライフを楽しんでください。}
