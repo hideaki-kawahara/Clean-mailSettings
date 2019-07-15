@@ -27,8 +27,15 @@
 	元コンシューマーゲームのエンジニア、某メガIT企業でメルマガのお守りをしていました、今はベンチャー企業でIoT関連の仕事をしております。
 
 
- * Twitter: @sapi_kawahara
- * Facebook: hideaki.kawahara0204
- * Support homepage: @<href>{https://bright-system.dev/}
- * Blog:@<href>{https://kawahara-ci.hatenablog.com/}
- * Qiita: sapi_kawahara
+//emlist[Twitter]{
+$ dig -t txt _twitter.bright-system.dev | grep Twitter
+//}
+//emlist[Facebook]{
+$ dig -t txt _facebook.bright-system.dev | grep Facebook
+//}
+//emlist[Blog]{
+$ dig -t txt _blog.bright-system.dev | grep Blog
+//}
+//emlist[Qiita]{
+$ dig -t txt _qiita.bright-system.dev | grep Qiita
+//}

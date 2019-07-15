@@ -102,7 +102,7 @@ include	Valueにあるドメイン名のSPFレコードを使用する、入れ�
 
 先ほどの例を解説すると最初の定義情報は @<code>{+ip4:xxx.xxx.xxx.xxx} なのでxxx.xxx.xxx.xxxに含まれたIPv4アドレスの場合は、送信メールサーバとして認証するという結果になります。そして次の定義情報は @<code>{~all} なので、すべての送信元について認証失敗とする場合があるという結果になります。よって全体としては『最初のIPv4アドレスはすべて認証成功とし、それ以外は認証失敗となる場合もある』ということを表します。
 
-//emlist[G Suiteの例][bash]{
+//emlist[G Suiteで使用しているinclude例][bash]{
 v=spf1 include:_spf.google.com ~all
 //}
 G Suiteでは、このような定義情報になっているが、includeにすることでG Suite利用者には最初の定義だけを記載しておくだけで、G Suiteを運営側はIPアドレスの変更を利用者に告知が不要になります。
